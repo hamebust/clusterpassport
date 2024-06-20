@@ -1,5 +1,6 @@
 {
-    "WTCP": "Bienvenido a Cluster Passport",
-    "Hello": "Hola"
+    "WTCP"  : "Bienvenido a Cluster Passport",
+    "ROPP"  :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
+    "Hello" : "Hola"
 
 }

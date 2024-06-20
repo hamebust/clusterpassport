@@ -29,6 +29,7 @@ class ClusterPassport extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
+      locale: const Locale('es'),
 
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(

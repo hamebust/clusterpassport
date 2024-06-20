@@ -1,3 +1,4 @@
+import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/presentation/pages/login_page.dart';
@@ -13,11 +14,11 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Center(child: Text("Welcome to Cluster Passport", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),),),
+            Center(child: Text(S.of(context).WTCP, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),),),
             Image.asset("assets/bg_image.png"),
             Column(
               children: [
-                const Text("Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.", textAlign: TextAlign.center,style: TextStyle(fontSize: 15),),
+                Text(S.of(context).ROPP, textAlign: TextAlign.center,style: const TextStyle(fontSize: 15),),
                 const SizedBox(height: 30,),
                 GestureDetector(
                   onTap: () {
