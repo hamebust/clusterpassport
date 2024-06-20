@@ -60,6 +60,16 @@ class S {
     );
   }
 
+  /// `Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.`
+  String get ROPP {
+    return Intl.message(
+      'Read our Privacy Policy Tap, \'Agree and Continue\' to accept the Team of Service.',
+      name: 'ROPP',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Hello`
   String get Hello {
     return Intl.message(
