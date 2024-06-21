@@ -12,7 +12,6 @@ void main() {
   runApp(const ClusterPassport());
 }
 
-
 class ClusterPassport extends StatelessWidget {
   const ClusterPassport({super.key});
 
