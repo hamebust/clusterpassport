@@ -21,6 +21,7 @@ class ClusterPassport extends StatelessWidget {
     return MaterialApp(
       title: 'Cluster Passport',
 
+
       //Flutter localización
       localizationsDelegates: const [
         S.delegate,
