@@ -1,6 +1,6 @@
-# myapp
+# Cluster Passport
 
-A new Flutter project.
+Is a Flutter project.
 
 ## Getting Started
 
