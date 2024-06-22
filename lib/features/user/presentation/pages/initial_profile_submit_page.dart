@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
+import 'package:cluster_passport/features/app/home/home_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 
 // import 'package:cluster_passport/features/app/global/widgets/profile_widget.dart';
@@ -31,13 +32,16 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
   File? _image;
   Future selectImage() async { 
     try {
-      final pickedFile = await ImagePicker.platform.getImage(source: ImageSource.gallery);
+      // ignore: invalid_use_of_visible_for_testing_member
+      final pickedFile = await ImagePicker.platform.getImageFromSource(source: ImageSource.gallery);
 
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
         } else {
-          print("no image has been selected");
+          if (kDebugMode) {
+            print("no image has been selected");
+          }
         }
       });
 
@@ -86,7 +90,10 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
             ),
             const SizedBox(height: 20,),
             GestureDetector(
-              onTap: submitProfileInfo,
+              onTap: () {
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1495956897.
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+              },
               child: Container(
                 width: 150,
                 height: 40,
