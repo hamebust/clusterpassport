@@ -1,0 +1,8 @@
+{
+    "name": "Cluster Passport",
+    "image": "clusterpassport",
+    "extensions": ["dart-code.dart-code"],
+    "settings": {
+        "dart.sdkPath": "/usr/local/flutter/bin/cache/dart-sdk"
+    }
+}
