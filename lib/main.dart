@@ -1,7 +1,5 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
-// Todos los notas son en español e inglés
-// All notes are in spanish and english
 
 
 
@@ -11,8 +9,6 @@ import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-// Probando commit en codespace
-// Testing commit in IDX
 
 void main() {
   runApp(const ClusterPassport());
@@ -28,15 +24,19 @@ class ClusterPassport extends StatelessWidget {
 
 
       //Flutter localización
+      
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+
       supportedLocales: S.delegate.supportedLocales,
       locale: const Locale('es'),
 
+      //Tema de la aplicación
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
