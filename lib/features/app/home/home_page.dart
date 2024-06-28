@@ -16,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Barra de navegación
+      // Navigation bar
       appBar: AppBar(
         title: const Text("Passport",
                             style:TextStyle(
