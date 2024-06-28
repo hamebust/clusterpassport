@@ -1,8 +1,6 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
 
-
-
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/generated/l10n.dart';
@@ -24,6 +22,7 @@ class ClusterPassport extends StatelessWidget {
 
 
       //Flutter localización
+      //Localization
       
       localizationsDelegates: const [
         S.delegate,
@@ -36,6 +35,7 @@ class ClusterPassport extends StatelessWidget {
       locale: const Locale('es'),
 
       //Tema de la aplicación
+      //App theme
       
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
