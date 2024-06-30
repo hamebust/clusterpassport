@@ -36,7 +36,7 @@ class ClusterPassport extends StatelessWidget {
       //App theme
       debugShowCheckedModeBanner: false,
       
-        theme: ThemeData(brightness: Brightness.light),
+        theme: ThemeData(brightness: Brightness.light, primarySwatch: Colors.green),
         darkTheme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.system,
       
