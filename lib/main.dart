@@ -2,7 +2,6 @@
 // All notes are in spanish and english
 
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
-import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
