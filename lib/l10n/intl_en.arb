@@ -1,10 +1,15 @@
 {
+    "AppNameCP0": "Cluster Passport",
+    "AppNameCP1": "CLUSTER PASSPORT",
     "WtoCP"     : "Welcome to Cluster Passport",
     "ROPP"      : "Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.",
     "Hello"     : "Hello",
     "AC"        : "AGREE AND CONTINUE",
     "PP"        : "Privacy Polices",
     "TS"        : "Terms of service",
-    "TC"        : "Terms and Conditions"
+    "TC"        : "Terms and Conditions",
+    "Passport0"  : "Passport",
+    "Passport1"  : "Pasaporte",
+    "Cluster"   : "Cluster"
     
 }

@@ -31,8 +31,8 @@ class WelcomePage extends StatelessWidget {
                       color: tabColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Center(
-                      child: Text(S.of(context).AC, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
+                    child: Center(
+                      child: Text(S.of(context).AC, style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
                     ),
                   ),
                 )

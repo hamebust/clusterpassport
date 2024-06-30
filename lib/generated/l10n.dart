@@ -50,6 +50,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Cluster Passport`
+  String get AppNameCP0 {
+    return Intl.message(
+      'Cluster Passport',
+      name: 'AppNameCP0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CLUSTER PASSPORT`
+  String get AppNameCP1 {
+    return Intl.message(
+      'CLUSTER PASSPORT',
+      name: 'AppNameCP1',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Welcome to Cluster Passport`
   String get WtoCP {
     return Intl.message(
@@ -115,6 +135,36 @@ class S {
     return Intl.message(
       'Terms and Conditions',
       name: 'TC',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passport`
+  String get Passport0 {
+    return Intl.message(
+      'Passport',
+      name: 'Passport0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pasaporte`
+  String get Passport1 {
+    return Intl.message(
+      'Pasaporte',
+      name: 'Passport1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cluster`
+  String get Cluster {
+    return Intl.message(
+      'Cluster',
+      name: 'Cluster',
       desc: '',
       args: [],
     );
