@@ -36,13 +36,11 @@ class ClusterPassport extends StatelessWidget {
       //Tema de la aplicación
       //App theme
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor,
-        dialogBackgroundColor: appBarColor,
-        appBarTheme: const AppBarTheme(
-          color: appBarColor,
-        ),
-      ),
+      
+        theme: ThemeData(brightness: Brightness.light),
+        darkTheme: ThemeData(brightness: Brightness.dark),
+        themeMode: ThemeMode.system,
+      
 
       //Página de inicio
       //Splash screen
