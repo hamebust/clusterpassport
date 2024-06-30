@@ -22,8 +22,7 @@ class ClusterPassport extends StatelessWidget {
 
 
       //Flutter localización
-      //Localization
-      
+      //Localization      
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -36,7 +35,6 @@ class ClusterPassport extends StatelessWidget {
 
       //Tema de la aplicación
       //App theme
-      
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
@@ -45,6 +43,9 @@ class ClusterPassport extends StatelessWidget {
           color: appBarColor,
         ),
       ),
+
+      //Página de inicio
+      //Splash screen
       home: const SplashScreen(),
     );
 

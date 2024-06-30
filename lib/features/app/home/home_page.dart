@@ -1,10 +1,8 @@
-
-
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({ super.key });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,13 +17,15 @@ class _HomePageState extends State<HomePage> {
       // Barra de navegación
       // Navigation bar
       appBar: AppBar(
-        title: const Text("Passport",
-                            style:TextStyle(
-                              fontSize: 20,
-                              color: greyColor,
-                              fontWeight: FontWeight.w600,
-                          ),
-                        ),
+        title: const Text(
+          "Passport",
+          style: TextStyle(
+            fontSize: 20,
+            color: greyColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        automaticallyImplyLeading: false,
         actions: const [
           Row(
             children: [
@@ -34,9 +34,7 @@ class _HomePageState extends State<HomePage> {
                 color: greyColor,
                 size: 28,
               ),
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:538705617.
               SizedBox(width: 25),
-
               Icon(
                 Icons.search,
                 color: greyColor,
@@ -52,7 +50,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      
+
+      // Cuerpo de la aplicación
+      // App body
       body: <Widget>[
         /// Home page
         const Card(
@@ -62,13 +62,14 @@ class _HomePageState extends State<HomePage> {
             child: Center(
               child: Text(
                 'Home page',
-                
               ),
             ),
           ),
         ),
 
-        /// Notifications page
+        // Página de autorizaciones
+        // Authorized page
+        // Notifications page
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
@@ -103,11 +104,10 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.all(8.0),
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: const Text(
                     'Hello',
-                    
                   ),
                 ),
               );
@@ -122,7 +122,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: const Text(
                   'Hi!',
-                  
                 ),
               ),
             );
@@ -130,6 +129,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ][currentPageIndex],
 
+      // Botón flotante
+      // Floating button
+      floatingActionButton:
+          switchFloatingActionButtonOnPageIndex(currentPageIndex),
+
+      // Barra de navegación inferior
+      // Bottom navigation bar
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -149,12 +155,36 @@ class _HomePageState extends State<HomePage> {
             label: 'Cluster',
           ),
           NavigationDestination(
-            icon: Badge(label: Text('2'), child: Icon(Icons.messenger_sharp),),
+            icon: Badge(
+              label: Text('2'),
+              child: Icon(Icons.messenger_sharp),
+            ),
             label: 'Messages',
           ),
         ],
       ),
-      
     );
+  }
+
+  // Estado del boton flotante
+  // Floating button state
+  switchFloatingActionButtonOnPageIndex(currentPageIndex) {
+    switch (currentPageIndex) {
+      case 0:
+        return FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        );
+      case 1:
+        return FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add_card),
+        );
+      case 2:
+        return FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        );
+    }
   }
 }
