@@ -17,7 +17,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // Barra de navegación
       // Navigation bar
-      appBar: AppBar(title: (child: Text(S.of(context).Passport0, style: const TextStyle(fontSize: 20, color: greyColor, fontWeight: FontWeight.w600,),),),
+      appBar: AppBar(
+        title: Text(
+          S.of(context).Passport0,
+          style: const TextStyle(
+            fontSize: 20,
+            color: greyColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         automaticallyImplyLeading: false,
         actions: const [
           Row(
@@ -124,7 +132,8 @@ class _HomePageState extends State<HomePage> {
 
       // Botón flotante
       // Floating button
-      floatingActionButton:switchFloatingActionButtonOnPageIndex(currentPageIndex),
+      floatingActionButton:
+          switchFloatingActionButtonOnPageIndex(currentPageIndex),
 
       // Barra de navegación inferior
       // Bottom navigation bar
