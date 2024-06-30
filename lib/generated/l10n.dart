@@ -51,10 +51,10 @@ class S {
   }
 
   /// `Welcome to Cluster Passport`
-  String get WTCP {
+  String get WtoCP {
     return Intl.message(
       'Welcome to Cluster Passport',
-      name: 'WTCP',
+      name: 'WtoCP',
       desc: '',
       args: [],
     );
@@ -75,6 +75,46 @@ class S {
     return Intl.message(
       'Hello',
       name: 'Hello',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AGREE AND CONTINUE`
+  String get AC {
+    return Intl.message(
+      'AGREE AND CONTINUE',
+      name: 'AC',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Polices`
+  String get PP {
+    return Intl.message(
+      'Privacy Polices',
+      name: 'PP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms of service`
+  String get TS {
+    return Intl.message(
+      'Terms of service',
+      name: 'TS',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms and Conditions`
+  String get TC {
+    return Intl.message(
+      'Terms and Conditions',
+      name: 'TC',
       desc: '',
       args: [],
     );

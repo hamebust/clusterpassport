@@ -22,10 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AC": MessageLookupByLibrary.simpleMessage("AGREE AND CONTINUE"),
         "Hello": MessageLookupByLibrary.simpleMessage("Hello"),
+        "PP": MessageLookupByLibrary.simpleMessage("Privacy Polices"),
         "ROPP": MessageLookupByLibrary.simpleMessage(
             "Read our Privacy Policy Tap, \'Agree and Continue\' to accept the Team of Service."),
-        "WTCP":
+        "TC": MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
+        "TS": MessageLookupByLibrary.simpleMessage("Terms of service"),
+        "WtoCP":
             MessageLookupByLibrary.simpleMessage("Welcome to Cluster Passport")
       };
 }

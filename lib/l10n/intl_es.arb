@@ -1,7 +1,11 @@
 {
-    "WTCP"  : "Bienvenido a Cluster Passport",
-    "ROPP"  :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
-    "Hello" : "Hola"
+    "WtoCP"     : "Bienvenido a Cluster Passport",
+    "ROPP"      :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
+    "Hello"     : "Hola",
+    "AC"     : "Aceptar y Continuar",
+    "PP"        : "Politicas de Privacidad",
+    "TS"        : "Terminos de Servicio",
+    "TC"        : "Terminos y Condiciones"
 
     
 }

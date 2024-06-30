@@ -14,7 +14,7 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Center(child: Text(S.of(context).WTCP, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),),),
+            Center(child: Text(S.of(context).WtoCP, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),),),
             Image.asset("assets/bg_image.png"),
             Column(
               children: [
@@ -32,7 +32,7 @@ class WelcomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: const Center(
-                      child: Text("AGREE AND CONTINUE", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
+                      child: Text(S.of(context).AC, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),),
                     ),
                   ),
                 )
