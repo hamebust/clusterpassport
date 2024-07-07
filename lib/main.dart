@@ -2,6 +2,7 @@
 // All notes are in spanish and english
 
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
+import 'package:cluster_passport/features/app/theme/app_theme.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,9 +37,9 @@ class ClusterPassport extends StatelessWidget {
       //App theme
       debugShowCheckedModeBanner: false,
       
-        theme: ThemeData(brightness: Brightness.light, primarySwatch: Colors.green),
-        darkTheme: ThemeData(brightness: Brightness.dark),
-        themeMode: ThemeMode.system,
+        theme:      AppTheme.lightTheme ,
+        darkTheme:  AppTheme.darkTheme,
+        themeMode:  ThemeMode.system,
       
 
       //Página de inicio

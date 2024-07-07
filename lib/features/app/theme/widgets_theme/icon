@@ -1,0 +1,22 @@
+
+          Row(
+            children: [
+              Icon(
+                Icons.filter_list,
+                color: greyColor,
+                size: 28,
+              ),
+              SizedBox(width: 25),
+              Icon(
+                Icons.search,
+                color: greyColor,
+                size: 28,
+              ),
+              SizedBox(width: 25),
+              Icon(
+                Icons.more_vert,
+                color: greyColor,
+                size: 28,
+              ),
+            ],
+          ),

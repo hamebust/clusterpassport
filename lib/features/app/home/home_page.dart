@@ -1,3 +1,4 @@
+import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -20,32 +21,48 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           S.of(context).Passport0,
-          style: const TextStyle(
-            fontSize: 20,
-            color: greyColor,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         automaticallyImplyLeading: false,
-        actions: const [
+        actions: [
           Row(
             children: [
-              Icon(
-                Icons.filter_list,
+              iconAppBarHomePage(
+                icon: Icons.filter_list,
                 color: greyColor,
                 size: 28,
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const SizedBox(
+                        height: 200,
+                        child: Center(
+                          child: Text('Contenido de la BottomSheet'),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
-              SizedBox(width: 25),
-              Icon(
-                Icons.search,
-                color: greyColor,
-                size: 28,
+              const SizedBox(
+                width: 20,
               ),
-              SizedBox(width: 25),
-              Icon(
-                Icons.more_vert,
-                color: greyColor,
-                size: 28,
+              iconAppBarHomePage(
+                  icon: Icons.search,
+                  color: greyColor,
+                  size: 28,
+                  onPressed: () {}),
+              const SizedBox(
+                width: 20,
+              ),
+              iconAppBarHomePage(
+                  icon: Icons.more_vert,
+                  color: greyColor,
+                  size: 28,
+                  onPressed: () {}),
+              const SizedBox(
+                width: 20,
               ),
             ],
           ),
@@ -187,5 +204,14 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(Icons.add),
         );
     }
+  }
+
+  Widget iconAppBarHomePage(
+      {required IconData icon,
+      required Color color,
+      double size = 24,
+      required VoidCallback onPressed}) {
+    return IconAppBarHomePage(
+        icon: icon, color: color, size: size, onPressed: onPressed);
   }
 }
