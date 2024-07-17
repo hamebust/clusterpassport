@@ -3,5 +3,7 @@
     "IDX.aI.enableCodebaseIndexing": true,
     "cSpell.ignoreWords": [
         "RGBO"
-    ]
+    ],
+    "IDX.corgiMode": true,
+    "IDX.webDevTools": true
 }

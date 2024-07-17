@@ -189,25 +189,25 @@ class _HomePageState extends State<HomePage> {
         },
         indicatorColor: Colors.grey,
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           //Botón Página de autorizados
           //Authorized page button
           NavigationDestination(
-            selectedIcon: Icon(Icons.sensor_occupied),
-            icon: Icon(Icons.groups),
-            label: 'Autorized',
+            selectedIcon: const Icon(Icons.sensor_occupied),
+            icon: const Icon(Icons.groups),
+            label: (S.of(context).Autorized),
           ),
 
           //Botón Página de clusters
           //Clusters page button
-          NavigationDestination(
+          const NavigationDestination(
             icon: Badge(child: Icon(Icons.location_city)),
             label: 'Cluster',
           ),
 
           //Botón Página de notificaciones
           //Notifications page button
-          NavigationDestination(
+          const NavigationDestination(
             icon: Badge(
               label: Text('2'),
               child: Icon(Icons.messenger_sharp),
