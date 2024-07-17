@@ -25,17 +25,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "AC": MessageLookupByLibrary.simpleMessage("AGREE AND CONTINUE"),
         "AppNameCP0": MessageLookupByLibrary.simpleMessage("Cluster Passport"),
         "AppNameCP1": MessageLookupByLibrary.simpleMessage("CLUSTER PASSPORT"),
-        "Autorized": MessageLookupByLibrary.simpleMessage("Authorized"),
+        "Authorized": MessageLookupByLibrary.simpleMessage("Authorized"),
         "Cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Cluster1": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "PP": MessageLookupByLibrary.simpleMessage("Privacy Polices"),
         "Passport0": MessageLookupByLibrary.simpleMessage("Passport"),
         "Passport1": MessageLookupByLibrary.simpleMessage("Pasaporte"),
+        "Phone_Number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "ROPP": MessageLookupByLibrary.simpleMessage(
             "Read our Privacy Policy Tap, \'Agree and Continue\' to accept the Team of Service."),
+        "Search": MessageLookupByLibrary.simpleMessage("Search"),
+        "Select_your_phone_code":
+            MessageLookupByLibrary.simpleMessage("Select your phone code"),
         "TC": MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
         "TS": MessageLookupByLibrary.simpleMessage("Terms of service"),
+        "Verify_your_phone_number":
+            MessageLookupByLibrary.simpleMessage("Verify your phone number"),
+        "WhatsApp_will_send_an_SMS_message": MessageLookupByLibrary.simpleMessage(
+            "WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number"),
         "WtoCP":
             MessageLookupByLibrary.simpleMessage("Welcome to Cluster Passport")
       };

@@ -1,17 +1,59 @@
 {
-    "AppNameCP0": "Cluster Passport",
-    "AppNameCP1": "CLUSTER PASSPORT",
-    "WtoCP"     : "Bienvenido a Cluster Passport",
-    "ROPP"      :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
-    "Hello"     : "Hola",
-    "AC"        : "Aceptar y Continuar",
-    "PP"        : "Politicas de Privacidad",
-    "TS"        : "Terminos de Servicio",
-    "TC"        : "Terminos y Condiciones",
-    "Passport0"  : "Passport",
-    "Passport1"  : "Pasaporte",
-    "Cluster"   : "Cluster",
-    "Cluster1"  : "Clúster",
-    "Autorized" : "Autorizados"
+    "AppNameCP0"    
+    : "Cluster Passport",
+    
+    "AppNameCP1"    
+    : "CLUSTER PASSPORT",
+    
+    "WtoCP"         
+    : "Bienvenido a Cluster Passport",
+    
+    "ROPP"          
+    :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
+    
+    "Hello"         
+    : "Hola",
+    
+    "AC"            
+    : "Aceptar y Continuar",
+    
+    "PP"            
+    : "Politicas de Privacidad",
+    
+    "TS"            
+    : "Terminos de Servicio",
+    
+    "TC"            
+    : "Terminos y Condiciones",
+    
+    "Passport0"     
+    : "Passport",
+    
+    "Passport1"     
+    : "Pasaporte",
+    
+    "Cluster"       
+    : "Cluster",
+    
+    "Cluster1"      
+    : "Clúster",
+    
+    "Authorized"    
+    : "Autorizados",
+    
+    "Verify_your_phone_number"          
+    : "Verifica tu numero de telefono",
+    
+    "WhatsApp_will_send_an_SMS_message"     
+    : "Clúster enviara un mensaje de texto (podrá aplicar cambios) para verificar tu número de telefono. Ingrese el código",
+    
+    "Phone_Number"   
+    : "Número de Telefono",
+    
+    "Search"   
+    : "Busqueda",
+    
+    "Select_your_phone_code"   
+    : "Selecciona tu código telefonico"
     
 }

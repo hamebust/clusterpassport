@@ -181,10 +181,60 @@ class S {
   }
 
   /// `Authorized`
-  String get Autorized {
+  String get Authorized {
     return Intl.message(
       'Authorized',
-      name: 'Autorized',
+      name: 'Authorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your phone number`
+  String get Verify_your_phone_number {
+    return Intl.message(
+      'Verify your phone number',
+      name: 'Verify_your_phone_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number`
+  String get WhatsApp_will_send_an_SMS_message {
+    return Intl.message(
+      'WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number',
+      name: 'WhatsApp_will_send_an_SMS_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get Phone_Number {
+    return Intl.message(
+      'Phone number',
+      name: 'Phone_Number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get Search {
+    return Intl.message(
+      'Search',
+      name: 'Search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select your phone code`
+  String get Select_your_phone_code {
+    return Intl.message(
+      'Select your phone code',
+      name: 'Select_your_phone_code',
       desc: '',
       args: [],
     );
