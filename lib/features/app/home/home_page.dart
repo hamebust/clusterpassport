@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
       // Floating button
       floatingActionButton:
           switchFloatingActionButtonOnPageIndex(currentPageIndex),
-
+      //
       // Barra de navegación inferior
       // Bottom navigation bar
       bottomNavigationBar: NavigationBar(
