@@ -1,10 +1,10 @@
-import 'package:mobx/mobx.dart';
+//import 'package:mobx/mobx.dart';
 
-part 'clusters_controller.g.dart';
+//part 'clusters_controller.g.dart';
 
-class ClustersController = _ClustersControllerBase with _$ClustersController;
+//class ClustersController = _ClustersControllerBase with _$ClustersController;
 
-abstract class _ClustersControllerBase with Store {
+//abstract class _ClustersControllerBase with Store {
     
-}
+//}
 

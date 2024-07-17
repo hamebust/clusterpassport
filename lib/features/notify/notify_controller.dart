@@ -1,10 +1,10 @@
-import 'package:mobx/mobx.dart';
+//import 'package:mobx/mobx.dart';
 
-part 'notify_controller.g.dart';
+//part 'notify_controller.g.dart';
 
-class NotifyController = _NotifyControllerBase with _$NotifyController;
+//class NotifyController = _NotifyControllerBase with _$NotifyController;
 
-abstract class _NotifyControllerBase with Store {
+//abstract class _NotifyControllerBase with Store {
     
-}
+//}
 
