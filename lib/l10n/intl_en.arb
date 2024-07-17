@@ -8,8 +8,10 @@
     "PP"        : "Privacy Polices",
     "TS"        : "Terms of service",
     "TC"        : "Terms and Conditions",
-    "Passport0"  : "Passport",
-    "Passport1"  : "Pasaporte",
-    "Cluster"   : "Cluster"
+    "Passport0" : "Passport",
+    "Passport1" : "Pasaporte",
+    "Cluster"   : "Cluster",
+    "Cluster1"  : "Cluster",
+    "Autorized" : "Authorized"
     
 }

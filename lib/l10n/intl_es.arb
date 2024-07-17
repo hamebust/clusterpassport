@@ -10,7 +10,8 @@
     "TC"        : "Terminos y Condiciones",
     "Passport0"  : "Passport",
     "Passport1"  : "Pasaporte",
-    "Cluster"   : "Cluster"
-
+    "Cluster"   : "Cluster",
+    "Cluster1"  : "Clúster",
+    "Autorized" : "Autorizados"
     
 }

@@ -169,6 +169,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Cluster`
+  String get Cluster1 {
+    return Intl.message(
+      'Cluster',
+      name: 'Cluster1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authorized`
+  String get Autorized {
+    return Intl.message(
+      'Authorized',
+      name: 'Autorized',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
