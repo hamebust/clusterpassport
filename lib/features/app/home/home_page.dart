@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
             selectedIcon: const Icon(Icons.sensor_occupied),
             icon: const Icon(Icons.groups),
-            label: (S.of(context).Autorized),
+            label: (S.of(context).Authorized),
           ),
 
           //Botón Página de clusters
