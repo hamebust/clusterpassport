@@ -25,17 +25,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "AC": MessageLookupByLibrary.simpleMessage("Aceptar y Continuar"),
         "AppNameCP0": MessageLookupByLibrary.simpleMessage("Cluster Passport"),
         "AppNameCP1": MessageLookupByLibrary.simpleMessage("CLUSTER PASSPORT"),
-        "Autorized": MessageLookupByLibrary.simpleMessage("Autorizados"),
+        "Authorized": MessageLookupByLibrary.simpleMessage("Autorizados"),
         "Cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Cluster1": MessageLookupByLibrary.simpleMessage("Clúster"),
         "Hello": MessageLookupByLibrary.simpleMessage("Hola"),
         "PP": MessageLookupByLibrary.simpleMessage("Politicas de Privacidad"),
         "Passport0": MessageLookupByLibrary.simpleMessage("Passport"),
         "Passport1": MessageLookupByLibrary.simpleMessage("Pasaporte"),
+        "Phone_Number":
+            MessageLookupByLibrary.simpleMessage("Número de Telefono"),
         "ROPP": MessageLookupByLibrary.simpleMessage(
             "Lea nuestras Politicas de Privacidad, \'Aceptar y Continuar\' para acetar los terminos del servicio."),
+        "Search": MessageLookupByLibrary.simpleMessage("Busqueda"),
+        "Select_your_phone_code": MessageLookupByLibrary.simpleMessage(
+            "Selecciona tu código telefonico"),
         "TC": MessageLookupByLibrary.simpleMessage("Terminos y Condiciones"),
         "TS": MessageLookupByLibrary.simpleMessage("Terminos de Servicio"),
+        "Verify_your_phone_number": MessageLookupByLibrary.simpleMessage(
+            "Verifica tu numero de telefono"),
+        "WhatsApp_will_send_an_SMS_message": MessageLookupByLibrary.simpleMessage(
+            "Clúster enviara un mensaje de texto (podrá aplicar cambios) para verificar tu número de telefono. Ingrese el código"),
         "WtoCP": MessageLookupByLibrary.simpleMessage(
             "Bienvenido a Cluster Passport")
       };

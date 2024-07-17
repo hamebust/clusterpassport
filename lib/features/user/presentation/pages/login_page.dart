@@ -1,5 +1,6 @@
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/presentation/pages/otp_page.dart';
+import 'package:cluster_passport/generated/l10n.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dialog.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -43,12 +44,11 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column( 
                     children: [
                       const SizedBox(height: 40,), 
-                      const Center(
+                      Center(
                         child: 
-                          Text(
-                            "Verify your phone number",
+                          Text(S.of(context).Verify_your_phone_number,
                             style: 
-                              TextStyle(
+                              const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: tabColor,
@@ -57,11 +57,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                       ),
                 
-                      const Text(
-                        "WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number",
+                      Text(S.of(context).WhatsApp_will_send_an_SMS_message,
                         textAlign: TextAlign.center,
                         style: 
-                          TextStyle(
+                          const TextStyle(
                             fontSize: 15,
                           ),
                         //style
@@ -106,8 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: const BoxDecoration(border: Border(bottom:BorderSide(color: tabColor,width: 1.5),),),
                                 child: TextField(
                                   controller: _phoneController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Phone number',
+                                  decoration: InputDecoration(
+                                    hintText: S.of(context).Phone_Number,
                                     border: InputBorder.none,),
                               ),   
                             ),
@@ -165,11 +164,11 @@ class _LoginPageState extends State<LoginPage> {
           child: CountryPickerDialog( 
             titlePadding: const EdgeInsets.all(8.0),
             searchCursorColor: tabColor,
-            searchInputDecoration: const InputDecoration(
-              hintText: 'Search',              
+            searchInputDecoration: InputDecoration(
+              hintText: S.of(context).Search,              
             ),
             isSearchable: true,
-            title: const Text('Select your phone code'),
+            title: Text(S.of(context).Select_your_phone_code),
             onValuePicked: (Country country) {
               setState(() {
                 _selectedFilteredDialoCountry = country;

@@ -1,17 +1,58 @@
 {
-    "AppNameCP0": "Cluster Passport",
-    "AppNameCP1": "CLUSTER PASSPORT",
-    "WtoCP"     : "Welcome to Cluster Passport",
-    "ROPP"      : "Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.",
-    "Hello"     : "Hello",
-    "AC"        : "AGREE AND CONTINUE",
-    "PP"        : "Privacy Polices",
-    "TS"        : "Terms of service",
-    "TC"        : "Terms and Conditions",
-    "Passport0" : "Passport",
-    "Passport1" : "Pasaporte",
-    "Cluster"   : "Cluster",
-    "Cluster1"  : "Cluster",
-    "Autorized" : "Authorized"
+    "AppNameCP0"    
+    : "Cluster Passport",
+
+    "AppNameCP1"    
+    : "CLUSTER PASSPORT",
+
+    "WtoCP"         
+    : "Welcome to Cluster Passport",
+
+    "ROPP"          
+    : "Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.",
     
+    "Hello"         
+    : "Hello",
+
+    "AC"            
+    : "AGREE AND CONTINUE",
+    
+    "PP"            
+    : "Privacy Polices",
+    
+    "TS"            
+    : "Terms of service",
+    
+    "TC"            
+    : "Terms and Conditions",
+    
+    "Passport0"     
+    : "Passport",
+    
+    "Passport1"     
+    : "Pasaporte",
+    
+    "Cluster"       
+    : "Cluster",
+    
+    "Cluster1"      
+    : "Cluster", 
+    
+    "Authorized"    
+    : "Authorized",
+    
+    "Verify_your_phone_number"          
+    : "Verify your phone number",
+    
+    "WhatsApp_will_send_an_SMS_message"     
+    : "WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number",
+    
+    "Phone_Number"   
+    : "Phone number",
+    
+    "Search"   
+    : "Search",
+    
+    "Select_your_phone_code"   
+    : "Select your phone code"
 }
