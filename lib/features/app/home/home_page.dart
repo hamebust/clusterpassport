@@ -1,5 +1,8 @@
 import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
+import 'package:cluster_passport/features/authorized/authorized_page.dart';
+import 'package:cluster_passport/features/clusters/clusters_page.dart';
+import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -19,14 +22,24 @@ class _HomePageState extends State<HomePage> {
       // Barra de navegación
       // Navigation bar
       appBar: AppBar(
+        // boton de retroceso desactivado
+        // Back button disabled
+        automaticallyImplyLeading: false,
+
+        // Título de la aplicación
+        // App title
         title: Text(
           S.of(context).Passport0,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        automaticallyImplyLeading: false,
+
+        // Botones de la barra de navegación superior
+        // Navigation superior bar buttons
         actions: [
           Row(
             children: [
+              // Botón de filtro
+              // Filter button
               iconAppBarHomePage(
                 icon: Icons.filter_list,
                 color: greyColor,
@@ -45,22 +58,65 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
+
               const SizedBox(
                 width: 20,
               ),
+
+              // Botón de búsqueda
+              // Search button
               iconAppBarHomePage(
                   icon: Icons.search,
                   color: greyColor,
                   size: 28,
                   onPressed: () {}),
+
               const SizedBox(
                 width: 20,
               ),
+
+              // Botón de menú
+              // Menu button
               iconAppBarHomePage(
-                  icon: Icons.more_vert,
-                  color: greyColor,
-                  size: 28,
-                  onPressed: () {}),
+                icon: Icons.more_vert,
+                color: greyColor,
+                size: 28,
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        // Usa SizedBox en lugar de ListView
+                        height: 200,
+                        child: Column(
+                          // Usa Column para organizar los elementos verticalmente
+                          children: <Widget>[
+                            ListTile(
+                              // Usa ListTile para cada ítem
+                              leading: const Icon(Icons.settings),
+                              title: const Text('Configuración'),
+                              onTap: () {
+                                // Acción al presionar "Configuración"
+                                Navigator.pop(context); // Cierra el BottomSheet
+                              },
+                            ),
+                            ListTile(
+                              leading: const Icon(Icons.info),
+                              title: const Text('Acerca de'),
+                              onTap: () {
+                                // Acción al presionar "Acerca de"
+                                Navigator.pop(context);
+                              },
+                            ),
+                            // Agrega más ListTile según sea necesario
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+
               const SizedBox(
                 width: 20,
               ),
@@ -72,45 +128,16 @@ class _HomePageState extends State<HomePage> {
       // Cuerpo de la aplicación
       // App body
       body: <Widget>[
-        /// Home page
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Home page',
-              ),
-            ),
-          ),
-        ),
+        // Página de Autorizados
+        // Authorized page
+        const AuthorizedPage(),
 
         // Página de autorizaciones
         // Authorized page
-        // Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const MyClustersPage(),
 
-        /// Messages page
+        // Página de notificaciones
+        // Notifications page
         ListView.builder(
           reverse: true,
           itemCount: 2,
@@ -163,21 +190,29 @@ class _HomePageState extends State<HomePage> {
         indicatorColor: Colors.grey,
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
+          //Botón Página de autorizados
+          //Authorized page button
           NavigationDestination(
             selectedIcon: Icon(Icons.sensor_occupied),
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.groups),
             label: 'Autorized',
           ),
+
+          //Botón Página de clusters
+          //Clusters page button
           NavigationDestination(
             icon: Badge(child: Icon(Icons.location_city)),
             label: 'Cluster',
           ),
+
+          //Botón Página de notificaciones
+          //Notifications page button
           NavigationDestination(
             icon: Badge(
               label: Text('2'),
               child: Icon(Icons.messenger_sharp),
             ),
-            label: 'Messages',
+            label: 'Notify',
           ),
         ],
       ),
@@ -188,21 +223,32 @@ class _HomePageState extends State<HomePage> {
   // Floating button state
   switchFloatingActionButtonOnPageIndex(currentPageIndex) {
     switch (currentPageIndex) {
+      // Boton de agregar usuario
+      // Add user button
       case 0:
         return FloatingActionButton(
           onPressed: () {},
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.person_add),
         );
+
+      // Boton de agregar cluster
+      // Add cluster button
       case 1:
         return FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ClustersPage()),
+            );
+          },
           child: const Icon(Icons.add_card),
         );
-      case 2:
-        return FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        );
+
+      //case 2:
+      //return FloatingActionButton(
+      //onPressed: () {},
+      //child: const Icon(Icons.add),
+      //);
     }
   }
 

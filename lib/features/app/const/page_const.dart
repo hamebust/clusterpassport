@@ -5,17 +5,17 @@ class PageConst {
   // * Pages of login
 
   // Constante estática de la página de Bienvenida "/"
-  // Static constant of the welcome page "/"  
+  // Static constant of the welcome page "/"
   static const String welcomePage = "/";
 
   // Constante estatica de la página OTP "otpPage"
   // Static constant of the OTP page "otpPage"
   static const String otpPage = "otpPage";
-  
+
   // Constante estática de la página de inicio de sesión "loginPage"
   // Static constant of the login page "loginPage"
   static const String loginPage = "loginPage";
-  
+
   // Constante estática de la página de Perfil de usuario "initialProfileSubmitPage"
   // Static constant of the user profile page "initialProfileSubmitPage"
   static const String initialProfileSubmitPage = "initialProfileSubmitPage";
