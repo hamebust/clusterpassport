@@ -6,28 +6,42 @@ import 'package:flutter/material.dart';
 
 class OnGenerateRoute{
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1518047103.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2100753167.
-  static Route<dynamic>? route(RouteSettings settings){
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:4238597660.
+ Route<dynamic>? route(RouteSettings settings){
+    // ignore: unused_local_variable
     final args = settings.arguments;
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:4033119267.
     final name = settings.name;
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1640905759.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:434045757.
     switch(name){
+
+      // Página de selección de contactos
+      // Contact selection page
       case PageConst.contactUsersPage:
         {
             return materialPageBuilder(const ContactsPage());
         }
 
-      case PageConst.settingsPage:
-        {
-            return materialPageBuilder( SettingsPage());
-        }
+      // Página de configuración
+      // Settings page
+      //case PageConst.settingsPage:
+      //  {
+      //      return materialPageBuilder( SettingsPage());
+      //  }
 
+      // Página de usuarios autorizados
+      // Authorized users page
+      //case PageConst.authorizedUsersPage:
+      //  {
+      //      return materialPageBuilder( AuthorizedPage());
+      //  }
 
+      // Página de Clusters
+      // Clusters page
+      //case PageConst.clustersPage:
+      //  {
+      //      return materialPageBuilder( ClustersPage());
+      //  }
+      
+      
 
     }
     return null;

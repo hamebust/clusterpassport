@@ -1,14 +1,14 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
 
+//import 'package:flutter_modular/flutter_modular.dart';
 //import 'package:cluster_passport/app_modular/app_modular.dart';
+//import 'package:cluster_passport/routes/on_generate_routes.dart';
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
 import 'package:cluster_passport/generated/l10n.dart';
-//import 'package:cluster_passport/routes/on_generate_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-//import 'package:flutter_modular/flutter_modular.dart';
 
 void main() {
   runApp(const ClusterPassport());

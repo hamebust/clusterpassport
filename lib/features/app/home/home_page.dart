@@ -2,7 +2,9 @@ import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/authorized/authorized_page.dart';
 import 'package:cluster_passport/features/clusters/clusters_page.dart';
+import 'package:cluster_passport/features/contacts/contacts_page.dart';
 import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/notify/notify_page.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -130,55 +132,22 @@ class _HomePageState extends State<HomePage> {
       body: <Widget>[
         // Página de Autorizados
         // Authorized page
-        const AuthorizedPage(),
+        AuthorizedPage(),
 
         // Página de autorizaciones
         // Authorized page
-        const MyClustersPage(),
+        MyClustersPage(),
 
         // Página de notificaciones
         // Notifications page
-        ListView.builder(
-          reverse: true,
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: const Text(
-                    'Hello',
-                  ),
-                ),
-              );
-            }
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: const Text(
-                  'Hi!',
-                ),
-              ),
-            );
-          },
-        ),
+        const NotifyPage(),
       ][currentPageIndex],
 
       // Botón flotante
       // Floating button
       floatingActionButton:
           switchFloatingActionButtonOnPageIndex(currentPageIndex),
-      //
+      
       // Barra de navegación inferior
       // Bottom navigation bar
       bottomNavigationBar: NavigationBar(
@@ -227,7 +196,12 @@ class _HomePageState extends State<HomePage> {
       // Add user button
       case 0:
         return FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ContactsPage()),
+            );
+          },
           child: const Icon(Icons.person_add),
         );
 

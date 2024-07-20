@@ -20,37 +20,46 @@ import 'package:flutter/material.dart';
 //}
 
 class MyClustersPage extends StatelessWidget {
-  const MyClustersPage({super.key});
+  MyClustersPage({super.key});
+
+  final List<Map<String, String>> myclusters = [
+    {
+      'icon': 'business',
+      'title': 'Centro Comercial Oleus',
+      'subtitle': 'Mi trabajo'
+    },
+    {
+      'icon': 'apartment',
+      'title': 'Conjunto Residencial Loma Linda',
+      'subtitle': 'Mi hogar'
+    },
+    {
+      'icon': 'apartment',
+      'title': 'Conjunto Residencial El Remanso',
+      'subtitle': 'Mi hogar'
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            Card(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: myclusters.length,
+          itemBuilder: (context, index) {
+            final cluster = myclusters[index];
+            return Card(
               child: ListTile(
-                leading: Icon(Icons.business, size: 30),
-                title: Text('Centro Comercial Oleus'),
-                subtitle: Text('Mi trabajo'),
+                leading: Icon(
+                  cluster['icon'] == 'business' ? Icons.business : Icons.apartment,
+                  size: 30,
+                ),
+                title: Text(cluster['title']!),
+                subtitle: Text(cluster['subtitle']!),
               ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.apartment, size: 30),
-                title: Text('Conjunto Residencial Loma Linda'),
-                subtitle: Text('Mi hogar'),
-              ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.apartment, size: 30),
-                title: Text('Conjunto Residencial El Remanso'),
-                subtitle: Text('Mi hogar'),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
