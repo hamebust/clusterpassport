@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 //import './authorized_controller.dart';
 
-class ContactsPage extends StatelessWidget {
+class Contacts2Page extends StatelessWidget {
   // ignore: unused_field
   // final AuthorizedController _controller;
 
   // ignore: use_key_in_widget_constructors
-  const ContactsPage({super.key});
+  const Contacts2Page({super.key});
   //      Key? key,
   //      required AuthorizedController controller,
   //    }) : _controller = controller;

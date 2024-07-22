@@ -1,12 +1,11 @@
-
-
 import 'package:cluster_passport/features/app/const/page_const.dart';
-import 'package:cluster_passport/features/app/home/contacts_page.dart';
+import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
+import 'package:cluster_passport/features/contacts/contacts_page.dart';
 import 'package:flutter/material.dart';
 
 class OnGenerateRoute{
 
- Route<dynamic>? route(RouteSettings settings){
+  Route<dynamic>? route(RouteSettings settings){
     // ignore: unused_local_variable
     final args = settings.arguments;
     final name = settings.name;
@@ -19,6 +18,12 @@ class OnGenerateRoute{
         {
             return materialPageBuilder(const ContactsPage());
         }
+
+      case PageConst.welcomePage:
+        {
+            return materialPageBuilder(const WelcomePage());
+        }
+
 
       // Página de configuración
       // Settings page
@@ -45,8 +50,6 @@ class OnGenerateRoute{
 
     }
     return null;
-
-    
 
   }
   

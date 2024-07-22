@@ -1,8 +1,8 @@
+import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/authorized/authorized_page.dart';
 import 'package:cluster_passport/features/clusters/clusters_page.dart';
-import 'package:cluster_passport/features/contacts/contacts_page.dart';
 import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
 import 'package:cluster_passport/features/notify/notify_page.dart';
 import 'package:cluster_passport/generated/l10n.dart';
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
       // Floating button
       floatingActionButton:
           switchFloatingActionButtonOnPageIndex(currentPageIndex),
-      
+
       // Barra de navegación inferior
       // Bottom navigation bar
       bottomNavigationBar: NavigationBar(
@@ -197,10 +197,9 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ContactsPage()),
-            );
+            Navigator.pushNamed(context, PageConst.contactUsersPage);
+            // Este navegador llama a la página de contactos
+            // This navigator calls the contacts page
           },
           child: const Icon(Icons.person_add),
         );
