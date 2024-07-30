@@ -36,6 +36,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  
   State<HomePage> createState() => _HomePageState();
 }
 
@@ -54,10 +55,7 @@ class _HomePageState extends State<HomePage> {
 
         // Título de la aplicación
         // App title
-        title: Text(
-          S.of(context).Passport0,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: Text(S.of(context).Passport0, style: Theme.of(context).textTheme.titleLarge,),
 
         // Botones de la barra de navegación superior
         // Navigation superior bar buttons
