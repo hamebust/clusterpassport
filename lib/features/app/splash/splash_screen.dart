@@ -1,6 +1,17 @@
+//Paquete que permite conectar a dart:async para hacer un delay en la pantalla de presentación
+//Package that allows connecting to dart:async to make a delay in the presentation screen
 import 'dart:async';
+
+//Paquete que permite conectar a hoja de estilos de la aplicación en la carpeta lib/features/app/theme/style
+//Package that allows connecting to the style sheet of the application in the lib/features/app/theme/style folder
 import 'package:cluster_passport/features/app/theme/style.dart';
+
+//Paquete que permite conectar a WelcomePage: página de bienvenida en la carpeta lib/features/app/welcome
+//Package that allows connecting to WelcomePage: welcome page in the lib/features/app/welcome folder
 import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
+
+//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
+//Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,6 +23,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+//Clase que contiene el estado del widget SplashScreen que permite un delay en la pantalla de presentación
+//Class that contains the state of the SplashScreen widget that allows a delay in the presentation screen
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {

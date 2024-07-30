@@ -1,7 +1,24 @@
-import 'package:cluster_passport/features/app/const/page_const.dart';
-import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
-import 'package:cluster_passport/features/contacts/contacts_page.dart';
-import 'package:flutter/material.dart';
+//OnGenerateRoute: generador de rutas de la aplicación
+//Route generator of the application
+
+//Sección de Paquetes
+//Packages section
+
+  //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
+  //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
+  import 'package:cluster_passport/features/app/const/page_const.dart';
+
+  //Paquete que permite conectar a WelcomePage: página de bienvenida en la carpeta lib/features/app/welcome
+  //Package that allows connecting to WelcomePage: welcome page in the lib/features/app/welcome folder
+  import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
+
+  //Paquete que permite conectar a ContactsPage: página de contactos en la carpeta lib/features/contacts
+  //Package that allows connecting to ContactsPage: contacts page in the lib/features/contacts folder
+  import 'package:cluster_passport/features/contacts/contacts_page.dart';
+
+  //Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
+  //Package that allows connecting to Flutter: main widget of the application in main.dart
+  import 'package:flutter/material.dart';
 
 class OnGenerateRoute{
 

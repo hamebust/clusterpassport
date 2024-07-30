@@ -1,6 +1,17 @@
+//Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
+//Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
 import 'package:cluster_passport/generated/l10n.dart';
+
+//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
+//Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
+
+//Paquete que permite conectar a la hoja de estilos de la aplicación en la carpeta lib/features/app/theme/style
+//Package that allows connecting to the style sheet of the application in the lib/features/app/theme/style folder
 import 'package:cluster_passport/features/app/theme/style.dart';
+
+//Paquete que permite conectar a LoginPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
+//Package that allows connecting to LoginPage: login page in the lib/features/user/presentation/pages folder
 import 'package:cluster_passport/features/user/presentation/pages/login_page.dart';
 
 class WelcomePage extends StatelessWidget {

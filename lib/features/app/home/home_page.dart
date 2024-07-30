@@ -1,12 +1,36 @@
-import 'package:cluster_passport/features/app/const/page_const.dart';
-import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
-import 'package:cluster_passport/features/app/theme/style.dart';
-import 'package:cluster_passport/features/authorized/authorized_page.dart';
-import 'package:cluster_passport/features/clusters/clusters_page.dart';
-import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
-import 'package:cluster_passport/features/notify/notify_page.dart';
-import 'package:cluster_passport/generated/l10n.dart';
-import 'package:flutter/material.dart';
+//HomePage: página principal de la aplicación en la carpeta lib/features/app/home
+//HomePage: main page of the application in the lib/features/app/home folder
+
+//Sección de Paquetes
+//Packages section
+
+  //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
+  //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
+  import 'package:cluster_passport/features/app/const/page_const.dart';
+  //Paquete que permite conectar a IconAppBarHomePage: icono de la barra de navegación en la carpeta lib/features/app/home/widgets_home
+  //Package that allows connecting to IconAppBarHomePage: icon of the navigation bar in the lib/features/app/home/widgets_home folder
+  import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
+  //Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
+  //Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
+  import 'package:cluster_passport/features/app/theme/style.dart';
+  //Paquete que permite conectar a AuthorizedPage: página de autorizados en la carpeta lib/features/authorized
+  //Package that allows connecting to AuthorizedPage: authorized page in the lib/features/authorized folder
+  import 'package:cluster_passport/features/authorized/authorized_page.dart';
+  //Paquete que permite conectar a ClustersPage: página de clusters en la carpeta lib/features/clusters
+  //Package that allows connecting to ClustersPage: clusters page in the lib/features/clusters folder
+  import 'package:cluster_passport/features/clusters/clusters_page.dart';
+  //Paquete que permite conectar a MyClustersPage: página de clusters propios en la carpeta lib/features/my_clusters
+  //Package that allows connecting to MyClustersPage: my clusters page in the lib/features/my_clusters folder
+  import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
+  //Paquete que permite conectar a NotifyPage: página de notificaciones en la carpeta lib/features/notify
+  //Package that allows connecting to NotifyPage: notifications page in the lib/features/notify folder
+  import 'package:cluster_passport/features/notify/notify_page.dart';
+  //Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
+  //Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
+  import 'package:cluster_passport/generated/l10n.dart';
+  //Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
+  //Package that allows connecting to Flutter: main widget of the application in main.dart
+  import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

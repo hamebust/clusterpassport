@@ -1,8 +1,9 @@
+//PageConst: constantes en la carpeta lib/features/app/const
+//PageConst: page constants in the lib/features/app/const folder
+
 // * Pagina de constantes
 // * Page constants
 class PageConst {
-  // * Páginas de inicio
-  // * Pages of login
 
   // Constante estática de la página de Bienvenida "/"
   // Static constant of the welcome page "/"
