@@ -11,7 +11,7 @@ class ContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text('Select Contact'),
+        title:  const Text('Select Contact'),
       ),
       body: ListView.builder(itemCount: 5, itemBuilder:(context, index){
         return ListTile(
