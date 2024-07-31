@@ -1,60 +1,51 @@
 {
-    
     "AppNameCP0"    
-    : "Cluster Passport",
-    
+        :"Cluster Passport",    
     "AppNameCP1"    
-    : "CLUSTER PASSPORT",
+        :"CLUSTER PASSPORT",
+
+
+    "WelcomePageTranslation":"Traducción WelcomePage",
     
     "WtoCP"         
-    : "Bienvenido a Cluster Passport",
-    
+        :"Bienvenido a Cluster Passport",
     "ROPP"          
-    :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
-    
-    "Hello"         
-    : "Hola",
-    
+        :"Lea nuestras Politicas de Privacidad, 'Aceptar y Continuar' para acetar los terminos del servicio.",
     "AC"            
-    : "Aceptar y Continuar",
+        :"Aceptar y Continuar",
+    
+
+    "LoginPageTranslation":"Traducción LoginPage",
+
+    "Verify_your_phone_number"          
+        :"Verifica tu numero de telefono",
+    "WhatsApp_will_send_an_SMS_message"     
+        :"Clúster enviara un mensaje de texto (podrá aplicar cambios) para verificar tu número de telefono. Ingrese el código",
+    "Phone_Number"   
+        :"Número de Telefono",
+    "Next"   
+        :"Próximo",
+    "Search"   
+        :"Busqueda",
+    "Select_your_phone_code"   
+        :"Selecciona tu código telefonico",
+    
+    
     
     "PP"            
-    : "Politicas de Privacidad",
-    
+        :"Politicas de Privacidad",    
     "TS"            
-    : "Terminos de Servicio",
-    
+        :"Terminos de Servicio",    
     "TC"            
-    : "Terminos y Condiciones",
-    
+        :"Terminos y Condiciones",    
     "Passport0"     
-    : "Passport",
-    
+        :"Passport",    
     "Passport1"     
-    : "Pasaporte",
-    
+        :"Pasaporte",    
     "Cluster"       
-    : "Cluster",
-    
+        :"Cluster",    
     "Cluster1"      
-    : "Clúster",
-    
+        :"Clúster",    
     "Authorized"    
-    : "Autorizados",
-    
-    "Verify_your_phone_number"          
-    : "Verifica tu numero de telefono",
-    
-    "WhatsApp_will_send_an_SMS_message"     
-    : "Clúster enviara un mensaje de texto (podrá aplicar cambios) para verificar tu número de telefono. Ingrese el código",
-    
-    "Phone_Number"   
-    : "Número de Telefono",
-    
-    "Search"   
-    : "Busqueda",
-    
-    "Select_your_phone_code"   
-    : "Selecciona tu código telefonico"
-    
+        :"Autorizados"
 }

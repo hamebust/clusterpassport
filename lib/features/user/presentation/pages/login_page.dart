@@ -130,10 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                     color: tabColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                child: const Center(
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
+                child: Center(
+                  child: Text(S.of(context).Next,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,

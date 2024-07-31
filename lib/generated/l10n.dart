@@ -50,6 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `App Name`
+  String get AppName {
+    return Intl.message(
+      'App Name',
+      name: 'AppName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cluster Passport`
   String get AppNameCP0 {
     return Intl.message(
@@ -65,6 +75,16 @@ class S {
     return Intl.message(
       'CLUSTER PASSPORT',
       name: 'AppNameCP1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WelcomePage Translation`
+  String get WelcomePageTranslation {
+    return Intl.message(
+      'WelcomePage Translation',
+      name: 'WelcomePageTranslation',
       desc: '',
       args: [],
     );
@@ -90,21 +110,81 @@ class S {
     );
   }
 
-  /// `Hello`
-  String get Hello {
-    return Intl.message(
-      'Hello',
-      name: 'Hello',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `AGREE AND CONTINUE`
   String get AC {
     return Intl.message(
       'AGREE AND CONTINUE',
       name: 'AC',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LoginPage Translation`
+  String get LoginPageTranslation {
+    return Intl.message(
+      'LoginPage Translation',
+      name: 'LoginPageTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your phone number`
+  String get Verify_your_phone_number {
+    return Intl.message(
+      'Verify your phone number',
+      name: 'Verify_your_phone_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number`
+  String get WhatsApp_will_send_an_SMS_message {
+    return Intl.message(
+      'WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number',
+      name: 'WhatsApp_will_send_an_SMS_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get Phone_Number {
+    return Intl.message(
+      'Phone number',
+      name: 'Phone_Number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get Next {
+    return Intl.message(
+      'Next',
+      name: 'Next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get Search {
+    return Intl.message(
+      'Search',
+      name: 'Search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select your phone code`
+  String get Select_your_phone_code {
+    return Intl.message(
+      'Select your phone code',
+      name: 'Select_your_phone_code',
       desc: '',
       args: [],
     );
@@ -185,56 +265,6 @@ class S {
     return Intl.message(
       'Authorized',
       name: 'Authorized',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Verify your phone number`
-  String get Verify_your_phone_number {
-    return Intl.message(
-      'Verify your phone number',
-      name: 'Verify_your_phone_number',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number`
-  String get WhatsApp_will_send_an_SMS_message {
-    return Intl.message(
-      'WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number',
-      name: 'WhatsApp_will_send_an_SMS_message',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Phone number`
-  String get Phone_Number {
-    return Intl.message(
-      'Phone number',
-      name: 'Phone_Number',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Search`
-  String get Search {
-    return Intl.message(
-      'Search',
-      name: 'Search',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Select your phone code`
-  String get Select_your_phone_code {
-    return Intl.message(
-      'Select your phone code',
-      name: 'Select_your_phone_code',
       desc: '',
       args: [],
     );

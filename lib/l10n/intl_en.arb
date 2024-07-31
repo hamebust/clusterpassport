@@ -1,59 +1,55 @@
- {
-        
-    "AppNameCP0"    
-    : "Cluster Passport",
+,
+"@undefined": {} 
+{"@@locale": "",
+    "AppName":"App Name",
 
+    "AppNameCP0"    
+        :"Cluster Passport",
     "AppNameCP1"    
-    : "CLUSTER PASSPORT",
+        :"CLUSTER PASSPORT",
+
+
+    "WelcomePageTranslation":"WelcomePage Translation",
 
     "WtoCP"         
-    : "Welcome to Cluster Passport",
-
+        :"Welcome to Cluster Passport",
     "ROPP"          
-    : "Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.",
-    
-    "Hello"         
-    : "Hello",
-
+        :"Read our Privacy Policy Tap, 'Agree and Continue' to accept the Team of Service.",
     "AC"            
-    : "AGREE AND CONTINUE",
-    
-    "PP"            
-    : "Privacy Polices",
-    
-    "TS"            
-    : "Terms of service",
-    
-    "TC"            
-    : "Terms and Conditions",
-    
-    "Passport0"     
-    : "Passport",
-    
-    "Passport1"     
-    : "Pasaporte",
-    
-    "Cluster"       
-    : "Cluster",
-    
-    "Cluster1"      
-    : "Cluster", 
-    
-    "Authorized"    
-    : "Authorized",
+        :"AGREE AND CONTINUE",
+
+   
+    "LoginPageTranslation":"LoginPage Translation",
     
     "Verify_your_phone_number"          
-    : "Verify your phone number",
-    
+        :"Verify your phone number",
     "WhatsApp_will_send_an_SMS_message"     
-    : "WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number",
-    
+        :"WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number",
     "Phone_Number"   
-    : "Phone number",
-    
+        :"Phone number",
+    "Next"   
+        :"Next",
     "Search"   
-    : "Search",
-    
+        :"Search",
     "Select_your_phone_code"   
-    : "Select your phone code"
+        :"Select your phone code",
+   
+    
+    
+    "PP"            
+        :"Privacy Polices",    
+    "TS"            
+        :"Terms of service",    
+    "TC"            
+        :"Terms and Conditions",    
+    "Passport0"     
+        :"Passport",    
+    "Passport1"     
+        :"Pasaporte",    
+    "Cluster"       
+        :"Cluster",    
+    "Cluster1"      
+        :"Cluster",    
+    "Authorized"    
+        :"Authorized"
 }
