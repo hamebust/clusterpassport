@@ -1,9 +1,12 @@
 //HomePage: página principal de la aplicación en la carpeta lib/features/app/home
 //HomePage: main page of the application in the lib/features/app/home folder
 
+// Todas las notas son en español e inglés
+// All notes are in spanish and english
+
+
 //Sección de Paquetes
 //Packages section
-
   //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
   //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
   import 'package:cluster_passport/features/app/const/page_const.dart';
@@ -35,11 +38,12 @@
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  @override
-  
+  @override  
   State<HomePage> createState() => _HomePageState();
 }
 
+// Estas líneas definen el estado inicial del índice de la página actual a 0.
+// These lines define the initial state of the current page index to 0.
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
 
@@ -186,7 +190,9 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
             selectedIcon: const Icon(Icons.sensor_occupied),
             icon: const Icon(Icons.groups),
-            label: (S.of(context).Authorized),
+            label: (
+              //
+              S.of(context).Authorized),
           ),
 
           //Botón Página de clusters

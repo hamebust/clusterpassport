@@ -1,13 +1,21 @@
-import 'dart:io';
+//InitialProfileSubmitPage: Formulario inicial de foto y nombre de usuario
+//InitialProfileSubmitPage: Initial form for photo and username
 
-import 'package:cluster_passport/features/app/const/app_const.dart';
-import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
-import 'package:cluster_passport/features/app/home/home_page.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:cluster_passport/features/app/theme/style.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+
+// Todas las notas son en español e inglés
+// All notes are in spanish and english
+
+  
+  import 'dart:io';
+  //Paquete que permite conectar a las constantes de la aplicación en la carpeta 
+  import 'package:cluster_passport/features/app/const/app_const.dart';
+  import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
+  import 'package:cluster_passport/features/app/home/home_page.dart';
+  import 'package:flutter/foundation.dart';
+  import 'package:flutter/material.dart';
+  import 'package:cluster_passport/features/app/theme/style.dart';
+  // import 'package:flutter_bloc/flutter_bloc.dart';
+  import 'package:image_picker/image_picker.dart';
 
 // import 'package:cluster_passport/features/app/global/widgets/profile_widget.dart';
 // import 'package:cluster_passport/features/app/home/home_page.dart';
