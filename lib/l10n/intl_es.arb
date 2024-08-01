@@ -1,4 +1,7 @@
-{
+
+{"@@locale": "es",
+    "AppName":"App Name",
+
     "AppNameCP0"    
         :"Cluster Passport",    
     "AppNameCP1"    
