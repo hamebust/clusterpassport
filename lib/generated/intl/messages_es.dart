@@ -23,12 +23,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AC": MessageLookupByLibrary.simpleMessage("Aceptar y Continuar"),
+        "AppName": MessageLookupByLibrary.simpleMessage("Nombre de la App"),
         "AppNameCP0": MessageLookupByLibrary.simpleMessage("Cluster Passport"),
         "AppNameCP1": MessageLookupByLibrary.simpleMessage("CLUSTER PASSPORT"),
         "Authorized": MessageLookupByLibrary.simpleMessage("Autorizados"),
         "Cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Cluster1": MessageLookupByLibrary.simpleMessage("Clúster"),
-        "Hello": MessageLookupByLibrary.simpleMessage("Hola"),
+        "LoginPageTranslation":
+            MessageLookupByLibrary.simpleMessage("Traducción LoginPage"),
+        "Next": MessageLookupByLibrary.simpleMessage("Próximo"),
         "PP": MessageLookupByLibrary.simpleMessage("Politicas de Privacidad"),
         "Passport0": MessageLookupByLibrary.simpleMessage("Passport"),
         "Passport1": MessageLookupByLibrary.simpleMessage("Pasaporte"),
@@ -43,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "TS": MessageLookupByLibrary.simpleMessage("Terminos de Servicio"),
         "Verify_your_phone_number": MessageLookupByLibrary.simpleMessage(
             "Verifica tu numero de telefono"),
+        "WelcomePageTranslation":
+            MessageLookupByLibrary.simpleMessage("Traducción WelcomePage"),
         "WhatsApp_will_send_an_SMS_message": MessageLookupByLibrary.simpleMessage(
             "Clúster enviara un mensaje de texto (podrá aplicar cambios) para verificar tu número de telefono. Ingrese el código"),
         "WtoCP": MessageLookupByLibrary.simpleMessage(
