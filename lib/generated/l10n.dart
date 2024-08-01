@@ -190,6 +190,46 @@ class S {
     );
   }
 
+  /// `OTPPage Translation`
+  String get OtpPageTranslation {
+    return Intl.message(
+      'OTPPage Translation',
+      name: 'OtpPageTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your OTP`
+  String get Verify_your_OTP {
+    return Intl.message(
+      'Verify your OTP',
+      name: 'Verify_your_OTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)`
+  String get Enter_your_OTP {
+    return Intl.message(
+      'Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)',
+      name: 'Enter_your_OTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your 6 digit code`
+  String get Enter_your_6_digit_code {
+    return Intl.message(
+      'Enter your 6 digit code',
+      name: 'Enter_your_6_digit_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Privacy Polices`
   String get PP {
     return Intl.message(

@@ -1,5 +1,6 @@
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/presentation/pages/initial_profile_submit_page.dart';
+import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 
@@ -34,10 +35,9 @@ class _OtpPageState extends State<OtpPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  const Center(
-                    child: Text(
-                      "Verify your OTP",
-                      style: TextStyle(
+                  Center(
+                    child: Text(S.of(context).Verify_your_OTP,
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: tabColor),
@@ -46,10 +46,9 @@ class _OtpPageState extends State<OtpPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)",
+                  Text(S.of(context).Enter_your_OTP,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 15),
+                    style: const TextStyle(fontSize: 15),
                   ),
                   const SizedBox(
                     height: 30,
@@ -74,10 +73,9 @@ class _OtpPageState extends State<OtpPage> {
                   color: tabColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: const Center(
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
+                child: Center(
+                  child: Text(S.of(context).Next,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w500),
@@ -104,7 +102,7 @@ class _OtpPageState extends State<OtpPage> {
 
             onComplete: (String pinCode) {},
           ),
-          const Text("Enter your 6 digit code")
+          Text(S.of(context).Enter_your_6_digit_code)
         ],
       ),
     );

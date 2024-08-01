@@ -32,8 +32,16 @@
         :"Busqueda",
     "Select_your_phone_code"   
         :"Selecciona tu código telefonico",
-    
-    
+
+
+    "OtpPageTranslation":"Traducción OTPPage",
+
+    "Verify_your_OTP"          
+        :"Verifica tu código OTP",
+    "Enter_your_OTP"     
+        :"Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)",
+    "Enter_your_6_digit_code"
+        :"Ingresa el código de 6 digitos", 
     
     "PP"            
         :"Politicas de Privacidad",    

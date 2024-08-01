@@ -29,9 +29,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "Authorized": MessageLookupByLibrary.simpleMessage("Autorizados"),
         "Cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Cluster1": MessageLookupByLibrary.simpleMessage("Clúster"),
+        "Enter_your_6_digit_code": MessageLookupByLibrary.simpleMessage(
+            "Ingresa el código de 6 digitos"),
+        "Enter_your_OTP": MessageLookupByLibrary.simpleMessage(
+            "Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)"),
         "LoginPageTranslation":
             MessageLookupByLibrary.simpleMessage("Traducción LoginPage"),
         "Next": MessageLookupByLibrary.simpleMessage("Próximo"),
+        "OtpPageTranslation":
+            MessageLookupByLibrary.simpleMessage("Traducción OTPPage"),
         "PP": MessageLookupByLibrary.simpleMessage("Politicas de Privacidad"),
         "Passport0": MessageLookupByLibrary.simpleMessage("Passport"),
         "Passport1": MessageLookupByLibrary.simpleMessage("Pasaporte"),
@@ -44,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Selecciona tu código telefonico"),
         "TC": MessageLookupByLibrary.simpleMessage("Terminos y Condiciones"),
         "TS": MessageLookupByLibrary.simpleMessage("Terminos de Servicio"),
+        "Verify_your_OTP":
+            MessageLookupByLibrary.simpleMessage("Verifica tu código OTP"),
         "Verify_your_phone_number": MessageLookupByLibrary.simpleMessage(
             "Verifica tu numero de telefono"),
         "WelcomePageTranslation":
