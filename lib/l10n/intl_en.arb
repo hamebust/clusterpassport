@@ -76,5 +76,7 @@
     "Chats"
         :"Chats",
     "Logout"
-        :"Logout"
+        :"Logout",
+    "Username"
+        :"Username"
 }

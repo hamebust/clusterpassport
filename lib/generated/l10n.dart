@@ -230,6 +230,56 @@ class S {
     );
   }
 
+  /// `Settings Page`
+  String get Settings_Page {
+    return Intl.message(
+      'Settings Page',
+      name: 'Settings_Page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Security applications, change number`
+  String get settingsItemWidget_text01 {
+    return Intl.message(
+      'Security applications, change number',
+      name: 'settingsItemWidget_text01',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Block contacts, temporary messages`
+  String get settingsItemWidget_text02 {
+    return Intl.message(
+      'Block contacts, temporary messages',
+      name: 'settingsItemWidget_text02',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme, wallpapers, chat history`
+  String get settingsItemWidget_text03 {
+    return Intl.message(
+      'Theme, wallpapers, chat history',
+      name: 'settingsItemWidget_text03',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout from WhatsApp Clone`
+  String get settingsItemWidget_text04 {
+    return Intl.message(
+      'Logout from WhatsApp Clone',
+      name: 'settingsItemWidget_text04',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Privacy Polices`
   String get PP {
     return Intl.message(
@@ -255,6 +305,16 @@ class S {
     return Intl.message(
       'Terms and Conditions',
       name: 'TC',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `general word bank`
+  String get general_word_bank {
+    return Intl.message(
+      'general word bank',
+      name: 'general_word_bank',
       desc: '',
       args: [],
     );
@@ -305,6 +365,56 @@ class S {
     return Intl.message(
       'Authorized',
       name: 'Authorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get Account {
+    return Intl.message(
+      'Account',
+      name: 'Account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy`
+  String get Privacy {
+    return Intl.message(
+      'Privacy',
+      name: 'Privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chats`
+  String get Chats {
+    return Intl.message(
+      'Chats',
+      name: 'Chats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get Logout {
+    return Intl.message(
+      'Logout',
+      name: 'Logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get Username {
+    return Intl.message(
+      'Username',
+      name: 'Username',
       desc: '',
       args: [],
     );

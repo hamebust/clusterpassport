@@ -23,10 +23,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "AC": MessageLookupByLibrary.simpleMessage("AGREE AND CONTINUE"),
+        "Account": MessageLookupByLibrary.simpleMessage("Account"),
         "AppName": MessageLookupByLibrary.simpleMessage("App Name"),
         "AppNameCP0": MessageLookupByLibrary.simpleMessage("Cluster Passport"),
         "AppNameCP1": MessageLookupByLibrary.simpleMessage("CLUSTER PASSPORT"),
         "Authorized": MessageLookupByLibrary.simpleMessage("Authorized"),
+        "Chats": MessageLookupByLibrary.simpleMessage("Chats"),
         "Cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Cluster1": MessageLookupByLibrary.simpleMessage("Cluster"),
         "Enter_your_6_digit_code":
@@ -35,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)"),
         "LoginPageTranslation":
             MessageLookupByLibrary.simpleMessage("LoginPage Translation"),
+        "Logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "Next": MessageLookupByLibrary.simpleMessage("Next"),
         "OtpPageTranslation":
             MessageLookupByLibrary.simpleMessage("OTPPage Translation"),
@@ -42,13 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "Passport0": MessageLookupByLibrary.simpleMessage("Passport"),
         "Passport1": MessageLookupByLibrary.simpleMessage("Pasaporte"),
         "Phone_Number": MessageLookupByLibrary.simpleMessage("Phone number"),
+        "Privacy": MessageLookupByLibrary.simpleMessage("Privacy"),
         "ROPP": MessageLookupByLibrary.simpleMessage(
             "Read our Privacy Policy Tap, \'Agree and Continue\' to accept the Team of Service."),
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "Select_your_phone_code":
             MessageLookupByLibrary.simpleMessage("Select your phone code"),
+        "Settings_Page": MessageLookupByLibrary.simpleMessage("Settings Page"),
         "TC": MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
         "TS": MessageLookupByLibrary.simpleMessage("Terms of service"),
+        "Username": MessageLookupByLibrary.simpleMessage("Username"),
         "Verify_your_OTP":
             MessageLookupByLibrary.simpleMessage("Verify your OTP"),
         "Verify_your_phone_number":
@@ -58,6 +64,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "WhatsApp_will_send_an_SMS_message": MessageLookupByLibrary.simpleMessage(
             "WhatsApp will send an SMS message (carrier charges may apply) to verify your phone number. Enter the code and phone number"),
         "WtoCP":
-            MessageLookupByLibrary.simpleMessage("Welcome to Cluster Passport")
+            MessageLookupByLibrary.simpleMessage("Welcome to Cluster Passport"),
+        "general_word_bank":
+            MessageLookupByLibrary.simpleMessage("general word bank"),
+        "settingsItemWidget_text01": MessageLookupByLibrary.simpleMessage(
+            "Security applications, change number"),
+        "settingsItemWidget_text02": MessageLookupByLibrary.simpleMessage(
+            "Block contacts, temporary messages"),
+        "settingsItemWidget_text03": MessageLookupByLibrary.simpleMessage(
+            "Theme, wallpapers, chat history"),
+        "settingsItemWidget_text04":
+            MessageLookupByLibrary.simpleMessage("Logout from WhatsApp Clone")
       };
 }

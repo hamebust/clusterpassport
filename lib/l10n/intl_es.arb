@@ -76,5 +76,7 @@
     "Chats"
         :"Mensajes",
     "Logout"
-        :"Cerrar Cesion"
+        :"Cerrar Cesion",
+    "Username"
+        :"Nombre de Usuario"
 }

@@ -64,15 +64,15 @@ class _SettingsPageState extends State<SettingsPage> {
 
                   // Widget hijo que contiene el nombre de usuario y el código de seguridad
                   // Child widget that contains the username and security code
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Username",
-                          style: TextStyle(fontSize: 18),
+                          S.of(context).Username,
+                          style: const TextStyle(fontSize: 18),
                         ),
-                        Text(
+                        const Text(
                           "while true code{}",
                           style: TextStyle(fontSize: 14),
                         ),
@@ -105,7 +105,6 @@ class _SettingsPageState extends State<SettingsPage> {
             //App configuration area
 
             //Cuenta
-
             _settingsItemWidget(
               title: S.of(context).Account,
               description: S.of(context).settingsItemWidget_text01,
