@@ -1,7 +1,6 @@
 
 {
     "AppName":"App Name",
-
     "AppNameCP0"    
         :"Cluster Passport", 
     "AppNameCP1"    
@@ -9,7 +8,6 @@
 
 
     "WelcomePageTranslation":"WelcomePage Translation",
-
     "WtoCP"         
         :"Welcome to Cluster Passport",
     "ROPP"          
@@ -18,8 +16,7 @@
         :"AGREE AND CONTINUE",
 
    
-    "LoginPageTranslation":"LoginPage Translation",
-    
+    "LoginPageTranslation":"LoginPage Translation",    
     "Verify_your_phone_number"          
         :"Verify your phone number",
     "WhatsApp_will_send_an_SMS_message"     
@@ -34,8 +31,7 @@
         :"Select your phone code",
 
 
-    "OtpPageTranslation":"OTPPage Translation",
-    
+    "OtpPageTranslation":"OTPPage Translation",    
     "Verify_your_OTP"          
         :"Verify your OTP",
     "Enter_your_OTP"     
@@ -43,12 +39,26 @@
     "Enter_your_6_digit_code"
         :"Enter your 6 digit code",
     
+
+    "Settings_Page":"Settings Page",
+    "settingsItemWidget_text01"
+        :"Security applications, change number",
+    "settingsItemWidget_text02"
+        :"Block contacts, temporary messages",
+    "settingsItemWidget_text03"
+        :"Theme, wallpapers, chat history",
+    "settingsItemWidget_text04"
+        :"Logout from WhatsApp Clone",
+
     "PP"            
         :"Privacy Polices",    
     "TS"            
         :"Terms of service",    
     "TC"            
-        :"Terms and Conditions",    
+        :"Terms and Conditions",
+        
+        
+        "general_word_bank":"general word bank",
     "Passport0"     
         :"Passport",    
     "Passport1"     
@@ -57,6 +67,14 @@
         :"Cluster",    
     "Cluster1"      
         :"Cluster",    
-    "Authorized"    
-        :"Authorized"
+    "Authorized"
+        :"Authorized",
+    "Account"
+        :"Account",
+    "Privacy"
+        :"Privacy",
+    "Chats"
+        :"Chats",
+    "Logout"
+        :"Logout"
 }

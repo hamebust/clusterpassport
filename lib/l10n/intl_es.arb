@@ -1,15 +1,13 @@
 
 {
     "AppName":"Nombre de la App",
-
     "AppNameCP0"    
         :"Cluster Passport",    
     "AppNameCP1"    
         :"CLUSTER PASSPORT",
 
 
-    "WelcomePageTranslation":"Traducción WelcomePage",
-    
+    "WelcomePageTranslation":"Traducción WelcomePage",    
     "WtoCP"         
         :"Bienvenido a Cluster Passport",
     "ROPP"          
@@ -19,7 +17,6 @@
     
 
     "LoginPageTranslation":"Traducción LoginPage",
-
     "Verify_your_phone_number"          
         :"Verifica tu numero de telefono",
     "WhatsApp_will_send_an_SMS_message"     
@@ -35,20 +32,33 @@
 
 
     "OtpPageTranslation":"Traducción OTPPage",
-
     "Verify_your_OTP"          
         :"Verifica tu código OTP",
     "Enter_your_OTP"     
         :"Enter your OTP for the WhatsApp Clone Verification (so that you will be moved for the further steps to complete)",
     "Enter_your_6_digit_code"
         :"Ingresa el código de 6 digitos", 
+
+
+    "Settings_Page":"Página de Configuraciones",
+    "settingsItemWidget_text01"
+        :"Seguridad de la aplicación, cambiar número",
+    "settingsItemWidget_text02"
+        :"Bloquear contactos, mensajes temporales",
+    "settingsItemWidget_text03"
+        :"Theme, wallpapers, chat history",
+    "settingsItemWidget_text04"
+        :"Logout from WhatsApp Clone",
     
     "PP"            
         :"Politicas de Privacidad",    
     "TS"            
         :"Terminos de Servicio",    
     "TC"            
-        :"Terminos y Condiciones",    
+        :"Terminos y Condiciones",
+
+        
+    "general_word_bank":"banco general de palabras",
     "Passport0"     
         :"Passport",    
     "Passport1"     
@@ -56,7 +66,15 @@
     "Cluster"       
         :"Cluster",    
     "Cluster1"      
-        :"Clúster",    
-    "Authorized"    
-        :"Autorizados"
+        :"Clúster",
+    "Authorized"
+        :"Autorizados",
+    "Account"
+        :"Cuenta",
+    "Privacy"
+        :"Privacidad",
+    "Chats"
+        :"Mensajes",
+    "Logout"
+        :"Cerrar Cesion"
 }
