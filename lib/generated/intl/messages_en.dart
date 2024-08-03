@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "Select_your_phone_code":
             MessageLookupByLibrary.simpleMessage("Select your phone code"),
+        "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "Settings_Page": MessageLookupByLibrary.simpleMessage("Settings Page"),
         "TC": MessageLookupByLibrary.simpleMessage("Terms and Conditions"),
         "TS": MessageLookupByLibrary.simpleMessage("Terms of service"),

@@ -78,5 +78,7 @@
     "Logout"
         :"Logout",
     "Username"
-        :"Username"
+        :"Username",
+    "Settings"
+        :"Settings"
 }

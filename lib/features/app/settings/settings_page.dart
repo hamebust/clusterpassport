@@ -33,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
         appBar: AppBar(
           // Título de la página
           // Page title
-          title: const Text('Settings'),
+          title: Text(S.of(context).Settings),
         ),
         body: Column(
           // Widget Padre que contiene los datos del usuario que inicio sesión
