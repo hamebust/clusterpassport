@@ -139,6 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ));
   }
+
   //Widget hijo que contiene la configuración de la app
   //Child widget that contains the app configuration
   _settingsItemWidget(

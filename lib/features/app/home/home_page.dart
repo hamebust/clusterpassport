@@ -24,6 +24,7 @@ import 'package:cluster_passport/features/clusters/clusters_page.dart';
 //Paquete que permite conectar a MyClustersPage: página de clusters propios en la carpeta lib/features/my_clusters
 //Package that allows connecting to MyClustersPage: my clusters page in the lib/features/my_clusters folder
 import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/news/news_page.dart';
 //Paquete que permite conectar a NotifyPage: página de notificaciones en la carpeta lib/features/notify
 //Package that allows connecting to NotifyPage: notifications page in the lib/features/notify folder
 import 'package:cluster_passport/features/notify/notify_page.dart';
@@ -169,6 +170,10 @@ class _HomePageState extends State<HomePage> {
         // Authorized page
         MyClustersPage(),
 
+        // Página de Novedades
+        // New page
+        const NewsPage(),
+
         // Página de notificaciones
         // Notifications page
         const NotifyPage(),
@@ -176,12 +181,12 @@ class _HomePageState extends State<HomePage> {
 
       // Botón flotante
       // Floating button
-      floatingActionButton:
-          switchFloatingActionButtonOnPageIndex(currentPageIndex),
+      floatingActionButton: switchFloatingActionButtonOnPageIndex(currentPageIndex),
 
       // Barra de navegación inferior
       // Bottom navigation bar
       bottomNavigationBar: NavigationBar(
+        //
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
@@ -195,9 +200,7 @@ class _HomePageState extends State<HomePage> {
           NavigationDestination(
             selectedIcon: const Icon(Icons.sensor_occupied),
             icon: const Icon(Icons.groups),
-            label: (
-                //
-                S.of(context).Authorized),
+            label: (S.of(context).Authorized),
           ),
 
           //Botón Página de clusters
@@ -205,6 +208,13 @@ class _HomePageState extends State<HomePage> {
           const NavigationDestination(
             icon: Badge(child: Icon(Icons.location_city)),
             label: 'Cluster',
+          ),
+
+          //Botón Página Estatus de los clusters
+          //Status page button
+          const NavigationDestination(
+            icon: Badge(child: Icon(Icons.circle_notifications)),
+            label: 'News',
           ),
 
           //Botón Página de notificaciones
