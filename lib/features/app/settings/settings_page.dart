@@ -105,22 +105,32 @@ class _SettingsPageState extends State<SettingsPage> {
             //App configuration area
 
             //Cuenta
+            //Account
             _settingsItemWidget(
               title: S.of(context).Account,
               description: S.of(context).settingsItemWidget_text01,
               icon: Icons.key,
               onTap: () {},
             ),
+
+            //Privacidad
+            //Privacy
             _settingsItemWidget(
                 title: S.of(context).Privacy,
                 description: S.of(context).settingsItemWidget_text02,
                 icon: Icons.lock,
                 onTap: () {}),
+
+            //Chats
+            //Chats
             _settingsItemWidget(
                 title: S.of(context).Chats,
                 description: S.of(context).settingsItemWidget_text03,
                 icon: Icons.message,
                 onTap: () {}),
+
+            //Cerrar sesión
+            //Logout
             _settingsItemWidget(
                 title: S.of(context).Logout,
                 description: S.of(context).settingsItemWidget_text04,
@@ -129,8 +139,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ));
   }
-
+  //Widget hijo que contiene la configuración de la app
+  //Child widget that contains the app configuration
   _settingsItemWidget(
+      // Parámetros de entrada
+      // Input parameters
       {String? title,
       String? description,
       IconData? icon,
