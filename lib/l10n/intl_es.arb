@@ -78,5 +78,7 @@
     "Logout"
         :"Cerrar Cesion",
     "Username"
-        :"Nombre de Usuario"
+        :"Nombre de Usuario",
+    "Settings"
+        :"Configuraciones"
 }
