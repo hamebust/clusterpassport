@@ -7,6 +7,10 @@
   //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
   //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
   import 'package:cluster_passport/features/app/const/page_const.dart';
+  
+  //Paquete que permite conectar a SettingsPage: página de configuración en la carpeta lib/features/app/settings
+  //Package that allows connecting to SettingsPage: settings page in the lib/features/app/settings folder
+  import 'package:cluster_passport/features/app/settings/settings_page.dart';
 
   //Paquete que permite conectar a WelcomePage: página de bienvenida en la carpeta lib/features/app/welcome
   //Package that allows connecting to WelcomePage: welcome page in the lib/features/app/welcome folder
@@ -35,19 +39,18 @@ class OnGenerateRoute{
         {
             return materialPageBuilder(const ContactsPage());
         }
-
+      // Página de bienvenida
+      // Welcome page
       case PageConst.welcomePage:
         {
             return materialPageBuilder(const WelcomePage());
         }
-
-
       // Página de configuración
       // Settings page
-      //case PageConst.settingsPage:
-      //  {
-      //      return materialPageBuilder( SettingsPage());
-      //  }
+      case PageConst.settingsPage:
+        {
+            return materialPageBuilder( const SettingsPage());
+        }
 
       // Página de usuarios autorizados
       // Authorized users page

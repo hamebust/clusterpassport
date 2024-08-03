@@ -4,32 +4,27 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
 
-//Paquete que permite conectar a SplashScreen: vista de presentación de la aplicación en la carpeta lib/features/app/splash
-//Package that allows connecting to SplashScreen: presentation of the application in the lib/features/app/splash folder
-import 'package:cluster_passport/features/app/splash/splash_screen.dart';
+  //Paquete que permite conectar a SplashScreen: vista de presentación de la aplicación en la carpeta lib/features/app/splash
+  //Package that allows connecting to SplashScreen: presentation of the application in the lib/features/app/splash folder
+  import 'package:cluster_passport/features/app/splash/splash_screen.dart';
+  //Paquete que permite conectar a Theme: tema de la aplicación en la carpeta lib/features/app/theme
+  //Package that allows connecting to Theme: theme of the application in the lib/features/app/theme folder
+  import 'package:cluster_passport/features/app/theme/app_theme.dart';
+  //Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
+  //Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
+  import 'package:cluster_passport/generated/l10n.dart';
+  //Paquete que permite conectar a OnGenerateRoute: generador de rutas de la aplicación en la carpeta routes/on_generate_routes
+  //Package that allows connecting to OnGenerateRoute: route generator of the application in the routes/on_generate_routes folder
+  import 'package:cluster_passport/routes/on_generate_routes.dart';
+  //Paquete que permite conectar a MaterialApp: widget principal de la aplicación en la carpeta main.dart
+  //Package that allows connecting to MaterialApp: main widget of the application in main.dart
+  import 'package:flutter/material.dart';
+  //Paquete que permite conectar a FlutterLocalization: internacionalización de Flutter en la carpeta flutter_localizations
+  //Package that allows connecting to FlutterLocalization: internationalization of Flutter in the flutter_localizations folder
+  import 'package:flutter_localizations/flutter_localizations.dart';
 
-//Paquete que permite conectar a Theme: tema de la aplicación en la carpeta lib/features/app/theme
-//Package that allows connecting to Theme: theme of the application in the lib/features/app/theme folder
-import 'package:cluster_passport/features/app/theme/app_theme.dart';
-
-//Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
-//Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
-import 'package:cluster_passport/generated/l10n.dart';
-
-//Paquete que permite conectar a OnGenerateRoute: generador de rutas de la aplicación en la carpeta routes/on_generate_routes
-//Package that allows connecting to OnGenerateRoute: route generator of the application in the routes/on_generate_routes folder
-import 'package:cluster_passport/routes/on_generate_routes.dart';
-
-//Paquete que permite conectar a MaterialApp: widget principal de la aplicación en la carpeta main.dart
-//Package that allows connecting to MaterialApp: main widget of the application in main.dart
-import 'package:flutter/material.dart';
-
-//Paquete que permite conectar a FlutterLocalization: internacionalización de Flutter en la carpeta flutter_localizations
-//Package that allows connecting to FlutterLocalization: internationalization of Flutter in the flutter_localizations folder
-import 'package:flutter_localizations/flutter_localizations.dart';
-
-//import 'package:flutter_modular/flutter_modular.dart';
-//import 'package:cluster_passport/app_modular/app_modular.dart';
+  //import 'package:flutter_modular/flutter_modular.dart';
+  //import 'package:cluster_passport/app_modular/app_modular.dart';
 
 void main() {
   //Ejecución de la aplicación Cluster Passport

@@ -1,27 +1,38 @@
 //InitialProfileSubmitPage: Formulario inicial de foto y nombre de usuario
 //InitialProfileSubmitPage: Initial form for photo and username
 
-
-// Todas las notas son en español e inglés
-// All notes are in spanish and english
-
+  // Todas las notas son en español e inglés
+  // All notes are in spanish and english
   
   import 'dart:io';
-  //Paquete que permite conectar a las constantes de la aplicación en la carpeta 
+  //Paquete que permite conectar a las constantes de la aplicación en la carpeta lib/features/app/const/
+  //Package that allows connecting to the application constants in the folder lib/features/app/const/
   import 'package:cluster_passport/features/app/const/app_const.dart';
+  //Paquete que permite conectar a los widgets de la aplicación en la carpeta lib/features/app/global/widgets/
+  //Package that allows connecting to the widgets of the application in the folder lib/features/app/global/widgets/
   import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
+  //Paquete que permite conectar a la página principal de la aplicación en la carpeta lib/features/app/home/home_page.dart
+  //Package that allows connecting to the main page of the application in the folder lib/features/app/home/home_page.dart
   import 'package:cluster_passport/features/app/home/home_page.dart';
   import 'package:flutter/foundation.dart';
+  //Paquete que permite conectar a los widgets de la aplicación en la carpeta lib/features/app/global/widgets/
+  //Package that allows connecting to the widgets of the application in the folder lib/features/app/global/widgets/
   import 'package:flutter/material.dart';
+  //Paquete que permite conectar a los estilos de la aplicación en la carpeta lib/features/app/theme/style.dart
+  //Package that allows connecting to the styles of the application in the folder lib/features/app/theme/style.dart
   import 'package:cluster_passport/features/app/theme/style.dart';
-  // import 'package:flutter_bloc/flutter_bloc.dart';
+  //Paquete que permite manejar las imagenes de la aplicación
+  //Package that handles the images of the application
   import 'package:image_picker/image_picker.dart';
 
-// import 'package:cluster_passport/features/app/global/widgets/profile_widget.dart';
-// import 'package:cluster_passport/features/app/home/home_page.dart';
-// import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-// import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
-// import 'package:cluster_passport/storage/storage_provider.dart';
+  //Paquetes inabilitados
+  //Packages disabled
+    // import 'package:flutter_bloc/flutter_bloc.dart';
+    // import 'package:cluster_passport/features/app/global/widgets/profile_widget.dart';
+    // import 'package:cluster_passport/features/app/home/home_page.dart';
+    // import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
+    // import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+    // import 'package:cluster_passport/storage/storage_provider.dart';
 
 class InitialProfileSubmitPage extends StatefulWidget {
   const InitialProfileSubmitPage({super.key});

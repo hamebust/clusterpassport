@@ -45,9 +45,8 @@ dependencies:
   #firebase_auth: ^5.1.0
   uuid: ^4.4.0
   #fluttertoast: 8.2.2
-  #intl: ^0.19.0
-  contacts_service: ^0.6.3
-  flutter_contacts: ^1.1.7+1
+  #contacts_service: ^0.6.3
+  flutter_contacts: ^1.1.9
   image_picker: ^1.1.2
   file_picker: ^8.0.5
   video_player: ^2.8.2
@@ -67,8 +66,7 @@ dependencies:
   swipe_to: ^1.0.2
   emoji_picker_flutter: ^2.2.0
 
-  #giphy_picker: ^3.0.1
-  #enough_giphy: ^0.2.0
+    #enough_giphy: ^0.2.0
   #enough_giphy_flutter: ^0.4.0
   flutter_sound: ^9.2.13
   path_provider: ^2.0.14

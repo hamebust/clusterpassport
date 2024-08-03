@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AuthorizedPage extends StatelessWidget {
   AuthorizedPage({super.key});
 
+  // Lista de personas autorizadas
+  // List of authorized people
   final List<Map<String, String>> authorizedPeople = [
     {
       'icon': 'person',
