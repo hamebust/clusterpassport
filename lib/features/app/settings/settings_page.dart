@@ -53,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(32.5),
                         child:
-                            Image.asset("assets/images/profile_default.png")),
+                            Image.asset("assets/profile_default.png")),
                   ),
 
                   //Caja separadora
@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           style: const TextStyle(fontSize: 18),
                         ),
                         const Text(
-                          "while true code{}",
+                          "while true code {'+58 424 0853586'} ",
                           style: TextStyle(fontSize: 14),
                         ),
                       ],

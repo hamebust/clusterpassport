@@ -20,7 +20,7 @@ class ContactsPage extends StatelessWidget {
             height: 50,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
-              child: Image.asset("assets/images/profile_default.png"),
+              child: Image.asset("assets/profile_default.png"),
             ),
           ),
           title: const Text("Username"),
