@@ -11,7 +11,6 @@
 import 'package:cluster_passport/features/app/global/date/date_formats.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter/widgets.dart';
 
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:4197801718.
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:1493274669.
@@ -130,6 +129,7 @@ class NewsPage extends StatelessWidget {
             //notification list constructor
             ListView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),  // <|ISF|> Prevents scrolling conflict with SingleChildScrollView
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return ListTile(
