@@ -90,9 +90,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20,),
 
               // Botón de búsqueda
               // Search button
@@ -102,9 +100,7 @@ class _HomePageState extends State<HomePage> {
                   size: 28,
                   onPressed: () {}),
 
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20,),
 
               // Botón de menú
               // Menu button
@@ -129,7 +125,8 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 // Navegación a la página de configuración
                                 // Navigation to the settings page,
-                                Navigator.pushNamed(context, PageConst.settingsPage);
+                                Navigator.pushNamed(
+                                  context, PageConst.settingsPage);
                                 // Acción al presionar "Configuración"
                                  // Cierra el BottomSheet
                               },
@@ -151,17 +148,18 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20,),
             ],
           ),
         ],
       ),
 
+      body: IndexedStack(
+        index: currentPageIndex,
+        children:  <Widget>[
       // Cuerpo de la aplicación
       // App body
-      body: <Widget>[
+      
         // Página de Autorizados
         // Authorized page
         AuthorizedPage(),
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage> {
         // Página de notificaciones
         // Notifications page
         const NotifyPage(),
-      ][currentPageIndex],
+      ]),
 
       // Botón flotante
       // Floating button
@@ -233,7 +231,7 @@ class _HomePageState extends State<HomePage> {
 
   // Estado del boton flotante
   // Floating button state
-  switchFloatingActionButtonOnPageIndex(currentPageIndex) {
+  Widget? switchFloatingActionButtonOnPageIndex(int currentPageIndex) {
     switch (currentPageIndex) {
       // Boton de agregar usuario
       // Add user button
@@ -259,7 +257,8 @@ class _HomePageState extends State<HomePage> {
           },
           child: const Icon(Icons.add_card),
         );
-
+      default:
+        return null;
       //case 2:
       //return FloatingActionButton(
       //onPressed: () {},
