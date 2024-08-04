@@ -71,10 +71,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               // Botón de filtro
               // Filter button
-              iconAppBarHomePage(
+              _iconAppBarHomePage(
                 icon: Icons.filter_list,
-                color: greyColor,
-                size: 28,
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -90,24 +88,21 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
-              const SizedBox(width: 20,),
+              const SizedBox(width: 20),
 
               // Botón de búsqueda
               // Search button
-              iconAppBarHomePage(
-                  icon: Icons.search,
-                  color: greyColor,
-                  size: 28,
-                  onPressed: () {}),
+              _iconAppBarHomePage(
+                icon: Icons.search,
+                onPressed: () {},
+              ),
 
-              const SizedBox(width: 20,),
+              const SizedBox(width: 20),
 
               // Botón de menú
               // Menu button
-              iconAppBarHomePage(
+              _iconAppBarHomePage(
                 icon: Icons.more_vert,
-                color: greyColor,
-                size: 28,
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -126,9 +121,9 @@ class _HomePageState extends State<HomePage> {
                                 // Navegación a la página de configuración
                                 // Navigation to the settings page,
                                 Navigator.pushNamed(
-                                  context, PageConst.settingsPage);
+                                    context, PageConst.settingsPage);
                                 // Acción al presionar "Configuración"
-                                 // Cierra el BottomSheet
+                                // Cierra el BottomSheet
                               },
                             ),
                             ListTile(
@@ -148,18 +143,16 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
 
-              const SizedBox(width: 20,),
+              const SizedBox(width: 20),
             ],
           ),
         ],
       ),
 
-      body: IndexedStack(
-        index: currentPageIndex,
-        children:  <Widget>[
-      // Cuerpo de la aplicación
-      // App body
-      
+      body: IndexedStack(index: currentPageIndex, children: <Widget>[
+        // Cuerpo de la aplicación
+        // App body
+
         // Página de Autorizados
         // Authorized page
         AuthorizedPage(),
@@ -179,7 +172,8 @@ class _HomePageState extends State<HomePage> {
 
       // Botón flotante
       // Floating button
-      floatingActionButton: switchFloatingActionButtonOnPageIndex(currentPageIndex),
+      floatingActionButton:
+          _switchFloatingActionButtonOnPageIndex(currentPageIndex),
 
       // Barra de navegación inferior
       // Bottom navigation bar
@@ -231,7 +225,7 @@ class _HomePageState extends State<HomePage> {
 
   // Estado del boton flotante
   // Floating button state
-  Widget? switchFloatingActionButtonOnPageIndex(int currentPageIndex) {
+  Widget? _switchFloatingActionButtonOnPageIndex(int currentPageIndex) {
     switch (currentPageIndex) {
       // Boton de agregar usuario
       // Add user button
@@ -259,20 +253,20 @@ class _HomePageState extends State<HomePage> {
         );
       default:
         return null;
-      //case 2:
-      //return FloatingActionButton(
-      //onPressed: () {},
-      //child: const Icon(Icons.add),
-      //);
     }
   }
 
-  Widget iconAppBarHomePage(
-      {required IconData icon,
-      required Color color,
-      double size = 24,
-      required VoidCallback onPressed}) {
+  Widget _iconAppBarHomePage({
+    required IconData icon,
+    required VoidCallback onPressed,
+    Color color = greyColor,
+    double size = 28,
+  }) {
     return IconAppBarHomePage(
-        icon: icon, color: color, size: size, onPressed: onPressed);
+      icon: icon,
+      color: color,
+      size: size,
+      onPressed: onPressed,
+    );
   }
 }

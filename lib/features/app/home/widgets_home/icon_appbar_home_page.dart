@@ -8,14 +8,21 @@ class IconAppBarHomePage extends StatelessWidget {
     required this.size,
     required this.onPressed,
   });
-  final IconData icon; // Cambia el tipo a IconData
+
+  final IconData icon;
   final Color color;
   final double size;
   final VoidCallback onPressed;
+  
   @override
   Widget build(BuildContext context) {
-    return IconButton( // Usa IconButton en lugar de Icon
+    return IconButton(
       onPressed: onPressed, 
-      icon: Icon(icon, color: color, size: size),); // Agrega color y size al Icon
+      icon: Icon(
+        icon,
+        color: color,
+        size: size,
+      ),
+    ); // Agrega color y size al Icon
   }
 }
