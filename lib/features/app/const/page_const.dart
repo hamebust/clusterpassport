@@ -29,6 +29,15 @@ class PageConst {
   static const String contactUsersPage = "contactUsersPage";
   static const String callContactsPage = "callContactsPage";
 
+  // Authoized Users Page
+  static const String authorizedUsersPage = "authorizedUsersPage";
+
+  // * Clusters Page
+  static const String clustersPage = "clustersPage";
+
+  // * Chat Authorized Page
+  static const String chatAuthorizedPage = "chatAuthorizedPage";
+
   // * Settings
   static const String settingsPage = "settingsPage";
 

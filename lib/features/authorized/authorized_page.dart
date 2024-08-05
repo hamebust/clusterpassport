@@ -1,3 +1,4 @@
+import 'package:cluster_passport/features/authorized/presenter/chat_authorized_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthorizedPage extends StatelessWidget {
@@ -35,6 +36,15 @@ class AuthorizedPage extends StatelessWidget {
                 ),
                 title: Text(person['title']!),
                 subtitle: Text(person['subtitle']!),
+                onTap: () {
+                  // Navega a la página ChatAuthorizedPage al presionar
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChatAuthorizedPage(),
+                    ),
+                  );
+                },
               ),
             );
           },
