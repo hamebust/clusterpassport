@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (BuildContext context) {
                       return SizedBox(
                         // Usa SizedBox en lugar de ListView
-                        height: 200,
+                        height: 130,
                         child: Column(
                           // Usa Column para organizar los elementos verticalmente
                           children: <Widget>[

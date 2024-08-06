@@ -15,7 +15,13 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat'),
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Ambar Medina'),
+            Text('Online', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+          ],
+        ),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -64,10 +70,10 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   onPressed: () {},
                   icon: const Icon(Icons.attach_file),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.mic),
-                ),
+                //IconButton(
+                //  onPressed: () {},
+                //  icon: const Icon(Icons.mic),
+                //),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.send),
