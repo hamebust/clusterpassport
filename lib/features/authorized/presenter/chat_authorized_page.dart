@@ -1,6 +1,3 @@
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1329871108.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2763786354.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:749039502.
 import 'package:flutter/material.dart';
 
 class ChatAuthorizedPage extends StatefulWidget {
@@ -11,6 +8,10 @@ class ChatAuthorizedPage extends StatefulWidget {
 }
 
 class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
+  String _motivoVisita = '';
+  DateTime? _tiempoVisita;
+  final String _codigoAcceso = '123456'; // Genera un código de acceso real aquí
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +46,17 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
       ),
       body: Column(
         children: [
+          // Widget para la información de la visita
+          InformacionVisita(
+            motivoVisita: _motivoVisita,
+            tiempoVisita: _tiempoVisita,
+            codigoAcceso: _codigoAcceso,
+            onTimeSelected: (DateTime dateTime) {
+              setState(() {
+                _tiempoVisita = dateTime;
+              });
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: 6,
@@ -59,23 +71,28 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    onChanged: (text) {
+                      setState(() {
+                        _motivoVisita = text;
+                      });
+                    },
+                    decoration: const InputDecoration(
                       hintText: 'Escribe un mensaje',
                     ),
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Acción al presionar el icono de adjuntar
+                  },
                   icon: const Icon(Icons.attach_file),
                 ),
-                //IconButton(
-                //  onPressed: () {},
-                //  icon: const Icon(Icons.mic),
-                //),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Acción al presionar el icono de enviar
+                  },
                   icon: const Icon(Icons.send),
                 ),
               ],
@@ -87,3 +104,67 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   }
 }
 
+class InformacionVisita extends StatelessWidget {
+  final String motivoVisita;
+  final DateTime? tiempoVisita;
+  final String codigoAcceso;
+  final ValueChanged<DateTime> onTimeSelected;
+
+  const InformacionVisita({super.key, 
+    required this.motivoVisita,
+    required this.tiempoVisita,
+    required this.codigoAcceso,
+    required this.onTimeSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey[300]!),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (motivoVisita.isNotEmpty)
+            Text('Motivo: $motivoVisita'),
+          if (tiempoVisita != null)
+            Text('Tiempo: ${tiempoVisita!.toString()}'), // Formatea la fecha y hora
+          if (codigoAcceso.isNotEmpty)
+            Text('Código: $codigoAcceso'),
+          ElevatedButton(
+            onPressed: () async {
+              final DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2025),
+              );
+              if (pickedDate != null) {
+                final TimeOfDay? pickedTime = await showTimePicker(
+                  // ignore: use_build_context_synchronously
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                if (pickedTime != null) {
+                  final DateTime finalDateTime = DateTime(
+                    pickedDate.year,
+                    pickedDate.month,
+                    pickedDate.day,
+                    pickedTime.hour,
+                    pickedTime.minute,
+                  );
+                  onTimeSelected(finalDateTime);
+                }
+              }
+            },
+            child: const Text('Seleccionar Tiempo'),
+          ),
+        ],
+      ),
+    );
+  }
+}
