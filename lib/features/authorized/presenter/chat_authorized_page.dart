@@ -1,4 +1,6 @@
+import 'package:cluster_passport/features/authorized/presenter/chat_authorized_page%20copy.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatAuthorizedPage extends StatefulWidget {
   const ChatAuthorizedPage({super.key});
@@ -8,9 +10,12 @@ class ChatAuthorizedPage extends StatefulWidget {
 }
 
 class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
-  String _motivoVisita = '';
-  DateTime? _tiempoVisita;
-  final String _codigoAcceso = '123456'; // Genera un código de acceso real aquí
+  String _selectedTimeType = 'Por lapso';
+  String _selectedVisitType = 'Personal (visita privada)';
+  String _visitReason = 'motivo de la visita';
+  DateTime _visitStartTime = DateTime.now();
+  DateTime? _visitEndTime;
+  final String _accessCode = const Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
@@ -20,46 +25,40 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Ambar Medina'),
-            Text('Online', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+            Text('Online',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           ],
         ),
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back),
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // Implement video call action
+            },
             icon: const Icon(Icons.video_call),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // Implement call action
+            },
             icon: const Icon(Icons.call),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // Implement more options action
+            },
             icon: const Icon(Icons.more_vert),
           ),
         ],
       ),
       body: Column(
         children: [
-          // Widget para la información de la visita
-          InformacionVisita(
-            motivoVisita: _motivoVisita,
-            tiempoVisita: _tiempoVisita,
-            codigoAcceso: _codigoAcceso,
-            onTimeSelected: (DateTime dateTime) {
-              setState(() {
-                _tiempoVisita = dateTime;
-              });
-            },
-          ),
           Expanded(
             child: ListView.builder(
-              itemCount: 6,
+              itemCount: 10,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text('Mensaje $index'),
@@ -69,31 +68,55 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: (text) {
-                      setState(() {
-                        _motivoVisita = text;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Escribe un mensaje',
+                VisitInformation(
+                  timeType: _selectedTimeType,
+                  visitType: _selectedVisitType,
+                  visitReason: _visitReason,
+                  visitStartTime: _visitStartTime,
+                  visitEndTime: _visitEndTime,
+                  accessCode: _accessCode,
+                  onTimeStartSelected: (DateTime dateTime) {
+                    setState(() {
+                      _visitStartTime = dateTime;
+                    });
+                  },
+                  onTimeFinSelected: (DateTime dateTime) {
+                    setState(() {
+                      _visitEndTime = dateTime;
+                    });
+                  },
+                  onVisitTypeSelected: _updateVisitType,
+                  onTimeTypeSelected: _updateTimeType,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _visitReason = text;
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          hintText: 'Escribe un mensaje',
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    // Acción al presionar el icono de adjuntar
-                  },
-                  icon: const Icon(Icons.attach_file),
-                ),
-                IconButton(
-                  onPressed: () {
-                    // Acción al presionar el icono de enviar
-                  },
-                  icon: const Icon(Icons.send),
+                    IconButton(
+                      onPressed: () {
+                        // Acción al presionar el icono de adjuntar
+                      },
+                      icon: const Icon(Icons.attach_file),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // Acción al presionar el icono de enviar
+                      },
+                      icon: const Icon(Icons.send),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -102,69 +125,21 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
       ),
     );
   }
-}
 
-class InformacionVisita extends StatelessWidget {
-  final String motivoVisita;
-  final DateTime? tiempoVisita;
-  final String codigoAcceso;
-  final ValueChanged<DateTime> onTimeSelected;
+  void _updateVisitType(String? newValue) {
+    setState(() {
+      if (newValue != null) {
+        _selectedVisitType = newValue;
+      }
+    });
+  }
 
-  const InformacionVisita({super.key, 
-    required this.motivoVisita,
-    required this.tiempoVisita,
-    required this.codigoAcceso,
-    required this.onTimeSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.grey[300]!),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (motivoVisita.isNotEmpty)
-            Text('Motivo: $motivoVisita'),
-          if (tiempoVisita != null)
-            Text('Tiempo: ${tiempoVisita!.toString()}'), // Formatea la fecha y hora
-          if (codigoAcceso.isNotEmpty)
-            Text('Código: $codigoAcceso'),
-          ElevatedButton(
-            onPressed: () async {
-              final DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2025),
-              );
-              if (pickedDate != null) {
-                final TimeOfDay? pickedTime = await showTimePicker(
-                  // ignore: use_build_context_synchronously
-                  context: context,
-                  initialTime: TimeOfDay.now(),
-                );
-                if (pickedTime != null) {
-                  final DateTime finalDateTime = DateTime(
-                    pickedDate.year,
-                    pickedDate.month,
-                    pickedDate.day,
-                    pickedTime.hour,
-                    pickedTime.minute,
-                  );
-                  onTimeSelected(finalDateTime);
-                }
-              }
-            },
-            child: const Text('Seleccionar Tiempo'),
-          ),
-        ],
-      ),
-    );
+  void _updateTimeType(String? newValue) {
+    setState(() {
+      if (newValue != null) {
+        _selectedTimeType = newValue;
+      }
+    });
   }
 }
+
