@@ -55,7 +55,7 @@ class _VisitInformationState extends State<VisitInformation> {
             Text('Motivo: ${widget.visitReason}'),
           const SizedBox(height: 8),
           _buildDropdownRow(
-            'Tipo de Visita:',
+            'Visita:',
             widget.visitType,
             ['Personal', 'Servicio'],
             widget.onVisitTypeSelected,
