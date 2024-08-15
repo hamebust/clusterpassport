@@ -77,18 +77,42 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   visitStartTime: _visitStartTime,
                   visitEndTime: _visitEndTime,
                   accessCode: _accessCode,
-                  onTimeStartSelected: (DateTime dateTime) {
+                  onDateStartSelected: (DateTime dateTime) {
                     setState(() {
                       _visitStartTime = dateTime;
                     });
                   },
-                  onTimeFinSelected: (DateTime dateTime) {
+                  onDateEndSelected: (DateTime dateTime) {
                     setState(() {
                       _visitEndTime = dateTime;
                     });
                   },
+                  onTimeStartSelected: (DateTime dateTime) {
+                    setState(() {
+                      // Combina la fecha seleccionada con la hora seleccionada
+                      _visitStartTime = DateTime(
+                        _visitStartTime?.year ?? dateTime.year,
+                        _visitStartTime?.month ?? dateTime.month,
+                        _visitStartTime?.day ?? dateTime.day,
+                        dateTime.hour,
+                        dateTime.minute,
+                      );
+                    });
+                  },
+                  onTimeEndSelected: (DateTime dateTime) {
+                    setState(() {
+                      // Combina la fecha seleccionada con la hora seleccionada
+                      _visitEndTime = DateTime(
+                        _visitEndTime?.year ?? dateTime.year,
+                        _visitEndTime?.month ?? dateTime.month,
+                        _visitEndTime?.day ?? dateTime.day,
+                        dateTime.hour,
+                        dateTime.minute,
+                      );
+                    });
+                  },
                   onVisitTypeSelected: _updateVisitType,
-                  onTimeTypeSelected: _updateTimeType, // Added this line
+                  onTimeTypeSelected: _updateTimeType,
                 ),
                 Row(
                   children: [
@@ -146,10 +170,12 @@ class VisitInformation extends StatelessWidget {
   final DateTime? visitEndTime;
   final String accessCode;
   final String? timeType;
+  final ValueChanged<DateTime> onDateStartSelected;
+  final ValueChanged<DateTime> onDateEndSelected;
   final ValueChanged<DateTime> onTimeStartSelected;
-  final ValueChanged<DateTime> onTimeFinSelected;
+  final ValueChanged<DateTime> onTimeEndSelected;
   final ValueChanged<String?> onVisitTypeSelected;
-  final ValueChanged<String?> onTimeTypeSelected; // Added this line
+  final ValueChanged<String?> onTimeTypeSelected;
 
   const VisitInformation({
     super.key,
@@ -159,10 +185,12 @@ class VisitInformation extends StatelessWidget {
     required this.visitStartTime,
     required this.visitEndTime,
     required this.accessCode,
+    required this.onDateStartSelected,
+    required this.onDateEndSelected,
     required this.onTimeStartSelected,
-    required this.onTimeFinSelected,
+    required this.onTimeEndSelected,
     required this.onVisitTypeSelected,
-    required this.onTimeTypeSelected, // Added this line
+    required this.onTimeTypeSelected,
   });
 
   @override
@@ -178,14 +206,6 @@ class VisitInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //Row(
-          //  children: [
-          //    if (visitReason.isNotEmpty)
-          //      Expanded(
-          //        child: Text('Motivo: $visitReason'),
-          //      ),
-          //  ],
-          //),
           Row(
             children: [
               const Text('Visita:'),
@@ -193,10 +213,10 @@ class VisitInformation extends StatelessWidget {
               Expanded(
                 child: DropdownButton<String>(
                   value: visitType,
-                  hint: const Text('Visita'), //
+                  hint: const Text('Visita'),
                   items: <String>[
                     'Personal (privada)',
-                    'Servicio o trabajador (pública)' 
+                    'Servicio o trabajador (pública)'
                   ].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -223,7 +243,7 @@ class VisitInformation extends StatelessWidget {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: onTimeTypeSelected, // Updated this line
+                  onChanged: onTimeTypeSelected,
                 ),
               ),
             ],
@@ -240,42 +260,81 @@ class VisitInformation extends StatelessWidget {
               ],
             ),
           if (timeType == 'Por horario')
-            Row(
+            Column(
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _selectDateTime(context, onTimeStartSelected);
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: visitStartTime != null
-                            ? 'Inicio: \n${DateFormat('yyyy-MM-dd HH:mm').format(visitStartTime!)}'
-                            : 'Inicio: \n',
-                        style: DefaultTextStyle.of(context).style,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await _selectDate(context, onDateStartSelected);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: visitStartTime != null
+                                ? 'Fecha inicio: \n${DateFormat('yyyy-MM-dd').format(visitStartTime!)}'
+                                : 'Fecha inicio: \n',
+                            style: DefaultTextStyle.of(context).style,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await _selectDate(context, onDateEndSelected);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: visitEndTime != null
+                                ? 'Fecha fin: \n${DateFormat('yyyy-MM-dd').format(visitEndTime!)}'
+                                : 'Fecha fin: \n',
+                            style: DefaultTextStyle.of(context).style,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _selectDateTime(context, onTimeFinSelected);
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: visitEndTime != null
-                            ? 'Fin: \n${DateFormat('yyyy-MM-dd HH:mm').format(visitEndTime!)}'
-                            : 'Fin: \n',
-                        style: DefaultTextStyle.of(context).style,
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await _selectTime(context, onTimeStartSelected);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: visitStartTime != null
+                                ? 'Hora inicio: \n${DateFormat('HH:mm').format(visitStartTime!)}'
+                                : 'Hora inicio: \n',
+                            style: DefaultTextStyle.of(context).style,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await _selectTime(context, onTimeEndSelected);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: visitEndTime != null
+                                ? 'Hora fin: \n${DateFormat('HH:mm').format(visitEndTime!)}'
+                                : 'Hora fin: \n',
+                            style: DefaultTextStyle.of(context).style,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          //if (accessCode.isNotEmpty) Text('Código: $accessCode'),
         ],
       ),
     );
@@ -287,13 +346,13 @@ class VisitInformation extends StatelessWidget {
         final now = DateTime.now();
         final newEndTime = now.add(Duration(hours: hours));
         onTimeStartSelected(now);
-        onTimeFinSelected(newEndTime);
+        onTimeEndSelected(newEndTime);
       },
       child: Text('$hours h'),
     );
   }
 
-  Future<void> _selectDateTime(
+  Future<void> _selectDate(
       BuildContext context, ValueChanged<DateTime> onSelected) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -302,47 +361,27 @@ class VisitInformation extends StatelessWidget {
       lastDate: DateTime(2034),
     );
     if (pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        // ignore: use_build_context_synchronously
-        context: context,
-        initialTime: TimeOfDay.now(),
+      onSelected(pickedDate);
+    }
+  }
+
+  Future<void> _selectTime(
+      BuildContext context, ValueChanged<DateTime> onSelected) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      final now = DateTime.now();
+      final DateTime finalDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        pickedTime.hour,
+        pickedTime.minute,
       );
-      if (pickedTime != null) {
-        final DateTime finalDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
 
-        // Validación para onTimeStartSelected (inicio)
-        if (onSelected == onTimeStartSelected &&
-            finalDateTime.isBefore(DateTime.now())) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text(
-                    'La fecha de inicio debe ser la hora actual o posterior')),
-          );
-          return;
-        }
-
-        // Validación para onTimeFinSelected (fin)
-        if (onSelected == onTimeFinSelected &&
-            visitStartTime != null &&
-            finalDateTime.isBefore(visitStartTime!)) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text(
-                    'La fecha de fin debe ser posterior a la fecha de inicio')),
-          );
-          return;
-        }
-
-        onSelected(finalDateTime);
-      }
+      onSelected(finalDateTime);
     }
   }
 }
