@@ -20,7 +20,7 @@ class VisitInformation extends StatefulWidget {
     required this.accessCode,
     required this.onTimeStartSelected,
     required this.onTimeFinSelected,
-    required this.onVisitTypeSelected,
+    required this.onVisitTypeSelected, String? timeType, required void Function(String? newValue) onTimeTypeSelected,
   });
 
   @override
