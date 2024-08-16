@@ -89,7 +89,6 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   },
                   onTimeStartSelected: (DateTime dateTime) {
                     setState(() {
-                      // Combina la fecha seleccionada con la hora seleccionada
                       _visitStartTime = DateTime(
                         _visitStartTime?.year ?? dateTime.year,
                         _visitStartTime?.month ?? dateTime.month,
@@ -101,7 +100,6 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   },
                   onTimeEndSelected: (DateTime dateTime) {
                     setState(() {
-                      // Combina la fecha seleccionada con la hora seleccionada
                       _visitEndTime = DateTime(
                         _visitEndTime?.year ?? dateTime.year,
                         _visitEndTime?.month ?? dateTime.month,
@@ -193,6 +191,35 @@ class VisitInformation extends StatelessWidget {
     required this.onTimeTypeSelected,
   });
 
+  DateTime calculateEndTime(DateTime startTime, int hours) {
+    return startTime.add(Duration(hours: hours));
+  }
+
+  Widget buildDateSelection(BuildContext context, String label, DateTime? date, ValueChanged<DateTime> onSelected) {
+  return Expanded(
+    child: ElevatedButton(
+      onPressed: () async {
+        final pickedDate = await showDatePicker(
+          context: context,
+          initialDate: date ?? DateTime.now(),
+          firstDate: DateTime(2024),
+          lastDate: DateTime(2034),
+        );
+        if (pickedDate != null) {
+          onSelected(pickedDate);
+        }
+      },
+      child: RichText(
+        text: TextSpan(
+          text: date != null ? '$label: \n${DateFormat('yyyy-MM-dd').format(date)}' : '$label: \n',
+          style: DefaultTextStyle.of(context).style,
+        ),
+      ),
+    ),
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -264,73 +291,17 @@ class VisitInformation extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await _selectDate(context, onDateStartSelected);
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            text: visitStartTime != null
-                                ? 'Fecha inicio: \n${DateFormat('yyyy-MM-dd').format(visitStartTime!)}'
-                                : 'Fecha inicio: \n',
-                            style: DefaultTextStyle.of(context).style,
-                          ),
-                        ),
-                      ),
-                    ),
+                    buildDateSelection(context, 'Fecha inicio', visitStartTime, onDateStartSelected),
                     const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await _selectDate(context, onDateEndSelected);
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            text: visitEndTime != null
-                                ? 'Fecha fin: \n${DateFormat('yyyy-MM-dd').format(visitEndTime!)}'
-                                : 'Fecha fin: \n',
-                            style: DefaultTextStyle.of(context).style,
-                          ),
-                        ),
-                      ),
-                    ),
+                    buildDateSelection(context, 'Fecha fin', visitEndTime, onDateEndSelected),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await _selectTime(context, onTimeStartSelected);
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            text: visitStartTime != null
-                                ? 'Hora inicio: \n${DateFormat('HH:mm').format(visitStartTime!)}'
-                                : 'Hora inicio: \n',
-                            style: DefaultTextStyle.of(context).style,
-                          ),
-                        ),
-                      ),
-                    ),
+                    buildDateSelection(context, 'Hora inicio', visitStartTime, onTimeStartSelected),
                     const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await _selectTime(context, onTimeEndSelected);
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            text: visitEndTime != null
-                                ? 'Hora fin: \n${DateFormat('HH:mm').format(visitEndTime!)}'
-                                : 'Hora fin: \n',
-                            style: DefaultTextStyle.of(context).style,
-                          ),
-                        ),
-                      ),
-                    ),
+                    buildDateSelection(context, 'Hora fin', visitEndTime, onTimeEndSelected),
                   ],
                 ),
               ],
@@ -344,16 +315,15 @@ class VisitInformation extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         final now = DateTime.now();
-        final newEndTime = now.add(Duration(hours: hours));
+        final newEndTime = calculateEndTime(now, hours);
         onTimeStartSelected(now);
         onTimeEndSelected(newEndTime);
       },
       child: Text('$hours h'),
     );
   }
- 
-  Future<void> _selectDate(
-      BuildContext context, ValueChanged<DateTime> onSelected) async {
+
+  Future<void> _selectDate(BuildContext context, ValueChanged<DateTime> onSelected) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -373,7 +343,7 @@ class VisitInformation extends StatelessWidget {
     );
     if (pickedTime != null) {
       final now = DateTime.now();
-      final DateTime finalDateTime = DateTime(
+      final DateTime selectedDateTime = DateTime(
         now.year,
         now.month,
         now.day,
@@ -381,7 +351,7 @@ class VisitInformation extends StatelessWidget {
         pickedTime.minute,
       );
 
-      onSelected(finalDateTime);
+      onSelected(selectedDateTime);
     }
   }
 }
