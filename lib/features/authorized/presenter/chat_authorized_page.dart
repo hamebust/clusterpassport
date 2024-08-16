@@ -351,7 +351,7 @@ class VisitInformation extends StatelessWidget {
       child: Text('$hours h'),
     );
   }
-
+ 
   Future<void> _selectDate(
       BuildContext context, ValueChanged<DateTime> onSelected) async {
     final DateTime? pickedDate = await showDatePicker(
