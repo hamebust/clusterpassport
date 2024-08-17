@@ -31,6 +31,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   DateTime? _visitStartTime = DateTime.now();
   DateTime? _visitEndTime;
   final String _accessCode = const Uuid().v4();
+  int? _selectedHour; // Variable para almacenar el botón de hora seleccionado
 
   @override
   void initState() {
@@ -98,6 +99,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   visitStartTime: _visitStartTime,
                   visitEndTime: _visitEndTime,
                   accessCode: _accessCode,
+                  selectedHour: _selectedHour,
                   onDateStartSelected: (DateTime dateTime) {
                     setState(() {
                       _visitStartTime = dateTime;
@@ -132,6 +134,11 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   },
                   onVisitTypeSelected: _updateVisitType,
                   onTimeTypeSelected: _updateTimeType,
+                  onHourSelected: (int hours) {
+                    setState(() {
+                      _selectedHour = hours;
+                    });
+                  },
                 ),
                 Row(
                   children: [
@@ -190,12 +197,14 @@ class VisitInformation extends StatelessWidget {
   final DateTime? visitEndTime;
   final String accessCode;
   final String? timeType;
+  final int? selectedHour; // Variable para el botón de hora seleccionado
   final ValueChanged<DateTime> onDateStartSelected;
   final ValueChanged<DateTime> onDateEndSelected;
   final ValueChanged<DateTime> onTimeStartSelected;
   final ValueChanged<DateTime> onTimeEndSelected;
   final ValueChanged<String?> onVisitTypeSelected;
   final ValueChanged<String?> onTimeTypeSelected;
+  final ValueChanged<int> onHourSelected; // Callback para seleccionar la hora
 
   VisitInformation({
     super.key,
@@ -211,17 +220,12 @@ class VisitInformation extends StatelessWidget {
     required this.onTimeEndSelected,
     required this.onVisitTypeSelected,
     required this.onTimeTypeSelected,
+    required this.selectedHour,
+    required this.onHourSelected,
   });
 
   bool _isSelectedHour(int hours) {
-    if (visitStartTime == null || visitEndTime == null) {
-      return false;
-    }
-
-    final startHour = visitStartTime!.hour;
-    final endHour = visitEndTime!.hour;
-
-    return startHour <= hours && hours < endHour;
+    return selectedHour == hours;
   }
 
   DateTime calculateEndTime(DateTime startTime, int hours) {
@@ -275,27 +279,24 @@ class VisitInformation extends StatelessWidget {
           Row(
             children: [
               const SizedBox(
-                width: 100,
+                width: 110,
                 child: Text('Visita Tipo:'),
               ),
               const SizedBox(width: 8),
-              SizedBox(
-                width: 200,
-                child: Expanded(
-                  child: DropdownButton<String>(
-                    value: visitType,
-                    hint: const Text('Visita'),
-                    items: <String>[
-                      'Personal (privada)',
-                      'Servicio o trabajador (pública)'
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: onVisitTypeSelected,
-                  ),
+              Expanded(
+                child: DropdownButton<String>(
+                  value: visitType,
+                  hint: const Text('Visita'),
+                  items: <String>[
+                    'Personal (privada)',
+                    'Servicio (pública)'
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: onVisitTypeSelected,
                 ),
               ),
             ],
@@ -303,25 +304,22 @@ class VisitInformation extends StatelessWidget {
           Row(
             children: [
               const SizedBox(
-                width: 100,
+                width: 110,
                 child: Text('Tiempo Tipo:'),
               ),
               const SizedBox(width: 8),
-              SizedBox(
-                width: 200,
-                child: Expanded(
-                  child: DropdownButton<String>(
-                    value: timeType,
-                    hint: const Text('Selecciona el tipo de tiempo'),
-                    items: <String>['Por lapso', 'Por horario', 'Permanente']
-                        .map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: onTimeTypeSelected,
-                  ),
+              Expanded(
+                child: DropdownButton<String>(
+                  value: timeType,
+                  hint: const Text('Seleccione'),
+                  items: <String>['Por lapso', 'Por horario', 'Permanente']
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: onTimeTypeSelected,
                 ),
               ),
             ],
@@ -333,8 +331,8 @@ class VisitInformation extends StatelessWidget {
               children: [
                 _buildHourButton(1, context, _isSelectedHour(1)),
                 _buildHourButton(2, context, _isSelectedHour(2)),
-                _buildHourButton(4, context, _isSelectedHour(3)),
-                _buildHourButton(8, context, _isSelectedHour(4)),
+                _buildHourButton(4, context, _isSelectedHour(4)),
+                _buildHourButton(8, context, _isSelectedHour(8)),
               ],
             ),
           if (timeType == 'Por horario')
@@ -377,6 +375,7 @@ class VisitInformation extends StatelessWidget {
         final newEndTime = calculateEndTime(now, hours);
         onTimeStartSelected(now);
         onTimeEndSelected(newEndTime);
+        onHourSelected(hours); // Actualizar el botón de hora seleccionado
       },
       child: Text('$hours h'),
     );
