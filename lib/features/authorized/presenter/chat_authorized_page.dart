@@ -133,7 +133,14 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                     });
                   },
                   onVisitTypeSelected: _updateVisitType,
-                  onTimeTypeSelected: _updateTimeType,
+                  onTimeTypeSelected: (newValue) {
+                    setState(() {
+                      _selectedTimeType = newValue;
+                      if (newValue == 'Permanente') {
+                        _visitStartTime = DateTime.now();
+                      }
+                    });
+                  },
                   onHourSelected: (int hours) {
                     setState(() {
                       _selectedHour = hours;
@@ -179,12 +186,6 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   void _updateVisitType(String? newValue) {
     setState(() {
       _selectedVisitType = newValue;
-    });
-  }
-
-  void _updateTimeType(String? newValue) {
-    setState(() {
-      _selectedTimeType = newValue;
     });
   }
 }
@@ -319,7 +320,14 @@ class VisitInformation extends StatelessWidget {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: onTimeTypeSelected,
+                  onChanged: (newValue) {
+                    onTimeTypeSelected(newValue);
+                    if (newValue == 'Permanente') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('La visita será permanente a partir de hoy.'))
+                      );
+                    }
+                  },
                 ),
               ),
             ],
