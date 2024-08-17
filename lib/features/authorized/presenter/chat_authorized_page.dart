@@ -9,14 +9,36 @@ class ChatAuthorizedPage extends StatefulWidget {
   State<ChatAuthorizedPage> createState() => _ChatAuthorizedPageState();
 }
 
+class DateTimeLocale extends StatelessWidget {
+  const DateTimeLocale({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final formatter = DateFormat.yMd(locale.toString()).add_Hm(); // Locale-specific formatting
+    final formattedDateTime = formatter.format(DateTime.now());
+
+    return Text(formattedDateTime);
+  }
+}
+
 class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
+  late String formattedDate;
+  late String formattedTime;
   String? _selectedTimeType = 'Por lapso';
   String? _selectedVisitType = 'Personal (privada)';
   String _visitReason = 'motivo de la visita';
   DateTime? _visitStartTime = DateTime.now();
   DateTime? _visitEndTime;
   final String _accessCode = const Uuid().v4();
- 
+
+  @override
+  void initState() {
+    super.initState();
+    formattedDate = DateFormat('EEEE, d MMM yyyy').format(DateTime.now());
+    formattedTime = DateFormat('HH:mm').format(DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +47,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Ambar Medina'),
-            Text('Online',
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+            Text('Online', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           ],
         ),
         leading: IconButton(
@@ -162,6 +183,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
 }
 
 class VisitInformation extends StatelessWidget {
+  final DateFormat formatter = DateFormat('dd/MM/yyyy');
   final String? visitType;
   final String visitReason;
   final DateTime? visitStartTime;
@@ -175,7 +197,7 @@ class VisitInformation extends StatelessWidget {
   final ValueChanged<String?> onVisitTypeSelected;
   final ValueChanged<String?> onTimeTypeSelected;
 
-  const VisitInformation({
+  VisitInformation({
     super.key,
     required this.timeType,
     required this.visitType,
@@ -191,34 +213,51 @@ class VisitInformation extends StatelessWidget {
     required this.onTimeTypeSelected,
   });
 
+  bool _isSelectedHour(int hours) {
+    if (visitStartTime == null || visitEndTime == null) {
+      return false;
+    }
+
+    final startHour = visitStartTime!.hour;
+    final endHour = visitEndTime!.hour;
+
+    return startHour <= hours && hours < endHour;
+  }
+
   DateTime calculateEndTime(DateTime startTime, int hours) {
     return startTime.add(Duration(hours: hours));
   }
 
-  Widget buildDateSelection(BuildContext context, String label, DateTime? date, ValueChanged<DateTime> onSelected) {
-  return Expanded(
-    child: ElevatedButton(
-      onPressed: () async {
-        final pickedDate = await showDatePicker(
-          context: context,
-          initialDate: date ?? DateTime.now(),
-          firstDate: DateTime(2024),
-          lastDate: DateTime(2034),
-        );
-        if (pickedDate != null) {
-          onSelected(pickedDate);
-        }
-      },
-      child: RichText(
-        text: TextSpan(
-          text: date != null ? '$label: \n${DateFormat('yyyy-MM-dd').format(date)}' : '$label: \n',
-          style: DefaultTextStyle.of(context).style,
+  Widget buildDateSelection(BuildContext context, String label, DateTime? date,
+      ValueChanged<DateTime> onSelected, bool showTime) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () async {
+          if (showTime) {
+            await _selectTime(context, onSelected, date);
+          } else {
+            final pickedDate = await showDatePicker(
+              context: context,
+              initialDate: date ?? DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime(2034),
+            );
+            if (pickedDate != null) {
+              onSelected(pickedDate);
+            }
+          }
+        },
+        child: RichText(
+          text: TextSpan(
+            text: date != null
+                ? '$label: \n${DateFormat(showTime ? 'HH:mm' : 'yyyy-MM-dd').format(date)}'
+                : '$label: \n',
+            style: DefaultTextStyle.of(context).style,
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -235,42 +274,54 @@ class VisitInformation extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text('Visita:'),
+              const SizedBox(
+                width: 100,
+                child: Text('Visita Tipo:'),
+              ),
               const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButton<String>(
-                  value: visitType,
-                  hint: const Text('Visita'),
-                  items: <String>[
-                    'Personal (privada)',
-                    'Servicio o trabajador (pública)'
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: onVisitTypeSelected,
+              SizedBox(
+                width: 200,
+                child: Expanded(
+                  child: DropdownButton<String>(
+                    value: visitType,
+                    hint: const Text('Visita'),
+                    items: <String>[
+                      'Personal (privada)',
+                      'Servicio o trabajador (pública)'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: onVisitTypeSelected,
+                  ),
                 ),
               ),
             ],
           ),
           Row(
             children: [
-              const Text('Tipo de tiempo:'),
+              const SizedBox(
+                width: 100,
+                child: Text('Tiempo Tipo:'),
+              ),
               const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButton<String>(
-                  value: timeType,
-                  hint: const Text('Selecciona el tipo de tiempo'),
-                  items: <String>['Por lapso', 'Por horario', 'Permanente']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: onTimeTypeSelected,
+              SizedBox(
+                width: 200,
+                child: Expanded(
+                  child: DropdownButton<String>(
+                    value: timeType,
+                    hint: const Text('Selecciona el tipo de tiempo'),
+                    items: <String>['Por lapso', 'Por horario', 'Permanente']
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: onTimeTypeSelected,
+                  ),
                 ),
               ),
             ],
@@ -280,10 +331,10 @@ class VisitInformation extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildHourButton(1, context),
-                _buildHourButton(2, context),
-                _buildHourButton(4, context),
-                _buildHourButton(8, context),
+                _buildHourButton(1, context, _isSelectedHour(1)),
+                _buildHourButton(2, context, _isSelectedHour(2)),
+                _buildHourButton(4, context, _isSelectedHour(3)),
+                _buildHourButton(8, context, _isSelectedHour(4)),
               ],
             ),
           if (timeType == 'Por horario')
@@ -291,17 +342,21 @@ class VisitInformation extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    buildDateSelection(context, 'Fecha inicio', visitStartTime, onDateStartSelected),
+                    buildDateSelection(context, 'Fecha inicio', visitStartTime,
+                        onDateStartSelected, false),
                     const SizedBox(width: 8),
-                    buildDateSelection(context, 'Fecha fin', visitEndTime, onDateEndSelected),
+                    buildDateSelection(context, 'Fecha fin', visitEndTime,
+                        onDateEndSelected, false),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    buildDateSelection(context, 'Hora inicio', visitStartTime, onTimeStartSelected),
+                    buildDateSelection(context, 'Hora inicio', visitStartTime,
+                        onTimeStartSelected, true),
                     const SizedBox(width: 8),
-                    buildDateSelection(context, 'Hora fin', visitEndTime, onTimeEndSelected),
+                    buildDateSelection(context, 'Hora fin', visitEndTime,
+                        onTimeEndSelected, true),
                   ],
                 ),
               ],
@@ -311,8 +366,12 @@ class VisitInformation extends StatelessWidget {
     );
   }
 
-  Widget _buildHourButton(int hours, BuildContext context) {
+  Widget _buildHourButton(int hours, BuildContext context, bool isSelected) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isSelected ? Theme.of(context).primaryColor : Colors.grey[200],
+        foregroundColor: isSelected ? Colors.white : Colors.black,
+      ),
       onPressed: () {
         final now = DateTime.now();
         final newEndTime = calculateEndTime(now, hours);
@@ -323,34 +382,20 @@ class VisitInformation extends StatelessWidget {
     );
   }
 
-  Future<void> _selectDate(BuildContext context, ValueChanged<DateTime> onSelected) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2024),
-      lastDate: DateTime(2034),
-    );
-    if (pickedDate != null) {
-      onSelected(pickedDate);
-    }
-  }
-
-  Future<void> _selectTime(
-      BuildContext context, ValueChanged<DateTime> onSelected) async {
+  Future<void> _selectTime(BuildContext context, ValueChanged<DateTime> onSelected, DateTime? initialDate) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: initialDate != null ? TimeOfDay.fromDateTime(initialDate) : TimeOfDay.now(),
     );
+
     if (pickedTime != null) {
-      final now = DateTime.now();
       final DateTime selectedDateTime = DateTime(
-        now.year,
-        now.month,
-        now.day,
+        initialDate?.year ?? DateTime.now().year,
+        initialDate?.month ?? DateTime.now().month,
+        initialDate?.day ?? DateTime.now().day,
         pickedTime.hour,
         pickedTime.minute,
       );
-
       onSelected(selectedDateTime);
     }
   }

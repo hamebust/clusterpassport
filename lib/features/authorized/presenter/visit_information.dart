@@ -174,6 +174,7 @@ class _VisitInformationState extends State<VisitInformation> {
     );
     if (pickedDate != null) {
       final TimeOfDay? pickedTime = await showTimePicker(
+        // ignore: use_build_context_synchronously
         context: context,
         initialTime: TimeOfDay.now(),
       );
@@ -188,6 +189,7 @@ class _VisitInformationState extends State<VisitInformation> {
 
         if (onSelected == widget.onTimeStartSelected &&
             finalDateTime.isBefore(DateTime.now())) {
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
                 content:
@@ -199,6 +201,7 @@ class _VisitInformationState extends State<VisitInformation> {
         if (onSelected == widget.onTimeFinSelected &&
             widget.visitStartTime != null &&
             finalDateTime.isBefore(widget.visitStartTime!)) {
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
                 content: Text(
