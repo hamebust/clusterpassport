@@ -322,6 +322,48 @@ class VisitInformation extends StatelessWidget {
                   }).toList(),
                   onChanged: (newValue) {
                     onTimeTypeSelected(newValue);
+
+                    
+                    if (timeType == 'Por lapso') {
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildHourButton(1, context, _isSelectedHour(1)),
+                          _buildHourButton(2, context, _isSelectedHour(2)),
+                          _buildHourButton(4, context, _isSelectedHour(4)),
+                          _buildHourButton(8, context, _isSelectedHour(8)),
+                        ],
+                      );
+                    }
+
+                    
+                    if (timeType == 'Por horario') {
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              buildDateSelection(context, 'Fecha inicio', visitStartTime,
+                                  onDateStartSelected, false),
+                              const SizedBox(width: 8),
+                              buildDateSelection(context, 'Fecha fin', visitEndTime,
+                                  onDateEndSelected, false),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              buildDateSelection(context, 'Hora inicio', visitStartTime,
+                                  onTimeStartSelected, true),
+                              const SizedBox(width: 8),
+                              buildDateSelection(context, 'Hora fin', visitEndTime,
+                                  onTimeEndSelected, true),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+
+
                     if (newValue == 'Permanente') {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('La visita será permanente a partir de hoy.'))
@@ -333,40 +375,6 @@ class VisitInformation extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          if (timeType == 'Por lapso')
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildHourButton(1, context, _isSelectedHour(1)),
-                _buildHourButton(2, context, _isSelectedHour(2)),
-                _buildHourButton(4, context, _isSelectedHour(4)),
-                _buildHourButton(8, context, _isSelectedHour(8)),
-              ],
-            ),
-          if (timeType == 'Por horario')
-            Column(
-              children: [
-                Row(
-                  children: [
-                    buildDateSelection(context, 'Fecha inicio', visitStartTime,
-                        onDateStartSelected, false),
-                    const SizedBox(width: 8),
-                    buildDateSelection(context, 'Fecha fin', visitEndTime,
-                        onDateEndSelected, false),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    buildDateSelection(context, 'Hora inicio', visitStartTime,
-                        onTimeStartSelected, true),
-                    const SizedBox(width: 8),
-                    buildDateSelection(context, 'Hora fin', visitEndTime,
-                        onTimeEndSelected, true),
-                  ],
-                ),
-              ],
-            ),
         ],
       ),
     );
