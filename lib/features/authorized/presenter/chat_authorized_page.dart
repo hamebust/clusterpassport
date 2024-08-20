@@ -15,7 +15,8 @@ class DateTimeLocale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
-    final formatter = DateFormat.yMd(locale.toString()).add_Hm(); // Locale-specific formatting
+    final formatter = DateFormat.yMd(locale.toString())
+        .add_Hm(); // Locale-specific formatting
     final formattedDateTime = formatter.format(DateTime.now());
 
     return Text(formattedDateTime);
@@ -48,7 +49,8 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Ambar Medina'),
-            Text('Online', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+            Text('Online',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           ],
         ),
         leading: IconButton(
@@ -277,113 +279,114 @@ class VisitInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 110,
-                child: Text('Visita Tipo:'),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButton<String>(
-                  value: visitType,
-                  hint: const Text('Visita'),
-                  items: <String>[
-                    'Personal (privada)',
-                    'Servicio (pública)'
-                  ].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: onVisitTypeSelected,
-                ),
-              ),
-            ],
+          _buildDropdownRow('Visita Tipo:',visitType,['Personal (privada)', 'Servicio (pública)'],
+            onVisitTypeSelected,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 110,
-                child: Text('Tiempo Tipo:'),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButton<String>(
-                  value: timeType,
-                  hint: const Text('Seleccione'),
-                  items: <String>['Por lapso', 'Por horario', 'Permanente']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    onTimeTypeSelected(newValue);
-
-                    
-                    if (timeType == 'Por lapso') {
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildHourButton(1, context, _isSelectedHour(1)),
-                          _buildHourButton(2, context, _isSelectedHour(2)),
-                          _buildHourButton(4, context, _isSelectedHour(4)),
-                          _buildHourButton(8, context, _isSelectedHour(8)),
-                        ],
-                      );
-                    }
-
-                    
-                    if (timeType == 'Por horario') {
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              buildDateSelection(context, 'Fecha inicio', visitStartTime,
-                                  onDateStartSelected, false),
-                              const SizedBox(width: 8),
-                              buildDateSelection(context, 'Fecha fin', visitEndTime,
-                                  onDateEndSelected, false),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              buildDateSelection(context, 'Hora inicio', visitStartTime,
-                                  onTimeStartSelected, true),
-                              const SizedBox(width: 8),
-                              buildDateSelection(context, 'Hora fin', visitEndTime,
-                                  onTimeEndSelected, true),
-                            ],
-                          ),
-                        ],
-                      );
-                    }
-
-
-                    if (newValue == 'Permanente') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('La visita será permanente a partir de hoy.'))
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
+          _buildDropdownRow('Tiempo Tipo:', timeType,
+            ['Por lapso', 'Por horario', 'Permanente'],
+            (newValue) {
+              onTimeTypeSelected(newValue);
+              if (newValue == 'Permanente') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content:
+                          Text('La visita será permanente a partir de hoy.')),
+                );
+              }
+            },
           ),
           const SizedBox(height: 8),
+          if (timeType == 'Permanente' || timeType == 'Por horario')
+            Column(
+              children: [
+                Row(
+                  children: [
+                    buildDateSelection(context,
+                      'Fecha inicio',
+                      visitStartTime,
+                      onDateStartSelected,
+                      false,
+                    ),
+                    const SizedBox(width: 8),
+                    buildDateSelection(
+                      context,
+                      'Hora inicio',
+                      visitStartTime,
+                      onTimeStartSelected,
+                      true,
+                    ),
+                  ],
+                ),
+                if (timeType == 'Por horario') ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      buildDateSelection(
+                        context,
+                        'Fecha fin',
+                        visitEndTime,
+                        onDateEndSelected,
+                        false,
+                      ),
+                      const SizedBox(width: 8),
+                      buildDateSelection(
+                        context,
+                        'Hora fin',
+                        visitEndTime,
+                        onTimeEndSelected,
+                        true,
+                      ),
+                    ],
+                  ),
+                ]
+              ],
+            ),
+          if (timeType == 'Por lapso')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildHourButton(1, context, _isSelectedHour(1)),
+                _buildHourButton(2, context, _isSelectedHour(2)),
+                _buildHourButton(4, context, _isSelectedHour(4)),
+                _buildHourButton(8, context, _isSelectedHour(8)),
+              ],
+            ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDropdownRow(String label, String? value, List<String> items,
+      ValueChanged<String?> onChanged) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 110,
+          child: Text(label),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: DropdownButton<String>(
+            value: value,
+            hint: Text(label),
+            items: items.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: onChanged,
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildHourButton(int hours, BuildContext context, bool isSelected) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Theme.of(context).primaryColor : Colors.grey[200],
+        backgroundColor:
+            isSelected ? Theme.of(context).primaryColor : Colors.grey[200],
         foregroundColor: isSelected ? Colors.white : Colors.black,
       ),
       onPressed: () {
@@ -397,10 +400,13 @@ class VisitInformation extends StatelessWidget {
     );
   }
 
-  Future<void> _selectTime(BuildContext context, ValueChanged<DateTime> onSelected, DateTime? initialDate) async {
+  Future<void> _selectTime(BuildContext context,
+      ValueChanged<DateTime> onSelected, DateTime? initialDate) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: initialDate != null ? TimeOfDay.fromDateTime(initialDate) : TimeOfDay.now(),
+      initialTime: initialDate != null
+          ? TimeOfDay.fromDateTime(initialDate)
+          : TimeOfDay.now(),
     );
 
     if (pickedTime != null) {
