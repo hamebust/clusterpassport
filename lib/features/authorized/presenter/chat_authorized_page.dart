@@ -175,7 +175,7 @@ class VisitInformation extends StatelessWidget {
   final ValueChanged<String?> onTimeTypeSelected;
   final ValueChanged<int> onHourSelected;
 
-  VisitInformation({
+  const VisitInformation({
     super.key,
     required this.timeType,
     required this.visitType,
@@ -253,7 +253,7 @@ class VisitInformation extends StatelessWidget {
           ),
           child: Text(
             '$label: $formattedDateTime',
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
