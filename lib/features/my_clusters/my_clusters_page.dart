@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Cluster {
+  final int id;
   final IconData icon;
   final String title;
   final String subtitle;
 
   Cluster({
+    required this.id,
     required this.icon,
     required this.title,
     required this.subtitle,
@@ -17,16 +19,19 @@ class MyClustersPage extends StatelessWidget {
 
   final List<Cluster> myclusters = [
     Cluster(
+      id: 1,
       icon: Icons.business,
       title: 'Centro Comercial Oleus',
       subtitle: 'Mi trabajo',
     ),
     Cluster(
+      id: 2,
       icon: Icons.apartment,
       title: 'Conjunto Residencial Loma Linda',
       subtitle: 'Mi hogar',
     ),
     Cluster(
+      id: 3,
       icon: Icons.apartment,
       title: 'Conjunto Residencial El Remanso',
       subtitle: 'Mi hogar',
@@ -76,6 +81,48 @@ class ClusterCard extends StatelessWidget {
         ),
         title: Text(cluster.title),
         subtitle: Text(cluster.subtitle),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClusterPage(cluster: cluster),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ClusterPage extends StatelessWidget {
+  final Cluster cluster;
+
+  const ClusterPage({super.key, required this.cluster});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(cluster.title),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(cluster.icon, size: 100),
+            const SizedBox(height: 20),
+            Text(
+              cluster.title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              cluster.subtitle,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ],
+        ),
       ),
     );
   }
