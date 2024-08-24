@@ -20,10 +20,10 @@ import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/authorized/authorized_page.dart';
 //Paquete que permite conectar a ClustersPage: página de clusters en la carpeta lib/features/clusters
 //Package that allows connecting to ClustersPage: clusters page in the lib/features/clusters folder
-import 'package:cluster_passport/features/clusters/clusters_page.dart';
+import 'package:cluster_passport/features/clusters/ui/clusters_page.dart';
 //Paquete que permite conectar a MyClustersPage: página de clusters propios en la carpeta lib/features/my_clusters
 //Package that allows connecting to MyClustersPage: my clusters page in the lib/features/my_clusters folder
-import 'package:cluster_passport/features/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/ui/my_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
 //Paquete que permite conectar a NotifyPage: página de notificaciones en la carpeta lib/features/notify
 //Package that allows connecting to NotifyPage: notifications page in the lib/features/notify folder
