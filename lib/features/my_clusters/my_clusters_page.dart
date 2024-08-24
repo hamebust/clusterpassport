@@ -162,19 +162,19 @@ class ClusterCard extends StatelessWidget {
   }
 }
 
-//import 'package:flutter/material.dart';
-
 class Unit {
   final String name;
+  final String user; // Nuevo campo para almacenar el nombre del usuario
 
-  Unit({required this.name});
+  Unit({required this.name, required this.user});
 }
 
 class Area {
   final String name;
+  final String user; // Nuevo campo para almacenar el nombre del usuario
   final List<Unit> units;
 
-  Area({required this.name, required this.units});
+  Area({required this.name, required this.user, required this.units});
 }
 
 class ClusterPage extends StatefulWidget {
@@ -198,77 +198,27 @@ class _ClusterPageState extends State<ClusterPage> {
     areas = [
       Area(
         name: 'Torre 1',
+        user: 'Usuario 1',
         units: [
-          Unit(name: 'Apto. 1-PB-1'),
-          Unit(name: 'Apto. 1-PB-2'),
-          Unit(name: 'Apto. 1-PB-3'),
-          Unit(name: 'Apto. 1-PB-4'),
-          Unit(name: 'Apto. 1-1-1'),
-          Unit(name: 'Apto. 1-1-2'),
-          Unit(name: 'Apto. 1-1-3'),
-          Unit(name: 'Apto. 1-1-4'),
-          Unit(name: 'Apto. 1-1-5'),
-          Unit(name: 'Apto. 1-1-6'),
-          Unit(name: 'Apto. 1-1-7'),
-          Unit(name: 'Apto. 1-1-8'),
-          Unit(name: 'Apto. 1-2-1'),
-          Unit(name: 'Apto. 1-2-2'),
-          Unit(name: 'Apto. 1-2-3'),
-          Unit(name: 'Apto. 1-2-4'),
-          Unit(name: 'Apto. 1-2-5'),
-          Unit(name: 'Apto. 1-2-6'),
-          Unit(name: 'Apto. 1-2-7'),
-          Unit(name: 'Apto. 1-2-8'),
-          Unit(name: 'Apto. 1-3-1'),
-          Unit(name: 'Apto. 1-3-2'),
-          Unit(name: 'Apto. 1-3-3'),
-          Unit(name: 'Apto. 1-3-4'),
-          Unit(name: 'Apto. 1-3-5'),
-          Unit(name: 'Apto. 1-3-6'),
-          Unit(name: 'Apto. 1-3-7'),
-          Unit(name: 'Apto. 1-3-8'),
-          Unit(name: 'Apto. 1-4-1'),
-          Unit(name: 'Apto. 1-4-2'),
-          Unit(name: 'Apto. 1-4-3'),
-          Unit(name: 'Apto. 1-4-4'),
-          Unit(name: 'Apto. 1-4-5'),
-          Unit(name: 'Apto. 1-4-6'),
-          Unit(name: 'Apto. 1-4-7'),
-          Unit(name: 'Apto. 1-4-8'),
+          Unit(name: 'Apto. 1-PB-1', user: 'Usuario 1A'),
+          Unit(name: 'Apto. 1-PB-2', user: 'Usuario 1B'),
+          // Otros apartamentos...
         ],
       ),
       Area(
         name: 'Torre 2',
+        user: 'Usuario 2',
         units: [
-          Unit(name: 'Apto. 2A'),
-          Unit(name: 'Apto. 2B'),
+          Unit(name: 'Apto. 2A', user: 'Usuario 2A'),
+          Unit(name: 'Apto. 2B', user: 'Usuario 2B'),
         ],
       ),
       Area(
         name: 'Torre 3',
+        user: 'Usuario 3',
         units: [
-          Unit(name: 'Apto. 3A'),
-          Unit(name: 'Apto. 3B'),
-          Unit(name: 'Apto. 3C'),
-          Unit(name: 'Apto. 3D'),
-        ],
-      ),
-      Area(
-        name: 'Torre 4',
-        units: [
-          Unit(name: 'Apto. 3A'),
-          Unit(name: 'Apto. 3B'),
-          Unit(name: 'Apto. 3C'),
-          Unit(name: 'Apto. 3D'),
-        ],
-      ),
-      Area(
-        name: 'Torre 5',
-        units: [
-          Unit(name: 'Apto. 3A'),
-          Unit(name: 'Apto. 3B'),
-          Unit(name: 'Apto. 3C'),
-          Unit(name: 'Apto. 3D'),
+          Unit(name: 'Apto. 3A', user: 'Usuario 3A'),
+          Unit(name: 'Apto. 3B', user: 'Usuario 3B'),
         ],
       ),
     ];
@@ -277,9 +227,9 @@ class _ClusterPageState extends State<ClusterPage> {
     selectedUnits = areas[0].units;
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    // Calculamos 1/3 de la altura de la pantalla
+    // Calculamos 1/4 de la altura de la pantalla
     final double listViewHeight = MediaQuery.of(context).size.height / 4;
 
     return Scaffold(
@@ -319,19 +269,33 @@ class _ClusterPageState extends State<ClusterPage> {
             ),
             const SizedBox(height: 10),
             // ListView para las Áreas con altura limitada
-            Container(
-              height: 100,
+            SizedBox(
+              height: listViewHeight,
               child: ListView.builder(
                 itemCount: areas.length,
                 itemBuilder: (context, index) {
                   final area = areas[index];
-                  return ListTile(
-                    title: Text(area.name),
-                    onTap: () {
-                      setState(() {
-                        selectedUnits = area.units;
-                      });
-                    },
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(vertical: 4.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(area.name),
+                          Text(area.user, style: const TextStyle(color: Colors.grey)),
+                        ],
+                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        setState(() {
+                          selectedUnits = area.units;
+                        });
+                      },
+                    ),
                   );
                 },
               ),
@@ -365,14 +329,31 @@ class _ClusterPageState extends State<ClusterPage> {
             ),
             const SizedBox(height: 10),
             // ListView para las Unidades con altura limitada
-            Container(
+            SizedBox(
               height: listViewHeight,
               child: ListView.builder(
                 itemCount: selectedUnits.length,
                 itemBuilder: (context, index) {
                   final unit = selectedUnits[index];
-                  return ListTile(
-                    title: Text(unit.name),
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(vertical: 4.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(unit.name),
+                          Text(unit.user, style: const TextStyle(color: Colors.grey)),
+                        ],
+                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        // Acción de navegación para unidades
+                      },
+                    ),
                   );
                 },
               ),
@@ -383,7 +364,7 @@ class _ClusterPageState extends State<ClusterPage> {
       // Barra Inferior Vacía para futuras acciones
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          height: 50.0, // Altura de la barra inferior
+          height: 40.0, // Altura de la barra inferior
           color: Colors.blueGrey,
           child: const Center(
             child: Text(
