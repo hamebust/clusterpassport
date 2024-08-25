@@ -1,41 +1,106 @@
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class VisitInformation extends StatefulWidget {
+class VisitInformation extends StatelessWidget {
   final String? visitType;
   final String visitReason;
   final DateTime? visitStartTime;
   final DateTime? visitEndTime;
   final String accessCode;
+  final String? timeType;
+  final int? selectedHour;
+  final ValueChanged<DateTime> onDateStartSelected;
+  final ValueChanged<DateTime> onDateEndSelected;
   final ValueChanged<DateTime> onTimeStartSelected;
-  final ValueChanged<DateTime> onTimeFinSelected;
+  final ValueChanged<DateTime> onTimeEndSelected;
   final ValueChanged<String?> onVisitTypeSelected;
+  final ValueChanged<String?> onTimeTypeSelected;
+  final ValueChanged<int> onHourSelected;
 
   const VisitInformation({
     super.key,
+    required this.timeType,
     required this.visitType,
     required this.visitReason,
     required this.visitStartTime,
     required this.visitEndTime,
     required this.accessCode,
+    required this.onDateStartSelected,
+    required this.onDateEndSelected,
     required this.onTimeStartSelected,
-    required this.onTimeFinSelected,
-    required this.onVisitTypeSelected, String? timeType, required void Function(String? newValue) onTimeTypeSelected,
+    required this.onTimeEndSelected,
+    required this.onVisitTypeSelected,
+    required this.onTimeTypeSelected,
+    required this.selectedHour,
+    required this.onHourSelected,
   });
 
-  @override
-  State<VisitInformation> createState() => _VisitInformationState();
-}
+  bool _isSelectedHour(int hours) {
+    return selectedHour == hours;
+  }
 
-class _VisitInformationState extends State<VisitInformation> {
-  String? _selectedTimeType;
-  int? _selectedHours;
+  DateTime calculateEndTime(DateTime startTime, int hours) {
+    return startTime.add(Duration(hours: hours));
+  }
 
-  void _updateTimeType(String? newValue) {
-    setState(() {
-      _selectedTimeType = newValue;
-      _selectedHours = null; 
-    });
+  Widget buildDateSelection(
+    BuildContext context, String label, DateTime? dateTime, Function(DateTime) onSelected, bool isTime) {
+    
+    final locale = Localizations.localeOf(context);
+    final dateFormat = isTime ? DateFormat.Hm(locale.toString()) : DateFormat.yMd(locale.toString());
+    final formattedDateTime = dateTime != null ? dateFormat.format(dateTime) : 'N/A';
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: () async {
+          if (isTime) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.fromDateTime(dateTime ?? DateTime.now()),
+            );
+            if (time != null) {
+              final selectedDateTime = DateTime(
+                dateTime?.year ?? DateTime.now().year,
+                dateTime?.month ?? DateTime.now().month,
+                dateTime?.day ?? DateTime.now().day,
+                time.hour,
+                time.minute,
+              );
+              onSelected(selectedDateTime);
+            }
+          } else {
+            final date = await showDatePicker(
+              context: context,
+              initialDate: dateTime ?? DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+            );
+            if (date != null) {
+              final selectedDateTime = DateTime(
+                date.year,
+                date.month,
+                date.day,
+                dateTime?.hour ?? DateTime.now().hour,
+                dateTime?.minute ?? DateTime.now().minute,
+              );
+              onSelected(selectedDateTime);
+            }
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[800],
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Text(
+            '$label: $formattedDateTime',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -51,167 +116,93 @@ class _VisitInformationState extends State<VisitInformation> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.visitReason.isNotEmpty)
-            Text('Motivo: ${widget.visitReason}'),
-          const SizedBox(height: 8),
-          _buildDropdownRow(
-            'Visita:',
-            widget.visitType,
-            ['Personal', 'Servicio'],
-            widget.onVisitTypeSelected,
+          _buildDropdownRow('Visita Tipo:', visitType, ['Personal (privada)', 'Servicio (pública)'],
+            onVisitTypeSelected,
           ),
-          const SizedBox(height: 8),
-          _buildDropdownRow(
-            'Tipo de tiempo:',
-            _selectedTimeType,
+          _buildDropdownRow('Tiempo Tipo:', timeType,
             ['Por lapso', 'Por horario', 'Permanente'],
-            _updateTimeType,
+            (newValue) {
+              onTimeTypeSelected(newValue);
+              if (newValue == 'Permanente') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content:
+                          Text('La visita será permanente a partir de hoy.')),
+
+                );
+              }
+            },
           ),
           const SizedBox(height: 8),
-          if (_selectedTimeType == 'Por lapso')
-            _buildHourSelectionRow(),
-          if (_selectedTimeType == 'Por horario')
-            _buildDateTimeSelectionRow(),
-          if (widget.accessCode.isNotEmpty)
-            Text('Código: ${widget.accessCode}'),
+          if (timeType == 'Permanente' || timeType == 'Por horario')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildDateSelection(context, 'Inicio', visitStartTime, onDateStartSelected, false),
+                buildDateSelection(context, 'Hora Inicio', visitStartTime, onTimeStartSelected, true),
+              ],
+            ),
+          const SizedBox(height: 8),
+          if (timeType == 'Por lapso')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (int hour in [1, 2, 4, 8])
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          onHourSelected(hour);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _isSelectedHour(hour)
+                              ? Colors.blueGrey
+                              : Colors.grey,
+                        ),
+                        child: Text('$hour h'),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+
+          if (timeType == 'Por horario')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildDateSelection(context, 'Fin', visitEndTime, onDateEndSelected, false),
+                buildDateSelection(context, 'Hora Fin', visitEndTime, onTimeEndSelected, true),
+              ],
+            ),
+          const SizedBox(height: 8),
+          Text('Código de Acceso: $accessCode'),
+          const SizedBox(height: 8),
+          Text('Motivo: $visitReason'),
         ],
       ),
     );
   }
 
-  Widget _buildDropdownRow(
-      String label, String? value, List<String> items, ValueChanged<String?> onChanged) {
+  Widget _buildDropdownRow(String label, String? value, List<String> options,
+      ValueChanged<String?> onChanged) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label),
-        const SizedBox(width: 8),
-        Expanded(
-          child: DropdownButton<String>(
-            value: value,
-            hint: Text(label),
-            items: items.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: onChanged,
-          ),
+        const SizedBox(width: 16),
+        DropdownButton<String?>(
+
+          value: value,
+          items: options
+              .map((option) => DropdownMenuItem(
+                    value: option,
+                    child: Text(option),
+                  ))
+              .toList(),
+          onChanged: onChanged,
         ),
       ],
     );
-  }
-
-  Widget _buildHourSelectionRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [1, 2, 4, 8].map((hours) {
-        return _buildHourButton(hours, context, _selectedHours == hours);
-      }).toList(),
-    );
-  }
-
-  Widget _buildDateTimeSelectionRow() {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            onPressed: () => _selectDateTime(context, widget.onTimeStartSelected),
-            child: RichText(
-              text: TextSpan(
-                text: widget.visitStartTime != null
-                    ? 'Inicio: \n${DateFormat('yyyy-MM-dd HH:mm').format(widget.visitStartTime!)}'
-                    : 'Inicio: \n',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: ElevatedButton(
-            onPressed: () => _selectDateTime(context, widget.onTimeFinSelected),
-            child: RichText(
-              text: TextSpan(
-                text: widget.visitEndTime != null
-                    ? 'Fin: \n${DateFormat('yyyy-MM-dd HH:mm').format(widget.visitEndTime!)}'
-                    : 'Fin: \n',
-                style: DefaultTextStyle.of(context).style,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHourButton(int hours, BuildContext context, bool isSelected) {
-    return ElevatedButton(
-      onPressed: () {
-        final now = DateTime.now();
-        final newEndTime = now.add(Duration(hours: hours));
-        widget.onTimeStartSelected(now);
-        widget.onTimeFinSelected(newEndTime);
-
-        setState(() {
-          _selectedHours = isSelected ? null : hours;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Colors.blue : null,
-      ),
-      child: Text('$hours h'),
-    );
-  }
-
-  Future<void> _selectDateTime(
-      BuildContext context, ValueChanged<DateTime> onSelected) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020), // Changed to a more realistic date
-      lastDate: DateTime(2030),   // Changed to a more realistic date
-    );
-    if (pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        // ignore: use_build_context_synchronously
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
-      if (pickedTime != null) {
-        final DateTime finalDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-
-        if (onSelected == widget.onTimeStartSelected &&
-            finalDateTime.isBefore(DateTime.now())) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content:
-                    Text('La fecha de inicio debe ser la hora actual o posterior')),
-          );
-          return;
-        }
-
-        if (onSelected == widget.onTimeFinSelected &&
-            widget.visitStartTime != null &&
-            finalDateTime.isBefore(widget.visitStartTime!)) {
-          // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text(
-                    'La fecha de fin debe ser posterior a la fecha de inicio')),
-          );
-          return;
-        }
-
-        onSelected(finalDateTime);
-      }
-    }
   }
 }
