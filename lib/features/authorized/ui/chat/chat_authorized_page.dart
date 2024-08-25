@@ -314,7 +314,7 @@ class VisitInformation extends StatelessWidget {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _isSelectedHour(hour)
-                              ? Colors.blue
+                              ? Colors.blueGrey
                               : Colors.grey,
                         ),
                         child: Text('$hour h'),
