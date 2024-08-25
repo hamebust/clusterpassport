@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -45,29 +44,29 @@ class VisitInformation extends StatelessWidget {
   }
 
   Widget buildDateSelection(
-    BuildContext context, String label, DateTime? dateTime, Function(DateTime) onSelected, bool isTime) {
+    BuildContext context, String label, DateTime? dateTime, ValueChanged<DateTime> onSelected, bool isTime) {
     
-    final locale = Localizations.localeOf(context);
-    final dateFormat = isTime ? DateFormat.Hm(locale.toString()) : DateFormat.yMd(locale.toString());
+    final locale = Localizations.localeOf(context).toString();
+    final dateFormat = isTime ? DateFormat.Hm(locale) : DateFormat.yMd(locale);
     final formattedDateTime = dateTime != null ? dateFormat.format(dateTime) : 'N/A';
 
     return Expanded(
       child: GestureDetector(
         onTap: () async {
+          DateTime? selectedDateTime;
           if (isTime) {
             final time = await showTimePicker(
               context: context,
               initialTime: TimeOfDay.fromDateTime(dateTime ?? DateTime.now()),
             );
             if (time != null) {
-              final selectedDateTime = DateTime(
+              selectedDateTime = DateTime(
                 dateTime?.year ?? DateTime.now().year,
                 dateTime?.month ?? DateTime.now().month,
                 dateTime?.day ?? DateTime.now().day,
                 time.hour,
                 time.minute,
               );
-              onSelected(selectedDateTime);
             }
           } else {
             final date = await showDatePicker(
@@ -77,15 +76,17 @@ class VisitInformation extends StatelessWidget {
               lastDate: DateTime(2100),
             );
             if (date != null) {
-              final selectedDateTime = DateTime(
+              selectedDateTime = DateTime(
                 date.year,
                 date.month,
                 date.day,
                 dateTime?.hour ?? DateTime.now().hour,
                 dateTime?.minute ?? DateTime.now().minute,
               );
-              onSelected(selectedDateTime);
             }
+          }
+          if (selectedDateTime != null) {
+            onSelected(selectedDateTime);
           }
         },
         child: Container(
@@ -192,7 +193,6 @@ class VisitInformation extends StatelessWidget {
         Text(label),
         const SizedBox(width: 16),
         DropdownButton<String?>(
-
           value: value,
           items: options
               .map((option) => DropdownMenuItem(
