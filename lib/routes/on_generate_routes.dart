@@ -15,7 +15,7 @@
   //Paquete que permite conectar a WelcomePage: página de bienvenida en la carpeta lib/features/app/welcome
   //Package that allows connecting to WelcomePage: welcome page in the lib/features/app/welcome folder
   import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
-import 'package:cluster_passport/features/authorized/presenter/chat_authorized_page.dart';
+import 'package:cluster_passport/features/authorized/ui/chat_authorized_page.dart';
 
   //Paquete que permite conectar a ContactsPage: página de contactos en la carpeta lib/features/contacts
   //Package that allows connecting to ContactsPage: contacts page in the lib/features/contacts folder

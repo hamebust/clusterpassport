@@ -17,7 +17,7 @@ import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home
 import 'package:cluster_passport/features/app/theme/style.dart';
 //Paquete que permite conectar a AuthorizedPage: página de autorizados en la carpeta lib/features/authorized
 //Package that allows connecting to AuthorizedPage: authorized page in the lib/features/authorized folder
-import 'package:cluster_passport/features/authorized/authorized_page.dart';
+import 'package:cluster_passport/features/authorized/ui/authorized_page.dart';
 //Paquete que permite conectar a ClustersPage: página de clusters en la carpeta lib/features/clusters
 //Package that allows connecting to ClustersPage: clusters page in the lib/features/clusters folder
 import 'package:cluster_passport/features/clusters/ui/clusters_page.dart';

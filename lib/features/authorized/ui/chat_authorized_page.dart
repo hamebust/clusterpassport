@@ -306,20 +306,24 @@ class VisitInformation extends StatelessWidget {
               children: [
                 for (int hour in [1, 2, 4, 8])
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        onHourSelected(hour);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _isSelectedHour(hour)
-                            ? Colors.blue
-                            : Colors.grey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          onHourSelected(hour);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _isSelectedHour(hour)
+                              ? Colors.blue
+                              : Colors.grey,
+                        ),
+                        child: Text('$hour h'),
                       ),
-                      child: Text('$hour h'),
                     ),
                   ),
               ],
             ),
+
           if (timeType == 'Por horario')
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
