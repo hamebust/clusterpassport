@@ -23,6 +23,7 @@ class ClusterPage extends StatefulWidget {
   const ClusterPage({super.key, required this.cluster});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ClusterPageState createState() => _ClusterPageState();
 }
 
