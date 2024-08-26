@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class VisitInformation extends StatelessWidget {
+class VisitInformation extends StatefulWidget {
   final String? visitType;
   final String visitReason;
   final DateTime? visitStartTime;
@@ -16,6 +16,9 @@ class VisitInformation extends StatelessWidget {
   final ValueChanged<String?> onVisitTypeSelected;
   final ValueChanged<String?> onTimeTypeSelected;
   final ValueChanged<int> onHourSelected;
+
+  // Nombre del usuario visitante principal
+  final String mainVisitor;
 
   const VisitInformation({
     super.key,
@@ -33,19 +36,25 @@ class VisitInformation extends StatelessWidget {
     required this.onTimeTypeSelected,
     required this.selectedHour,
     required this.onHourSelected,
+    required this.mainVisitor, // nuevo parámetro para el visitante principal
   });
 
+  @override
+  _VisitInformationState createState() => _VisitInformationState();
+}
+
+class _VisitInformationState extends State<VisitInformation> {
+  List<String> secondaryVisitors = [];
+
   bool _isSelectedHour(int hours) {
-    return selectedHour == hours;
+    return widget.selectedHour == hours;
   }
 
   DateTime calculateEndTime(DateTime startTime, int hours) {
     return startTime.add(Duration(hours: hours));
   }
 
-  Widget buildDateSelection(
-    BuildContext context, String label, DateTime? dateTime, ValueChanged<DateTime> onSelected, bool isTime) {
-    
+  Widget buildDateSelection(BuildContext context, String label, DateTime? dateTime, ValueChanged<DateTime> onSelected, bool isTime) {
     final locale = Localizations.localeOf(context).toString();
     final dateFormat = isTime ? DateFormat.Hm(locale) : DateFormat.yMd(locale);
     final formattedDateTime = dateTime != null ? dateFormat.format(dateTime) : 'N/A';
@@ -117,34 +126,119 @@ class VisitInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDropdownRow('Visita Tipo:', visitType, ['Personal (privada)', 'Servicio (pública)'],
-            onVisitTypeSelected,
+          // Sección de Visitantes en un Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Texto 'Visitante Principal:' a la derecha
+              const Text(
+                'Visitante:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              // ListTile a la izquierda
+              Expanded(
+                child: ListTile(
+                  leading: const Icon(Icons.person),
+                  title: Text(widget.mainVisitor),
+                ),
+              ),
+              
+            ],
           ),
-          _buildDropdownRow('Tiempo Tipo:', timeType,
+
+          
+          // Sección de Visitantes Secundarios en un Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Texto 'Visitantes Secundarios:' a la izquierda
+              const Text(
+                'Otros: ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+          // Botón para agregar visitantes secundarios
+          TextButton.icon(
+            onPressed: () async {
+              final String? newVisitor = await _showAddVisitorDialog(context);
+              if (newVisitor != null && newVisitor.isNotEmpty) {
+                setState(() {
+                  secondaryVisitors.add(newVisitor);
+                });
+              }
+            },
+            icon: const Icon(Icons.add),
+            label: const Text(''),
+          ),
+
+              // ListTile con la lista de visitantes secundarios a la derecha
+              Expanded(
+                child: secondaryVisitors.isEmpty
+                    ? const Text('No hay visitantes secundarios.')
+                    : Column(
+                        children: secondaryVisitors.map((visitor) {
+                          return ListTile(
+                            leading: const Icon(Icons.person_outline),
+                            title: Text(visitor),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.remove_circle),
+                              onPressed: () {
+                                setState(() {
+                                  secondaryVisitors.remove(visitor);
+                                });
+                              },
+                            ),
+                          );
+                        }).toList(),
+                      ),
+              ),
+            ],
+          ),
+
+
+          // Campos existentes
+          _buildDropdownRow(
+            'Visita Tipo:',
+            widget.visitType,
+            ['Personal (privada)', 'Servicio (pública)'],
+            widget.onVisitTypeSelected,
+          ),
+          _buildDropdownRow(
+            'Tiempo Tipo:',
+            widget.timeType,
             ['Por lapso', 'Por horario', 'Permanente'],
             (newValue) {
-              onTimeTypeSelected(newValue);
+              widget.onTimeTypeSelected(newValue);
               if (newValue == 'Permanente') {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                      content:
-                          Text('La visita será permanente a partir de hoy.')),
-
+                      content: Text('La visita será permanente a partir de hoy.')),
                 );
               }
             },
           ),
           const SizedBox(height: 8),
-          if (timeType == 'Permanente' || timeType == 'Por horario')
+          if (widget.timeType == 'Permanente' || widget.timeType == 'Por horario')
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildDateSelection(context, 'Inicio', visitStartTime, onDateStartSelected, false),
-                buildDateSelection(context, 'Hora Inicio', visitStartTime, onTimeStartSelected, true),
+                buildDateSelection(
+                  context,
+                  'Inicio',
+                  widget.visitStartTime,
+                  widget.onDateStartSelected,
+                  false,
+                ),
+                buildDateSelection(
+                  context,
+                  'Hora Inicio',
+                  widget.visitStartTime,
+                  widget.onTimeStartSelected,
+                  true,
+                ),
               ],
             ),
           const SizedBox(height: 8),
-          if (timeType == 'Por lapso')
+          if (widget.timeType == 'Por lapso')
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -154,12 +248,12 @@ class VisitInformation extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 4.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          onHourSelected(hour);
+                          widget.onHourSelected(hour);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _isSelectedHour(hour)
-                              ? Colors.blueGrey
-                              : Colors.grey,
+                              ? Colors.white10
+                              : Colors.white70,
                         ),
                         child: Text('$hour h'),
                       ),
@@ -167,26 +261,74 @@ class VisitInformation extends StatelessWidget {
                   ),
               ],
             ),
-
-          if (timeType == 'Por horario')
+          if (widget.timeType == 'Por horario')
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildDateSelection(context, 'Fin', visitEndTime, onDateEndSelected, false),
-                buildDateSelection(context, 'Hora Fin', visitEndTime, onTimeEndSelected, true),
+                buildDateSelection(
+                  context,
+                  'Fin',
+                  widget.visitEndTime,
+                  widget.onDateEndSelected,
+                  false,
+                ),
+                buildDateSelection(
+                  context,
+                  'Hora Fin',
+                  widget.visitEndTime,
+                  widget.onTimeEndSelected,
+                  true,
+                ),
               ],
             ),
           const SizedBox(height: 8),
-          Text('Código de Acceso: $accessCode'),
+          // Text('Código de Acceso:), ${widget.accessCode}'),
           const SizedBox(height: 8),
-          Text('Motivo: $visitReason'),
+          Text('Motivo: ${widget.visitReason}'),
         ],
       ),
     );
   }
 
-  Widget _buildDropdownRow(String label, String? value, List<String> options,
-      ValueChanged<String?> onChanged) {
+  Future<String?> _showAddVisitorDialog(BuildContext context) async {
+    String? newVisitorName;
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Agregar Visitante Secundario'),
+          content: TextField(
+            onChanged: (value) {
+              newVisitorName = value;
+            },
+            decoration: const InputDecoration(hintText: 'Nombre del Visitante'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(newVisitorName);
+              },
+              child: const Text('Agregar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDropdownRow(
+    String label,
+    String? value,
+    List<String> options,
+    ValueChanged<String?> onChanged,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -195,10 +337,12 @@ class VisitInformation extends StatelessWidget {
         DropdownButton<String?>(
           value: value,
           items: options
-              .map((option) => DropdownMenuItem(
-                    value: option,
-                    child: Text(option),
-                  ))
+              .map(
+                (option) => DropdownMenuItem(
+                  value: option,
+                  child: Text(option),
+                ),
+              )
               .toList(),
           onChanged: onChanged,
         ),

@@ -1,6 +1,5 @@
 import 'package:cluster_passport/features/authorized/ui/chat/widgets/visit_information.dart';
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatAuthorizedPage extends StatefulWidget {
@@ -18,6 +17,9 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   DateTime? _visitEndTime;
   final String _accessCode = const Uuid().v4();
   int? _selectedHour;
+  
+  // Variable que controla la visibilidad de VisitInformation
+  bool _isVisitInfoVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,60 +68,82 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                VisitInformation(
-                  timeType: _selectedTimeType,
-                  visitType: _selectedVisitType,
-                  visitReason: _visitReason,
-                  visitStartTime: _visitStartTime,
-                  visitEndTime: _visitEndTime,
-                  accessCode: _accessCode,
-                  selectedHour: _selectedHour,
-                  onDateStartSelected: (DateTime dateTime) {
+                // Botón para mostrar u ocultar VisitInformation
+                ElevatedButton(
+                  onPressed: () {
                     setState(() {
-                      _visitStartTime = dateTime;
+                      _isVisitInfoVisible = !_isVisitInfoVisible;
                     });
                   },
-                  onDateEndSelected: (DateTime dateTime) {
-                    setState(() {
-                      _visitEndTime = dateTime;
-                    });
-                  },
-                  onTimeStartSelected: (DateTime dateTime) {
-                    setState(() {
-                      _visitStartTime = DateTime(
-                        _visitStartTime?.year ?? dateTime.year,
-                        _visitStartTime?.month ?? dateTime.month,
-                        _visitStartTime?.day ?? dateTime.day,
-                        dateTime.hour,
-                        dateTime.minute,
-                      );
-                    });
-                  },
-                  onTimeEndSelected: (DateTime dateTime) {
-                    setState(() {
-                      _visitEndTime = DateTime(
-                        _visitEndTime?.year ?? dateTime.year,
-                        _visitEndTime?.month ?? dateTime.month,
-                        _visitEndTime?.day ?? dateTime.day,
-                        dateTime.hour,
-                        dateTime.minute,
-                      );
-                    });
-                  },
-                  onVisitTypeSelected: _updateVisitType,
-                  onTimeTypeSelected: (newValue) {
-                    setState(() {
-                      _selectedTimeType = newValue;
-                      if (newValue == 'Permanente') {
-                        _visitStartTime = DateTime.now();
-                      }
-                    });
-                  },
-                  onHourSelected: (int hours) {
-                    setState(() {
-                      _selectedHour = hours;
-                    });
-                  },
+                  child: Text(
+                    _isVisitInfoVisible
+                        ? 'Ocultar Información de Visita'
+                        : 'Mostrar Información de Visita',
+                  ),
+                ),
+                
+                // Widget VisitInformation desplegable
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: _isVisitInfoVisible
+                      ? VisitInformation(
+                          mainVisitor: 'Ambar Medina',  // Nombre del visitante principal
+                          key: const ValueKey<int>(1),
+                          timeType: _selectedTimeType,
+                          visitType: _selectedVisitType,
+                          visitReason: _visitReason,
+                          visitStartTime: _visitStartTime,
+                          visitEndTime: _visitEndTime,
+                          accessCode: _accessCode,
+                          selectedHour: _selectedHour,
+                          onDateStartSelected: (DateTime dateTime) {
+                            setState(() {
+                              _visitStartTime = dateTime;
+                            });
+                          },
+                          onDateEndSelected: (DateTime dateTime) {
+                            setState(() {
+                              _visitEndTime = dateTime;
+                            });
+                          },
+                          onTimeStartSelected: (DateTime dateTime) {
+                            setState(() {
+                              _visitStartTime = DateTime(
+                                _visitStartTime?.year ?? dateTime.year,
+                                _visitStartTime?.month ?? dateTime.month,
+                                _visitStartTime?.day ?? dateTime.day,
+                                dateTime.hour,
+                                dateTime.minute,
+                              );
+                            });
+                          },
+                          onTimeEndSelected: (DateTime dateTime) {
+                            setState(() {
+                              _visitEndTime = DateTime(
+                                _visitEndTime?.year ?? dateTime.year,
+                                _visitEndTime?.month ?? dateTime.month,
+                                _visitEndTime?.day ?? dateTime.day,
+                                dateTime.hour,
+                                dateTime.minute,
+                              );
+                            });
+                          },
+                          onVisitTypeSelected: _updateVisitType,
+                          onTimeTypeSelected: (newValue) {
+                            setState(() {
+                              _selectedTimeType = newValue;
+                              if (newValue == 'Permanente') {
+                                _visitStartTime = DateTime.now();
+                              }
+                            });
+                          },
+                          onHourSelected: (int hours) {
+                            setState(() {
+                              _selectedHour = hours;
+                            });
+                          },
+                        )
+                      : const SizedBox(), // Cuando está oculto, no se muestra nada
                 ),
                 Row(
                   children: [
@@ -159,4 +183,3 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
     });
   }
 }
-

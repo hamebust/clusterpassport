@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ClustersPage extends StatefulWidget {
-  const ClustersPage({super.key});
+class SearchAndCreateClustersPage extends StatefulWidget {
+  const SearchAndCreateClustersPage({super.key});
   @override
-  State<ClustersPage> createState() => _ClustersPageState();
+  State<SearchAndCreateClustersPage> createState() => _SearchAndCreateClustersPageState();
 }
 
-class _ClustersPageState extends State<ClustersPage> {
+class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPage> {
   void _mostrarDialogoFiltro(BuildContext context) {
     showDialog(
       context: context,
