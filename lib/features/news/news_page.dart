@@ -145,7 +145,7 @@ class NewsPage extends StatelessWidget {
                     //Usuario
                     //User
                     title: const Text(
-                      "User",
+                      "Cluster",
                       style: TextStyle(fontSize: 16),
                     ),
                     //Descripción

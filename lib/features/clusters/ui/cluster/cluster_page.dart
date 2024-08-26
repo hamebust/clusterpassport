@@ -39,12 +39,28 @@ class _ClusterPageState extends State<ClusterPage> {
     areas = [
       Area(
         name: 'Torre 1',
-        user: 'Usuario 1',
+        user: 'Administrador 1',
         units: [
-          Unit(name: 'Apto. 1-PB-1', user: 'Usuario 1A'),
-          Unit(name: 'Apto. 1-PB-2', user: 'Usuario 1B'),
-          Unit(name: 'Apto. 1-PB-3', user: 'Usuario 1c'),
-          Unit(name: 'Apto. 1-PB-4', user: 'Usuario 1d'),
+          Unit(name: 'Apto. 1-PB-1', user: 'Usuario 01'),
+          Unit(name: 'Apto. 1-PB-2', user: 'Usuario 02'),
+          Unit(name: 'Apto. 1-PB-3', user: 'Usuario 03'),
+          Unit(name: 'Apto. 1-PB-4', user: 'Usuario 04'),
+          Unit(name: 'Apto. 1-1-1', user: 'Usuario 05'),
+          Unit(name: 'Apto. 1-1-2', user: 'Usuario 06'),
+          Unit(name: 'Apto. 1-1-3', user: 'Usuario 07'),
+          Unit(name: 'Apto. 1-1-4', user: 'Usuario 08'),
+          Unit(name: 'Apto. 1-1-5', user: 'Usuario 09'),
+          Unit(name: 'Apto. 1-1-6', user: 'Usuario 10'),
+          Unit(name: 'Apto. 1-1-7', user: 'Usuario 11'),
+          Unit(name: 'Apto. 1-1-8', user: 'Usuario 12'),
+          Unit(name: 'Apto. 1-2-1', user: 'Usuario 13'),
+          Unit(name: 'Apto. 1-2-2', user: 'Usuario 14'),
+          Unit(name: 'Apto. 1-2-3', user: 'Usuario 15'),
+          Unit(name: 'Apto. 1-2-4', user: 'Usuario 16'),
+          Unit(name: 'Apto. 1-2-5', user: 'Usuario 17'),
+          Unit(name: 'Apto. 1-2-6', user: 'Usuario 18'),
+          Unit(name: 'Apto. 1-2-7', user: 'Usuario 19'),
+          Unit(name: 'Apto. 1-2-8', user: 'Usuario 20'),
           // Otros apartamentos...
         ],
       ),
@@ -52,16 +68,52 @@ class _ClusterPageState extends State<ClusterPage> {
         name: 'Torre 2',
         user: 'Usuario 2',
         units: [
-          Unit(name: 'Apto. 2A', user: 'Usuario 2A'),
-          Unit(name: 'Apto. 2B', user: 'Usuario 2B'),
+          Unit(name: 'Apto. 2-PB-2', user: 'Usuario 02'),
+          Unit(name: 'Apto. 2-PB-1', user: 'Usuario 01'),
+          Unit(name: 'Apto. 2-PB-3', user: 'Usuario 03'),
+          Unit(name: 'Apto. 2-PB-4', user: 'Usuario 04'),
+          Unit(name: 'Apto. 2-1-1', user: 'Usuario 05'),
+          Unit(name: 'Apto. 2-1-2', user: 'Usuario 06'),
+          Unit(name: 'Apto. 2-1-3', user: 'Usuario 07'),
+          Unit(name: 'Apto. 2-1-4', user: 'Usuario 08'),
+          Unit(name: 'Apto. 2-1-5', user: 'Usuario 09'),
+          Unit(name: 'Apto. 2-1-6', user: 'Usuario 10'),
+          Unit(name: 'Apto. 2-1-7', user: 'Usuario 11'),
+          Unit(name: 'Apto. 2-1-8', user: 'Usuario 12'),
+          Unit(name: 'Apto. 2-2-1', user: 'Usuario 13'),
+          Unit(name: 'Apto. 2-2-2', user: 'Usuario 14'),
+          Unit(name: 'Apto. 2-2-3', user: 'Usuario 15'),
+          Unit(name: 'Apto. 2-2-4', user: 'Usuario 16'),
+          Unit(name: 'Apto. 2-2-5', user: 'Usuario 17'),
+          Unit(name: 'Apto. 2-2-6', user: 'Usuario 18'),
+          Unit(name: 'Apto. 2-2-7', user: 'Usuario 19'),
+          Unit(name: 'Apto. 2-2-8', user: 'Usuario 20'),
         ],
       ),
       Area(
         name: 'Torre 3',
         user: 'Usuario 3',
         units: [
-          Unit(name: 'Apto. 3A', user: 'Usuario 3A'),
-          Unit(name: 'Apto. 3B', user: 'Usuario 3B'),
+          Unit(name: 'Apto. 3-PB-1', user: 'Usuario 01'),
+          Unit(name: 'Apto. 3-PB-2', user: 'Usuario 02'),
+          Unit(name: 'Apto. 3-PB-3', user: 'Usuario 03'),
+          Unit(name: 'Apto. 3-PB-4', user: 'Usuario 04'),
+          Unit(name: 'Apto. 3-1-1', user: 'Usuario 05'),
+          Unit(name: 'Apto. 3-1-2', user: 'Usuario 06'),
+          Unit(name: 'Apto. 3-1-3', user: 'Usuario 07'),
+          Unit(name: 'Apto. 3-1-4', user: 'Usuario 08'),
+          Unit(name: 'Apto. 3-1-5', user: 'Usuario 09'),
+          Unit(name: 'Apto. 3-1-6', user: 'Usuario 10'),
+          Unit(name: 'Apto. 3-1-7', user: 'Usuario 11'),
+          Unit(name: 'Apto. 3-1-8', user: 'Usuario 12'),
+          Unit(name: 'Apto. 3-2-1', user: 'Usuario 13'),
+          Unit(name: 'Apto. 3-2-2', user: 'Usuario 14'),
+          Unit(name: 'Apto. 3-2-3', user: 'Usuario 15'),
+          Unit(name: 'Apto. 3-2-4', user: 'Usuario 16'),
+          Unit(name: 'Apto. 3-2-5', user: 'Usuario 17'),
+          Unit(name: 'Apto. 3-2-6', user: 'Usuario 18'),
+          Unit(name: 'Apto. 3-2-7', user: 'Usuario 19'),
+          Unit(name: 'Apto. 3-2-8', user: 'Usuario 20'),
         ],
       ),
     ];
@@ -73,30 +125,30 @@ class _ClusterPageState extends State<ClusterPage> {
   @override
   Widget build(BuildContext context) {
     // Calculamos 1/4 de la altura de la pantalla
-    final double listViewHeight = MediaQuery.of(context).size.height/3 - 56;
+    final double listViewHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.cluster.title),
-        actions: [
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.filter_list),
-                onPressed: () {
-                  // Acción para el filtro
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () {
-                  // Acción para el iltro
-                },
-              ),
+        // actions: [
+        //   Row(
+        //     children: [
+        //       IconButton(
+        //         icon: const Icon(Icons.filter_list),
+        //         onPressed: () {
+        //           // Acción para el filtro
+        //         },
+        //       ),
+        //       IconButton(
+        //         icon: const Icon(Icons.more_vert),
+        //         onPressed: () {
+        //           // Acción para el iltro
+        //         },
+        //       ),
 
-            ],
-          ),
-        ],
+        //     ],
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -133,7 +185,7 @@ class _ClusterPageState extends State<ClusterPage> {
             const SizedBox(height: 10),
             // ListView para las Áreas con altura limitada
             SizedBox(
-              height: listViewHeight,
+              height: listViewHeight/5 + 10,
               child: ListView.builder(
                 itemCount: areas.length,
                 itemBuilder: (context, index) {
@@ -193,7 +245,7 @@ class _ClusterPageState extends State<ClusterPage> {
             const SizedBox(height: 10),
             // ListView para las Unidades con altura limitada
             SizedBox(
-              height: listViewHeight,
+              height: listViewHeight/3 + 40,
               child: ListView.builder(
                 itemCount: selectedUnits.length,
                 itemBuilder: (context, index) {
@@ -224,19 +276,7 @@ class _ClusterPageState extends State<ClusterPage> {
           ],
         ),
       ),
-      // Barra Inferior Vacía para futuras acciones
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 40.0, // Altura de la barra inferior
-          color: Colors.blueGrey,
-          child: const Center(
-            child: Text(
-              'Barra Inferior',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-      ),
+
     );
   }
 }
