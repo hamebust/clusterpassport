@@ -40,11 +40,19 @@ class VisitInformation extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _VisitInformationState createState() => _VisitInformationState();
 }
 
 class _VisitInformationState extends State<VisitInformation> {
   List<String> secondaryVisitors = [];
+  late String _visitReason;
+
+  @override
+  void initState() {
+    super.initState();
+    _visitReason = widget.visitReason;
+  }
 
   bool _isSelectedHour(int hours) {
     return widget.selectedHour == hours;
@@ -101,12 +109,12 @@ class _VisitInformationState extends State<VisitInformation> {
         child: Container(
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: Colors.grey[800],
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: Text(
             '$label: $formattedDateTime',
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
       ),
@@ -217,6 +225,7 @@ class _VisitInformationState extends State<VisitInformation> {
             },
           ),
           const SizedBox(height: 8),
+          // Botones para seleccionar fechas y horas
           if (widget.timeType == 'Permanente' || widget.timeType == 'Por horario')
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -252,8 +261,11 @@ class _VisitInformationState extends State<VisitInformation> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _isSelectedHour(hour)
-                              ? Colors.white10
-                              : Colors.white70,
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.surface,
+                          foregroundColor: _isSelectedHour(hour)
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.onSurface,
                         ),
                         child: Text('$hour h'),
                       ),
@@ -281,10 +293,33 @@ class _VisitInformationState extends State<VisitInformation> {
                 ),
               ],
             ),
-          const SizedBox(height: 8),
-          // Text('Código de Acceso:), ${widget.accessCode}'),
-          const SizedBox(height: 8),
-          Text('Motivo: ${widget.visitReason}'),
+          // const SizedBox(height: 8),
+          // Text('Código de Acceso: ${widget.accessCode}'),
+          // const SizedBox(height: 8),
+          // Text('Motivo: $_visitReason'),
+          // TextField para el motivo de la visita
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  onChanged: (text) {
+                    setState(() {
+                      _visitReason = text;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Motivo de la visita',
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  // Aquí puedes agregar lógica para manejar el envío del motivo
+                },
+                icon: const Icon(Icons.send),
+              ),
+            ],
+          ),
         ],
       ),
     );

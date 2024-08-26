@@ -12,12 +12,12 @@ class ChatAuthorizedPage extends StatefulWidget {
 class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   String? _selectedTimeType = 'Por lapso';
   String? _selectedVisitType = 'Personal (privada)';
-  String _visitReason = 'motivo de la visita';
   DateTime? _visitStartTime = DateTime.now();
   DateTime? _visitEndTime;
   final String _accessCode = const Uuid().v4();
   int? _selectedHour;
-  
+  String _visitReason = '';  // VisitReason ahora está desvinculado
+
   // Variable que controla la visibilidad de VisitInformation
   bool _isVisitInfoVisible = false;
 
@@ -77,11 +77,11 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                   },
                   child: Text(
                     _isVisitInfoVisible
-                        ? 'Ocultar Información de Visita'
-                        : 'Mostrar Información de Visita',
+                        ? 'Ocultar Autorización'
+                        : 'Crear Autorización',
                   ),
                 ),
-                
+
                 // Widget VisitInformation desplegable
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
@@ -91,7 +91,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                           key: const ValueKey<int>(1),
                           timeType: _selectedTimeType,
                           visitType: _selectedVisitType,
-                          visitReason: _visitReason,
+                          visitReason: _visitReason, // Aquí se pasa el visitReason
                           visitStartTime: _visitStartTime,
                           visitEndTime: _visitEndTime,
                           accessCode: _accessCode,
@@ -145,30 +145,28 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
                         )
                       : const SizedBox(), // Cuando está oculto, no se muestra nada
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        onChanged: (text) {
-                          setState(() {
-                            _visitReason = text;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Escribe un mensaje',
+
+                // TextField de Chat se muestra solo cuando VisitInformation está oculto
+                if (!_isVisitInfoVisible)
+                  Row(
+                    children: [
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Escribe un mensaje',
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.attach_file),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.send),
-                    ),
-                  ],
-                ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.attach_file),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.send),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
