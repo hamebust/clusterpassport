@@ -149,6 +149,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
+
+      // Cuerpo de la aplicación
       body: IndexedStack(index: currentPageIndex, children: <Widget>[
         // Cuerpo de la aplicación
         // App body
