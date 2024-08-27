@@ -295,9 +295,9 @@ class _VisitInformationState extends State<VisitInformation> {
             ),
           // const SizedBox(height: 8),
           // Text('Código de Acceso: ${widget.accessCode}'),
-          // const SizedBox(height: 8),
-          // Text('Motivo: $_visitReason'),
-          // TextField para el motivo de la visita
+          const SizedBox(height: 8),
+          Text('Motivo: $_visitReason'),
+          //TextField para el motivo de la visita
           Row(
             children: [
               Expanded(

@@ -16,7 +16,7 @@ class _ChatAuthorizedPageState extends State<ChatAuthorizedPage> {
   DateTime? _visitEndTime;
   final String _accessCode = const Uuid().v4();
   int? _selectedHour;
-  String _visitReason = '';  // VisitReason ahora está desvinculado
+  final String _visitReason = '';  // VisitReason ahora está desvinculado
 
   // Variable que controla la visibilidad de VisitInformation
   bool _isVisitInfoVisible = false;
