@@ -47,7 +47,7 @@ dependencies:
   uuid: ^4.4.0
   #fluttertoast: 8.2.2
   #contacts_service: ^0.6.3
-  flutter_contacts: ^1.1.9
+  flutter_contacts: ^1.1.9+2
   image_picker: ^1.1.2
   file_picker: ^8.0.5
   video_player: ^2.8.2
@@ -80,6 +80,9 @@ dependencies:
   flutter_modular: ^6.3.4
   mobx: ^2.3.3+2
   url_launcher: ^6.3.0
+  cloud_firestore: ^5.3.0
+  firebase_auth: ^5.2.0
+  logger: ^2.4.0
   #flutter_intl:
   #  enabled: true
 dev_dependencies:
