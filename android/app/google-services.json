@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612542019511",
+    "project_id": "cluster-passport",
+    "storage_bucket": "cluster-passport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612542019511:android:89a61b3ea2a7b2faef5a32",
+        "android_client_info": {
+          "package_name": "com.clusterpassport.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5y6e0EMxLu69w7mKqDbHrGrQmW91Zwg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
