@@ -22,10 +22,10 @@ class GetDeviceNumberCubit extends Cubit<GetDeviceNumberState> {
       // Llama al caso de uso para obtener los números de contacto
       final contactNumbers = await getDeviceNumberUseCase.call();
       emit(GetDeviceNumberLoaded(contacts: contactNumbers));
-    } catch (e) {
+    } catch (e, stackTrace) {
       // Manejo de errores en caso de fallo durante la operación
-      print('Error in getDeviceNumber: $e');
-      emit(GetDeviceNumberFailure());
+      print('Error in getDeviceNumber: $e, StackTrace: $stackTrace');
+      emit(GetDeviceNumberFailure(error: e.toString()));
     }
   }
 }

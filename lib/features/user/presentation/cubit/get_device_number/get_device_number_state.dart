@@ -27,4 +27,12 @@ class GetDeviceNumberLoaded extends GetDeviceNumberState {
 }
 
 /// Estado que indica que hubo un fallo al obtener los números de contacto.
-class GetDeviceNumberFailure extends GetDeviceNumberState {}
+class GetDeviceNumberFailure extends GetDeviceNumberState {
+  final String error;
+
+  /// Constructor para [GetDeviceNumberFailure].
+  const GetDeviceNumberFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
