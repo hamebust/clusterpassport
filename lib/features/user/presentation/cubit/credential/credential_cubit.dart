@@ -56,7 +56,7 @@ class CredentialCubit extends Cubit<CredentialState> {
     try {
       await operation();
     } on SocketException {
-      emit(CredentialFailure(message: 'Error de red. Verifica tu conexión.'));
+      emit(const CredentialFailure(message: 'Error de red. Verifica tu conexión.'));
     } catch (e) {
       emit(CredentialFailure(message: 'Ocurrió un error inesperado: $e'));
     }
