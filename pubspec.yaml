@@ -69,7 +69,7 @@ dependencies:
 
   #enough_giphy: ^0.2.0
   #enough_giphy_flutter: ^0.4.0
-  flutter_sound: ^9.2.13
+  flutter_sound: ^9.11.2
   path_provider: ^2.0.14
   audioplayers: ^6.0.0
   just_audio: ^0.9.32
