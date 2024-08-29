@@ -3,7 +3,10 @@
 
 //Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
 //Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
+import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
 //Paquete que permite conectar a OtpPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
 //Package that allows connecting to OtpPage: login page in the lib/features/user/presentation/pages folder
 import 'package:cluster_passport/features/user/presentation/pages/otp_page.dart';
@@ -22,6 +25,7 @@ import 'package:country_pickers/utils/utils.dart';
 //Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
 //Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,6 +51,25 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    return  BlocConsumer<CredentialCubit, CredentialState>(
+      listener: ( BuildContext context, CredentialState credentialListenerState) {
+        if (credentialListenerState is CredentialSuccess) {
+          BlocProvider.of<AuthCubit>(context).loggedIn();
+        }
+        if (credentialListenerState is CredentialFailure) {
+          toast( "Something went" );
+
+        }
+      },
+      builder: (context, state) {
+        return Container();
+      },
+    )
+    
+    }
+
+  // ignore: unused_element
+  _bodyWidget () {
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
@@ -168,6 +191,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+ 
   }
 
   // Abre el dialogo de seleccion de paises
