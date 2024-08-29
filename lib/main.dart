@@ -5,8 +5,11 @@
 // All notes are in spanish and english
 
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
+import 'package:cluster_passport/firebase_options.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:cluster_passport/routes/on_generate_routes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'main_injection_container.dart' as di;
@@ -17,8 +20,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Manejo de errores global
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    print('Error de plataforma no capturado: $error');
+    return true;
+  };
+
   runZonedGuarded(() async {
-    await di.init();
+    await initializeFirebase();
+
+    await initializeDependencies();
+    
     // Ejecución de la aplicación Cluster Passport
     // Execution of Cluster Passport application
     runApp(const ClusterPassport());
@@ -29,6 +44,16 @@ void main() async {
   });
 }
 
+Future<void> initializeFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
+Future<void> initializeDependencies() async {
+  await di.init();
+}
+
 // Clase principal de la aplicación
 // Main application class
 class ClusterPassport extends StatelessWidget {
@@ -36,12 +61,8 @@ class ClusterPassport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMaterialApp();
-  }
-
   // Método separado para construir el MaterialApp
   // Separate method to build the MaterialApp
-  MaterialApp buildMaterialApp() {
     return MaterialApp(
       title: 'Cluster Passport',
       localizationsDelegates: const [

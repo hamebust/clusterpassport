@@ -84,6 +84,7 @@ dependencies:
   firebase_auth: ^5.2.0
   logger: ^2.4.0
   bloc: ^8.1.4
+  firebase_core: ^3.4.0
   #flutter_intl:
   #  enabled: true
 dev_dependencies:
