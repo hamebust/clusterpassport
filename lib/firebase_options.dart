@@ -61,9 +61,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB5y6e0EMxLu69w7mKqDbHrGrQmW91Zwg4',
-    appId: '1:612542019511:android:89a61b3ea2a7b2faef5a32',
+    appId: '1:612542019511:android:033673633e329f16ef5a32',
     messagingSenderId: '612542019511',
     projectId: 'cluster-passport',
     storageBucket: 'cluster-passport.appspot.com',
   );
+
 }
