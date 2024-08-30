@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageProviderRemoteDataSource {
-  static FirebaseStorage _storage = FirebaseStorage.instance;
+  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   static Future<String> uploadProfileImage(
       {required File file, Function(bool isUploading)? onComplete}) async {
