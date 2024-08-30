@@ -36,7 +36,10 @@ import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String uid;
+  final int? index;
+
+  const HomePage({super.key, required this.uid, this.index});
 
   @override
   State<HomePage> createState() => _HomePageState();

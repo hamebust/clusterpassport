@@ -12,6 +12,13 @@ abstract class CredentialState extends Equatable {
 /// Estado inicial del proceso de credenciales.
 class CredentialInitial extends CredentialState {}
 
+/// Estado que indica que se está realizando el proceso de credenciales.
+class CredentialLoading extends CredentialState {
+  @override
+  List<Object> get props => [];
+}
+
+
 /// Estado que indica que el código SMS ha sido enviado al usuario.
 class CredentialPhoneAuthSmsCodeSent extends CredentialState {}
 
@@ -19,7 +26,16 @@ class CredentialPhoneAuthSmsCodeSent extends CredentialState {}
 class CredentialPhoneAuthProfileInfo extends CredentialState {}
 
 /// Estado que indica que la operación de credenciales fue exitosa.
-class CredentialSuccess extends CredentialState {}
+class CredentialSuccess extends CredentialState {
+  @override
+  List<Object> get props => [];
+}
+
+/// Estado que indica que se ha recibido el código SMS del usuario.
+class CredentialPhoneAuthSmsCodeReceived extends CredentialState {
+  @override
+  List<Object> get props => [];
+}
 
 /// Estado que indica que ocurrió un error durante el proceso de credenciales.
 class CredentialFailure extends CredentialState {

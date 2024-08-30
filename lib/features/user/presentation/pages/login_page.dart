@@ -1,29 +1,17 @@
-//LoginPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
-//LoginPage: login page in the lib/features/user/presentation/pages folder
+// LoginPage: Página de inicio de sesión en la carpeta lib/features/user/presentation/pages
+// LoginPage: Login page in the lib/features/user/presentation/pages folder
 
-//Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
-//Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
-import 'package:cluster_passport/features/app/const/app_const.dart';
+//import 'package:cluster_passport/features/app/const/app_const.dart';
+import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
-//Paquete que permite conectar a OtpPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
-//Package that allows connecting to OtpPage: login page in the lib/features/user/presentation/pages folder
+import 'package:cluster_passport/features/user/presentation/pages/initial_profile_submit_page.dart';
 import 'package:cluster_passport/features/user/presentation/pages/otp_page.dart';
-//Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
-//Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
 import 'package:cluster_passport/generated/l10n.dart';
-//Paquete que permite conectar a Country: paises en la carpeta lib/country_pickers
-//Package that allows connecting to Country: countries in the lib/country_pickers folder
 import 'package:country_pickers/country.dart';
-//Paquete que permite conectar a CountryPickerDialog: dialogo de seleccion de paises en la carpeta lib/country_pickers
-//Package that allows connecting to CountryPickerDialog: country selection dialog in the lib/country_pickers folder
 import 'package:country_pickers/country_picker_dialog.dart';
-//Paquete que permite conectar a Utils: utilidades en la carpeta lib/country_pickers
-//Package that allows connecting to Utils: utilities in the lib/country_pickers folder
 import 'package:country_pickers/utils/utils.dart';
-//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
-//Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,39 +25,54 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneController = TextEditingController();
 
-  static Country _selectedFilteredDialoCountry =
-      CountryPickerUtils.getCountryByPhoneCode("58");
+  static Country _selectedFilteredDialoCountry = CountryPickerUtils.getCountryByPhoneCode("58");
 
-  // ignore: unused_field
   String _countryCode = _selectedFilteredDialoCountry.phoneCode;
+  String _phoneNumber = "";
 
   @override
   void dispose() {
+    // Liberar recursos al cerrar la página
+    // Release resources when closing the page
     _phoneController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  BlocConsumer<CredentialCubit, CredentialState>(
-      listener: ( BuildContext context, CredentialState credentialListenerState) {
-        if (credentialListenerState is CredentialSuccess) {
+    return BlocConsumer<CredentialCubit, CredentialState>(
+      listener: (BuildContext context, CredentialState state) {
+        if (state is CredentialSuccess) {
           BlocProvider.of<AuthCubit>(context).loggedIn();
-        }
-        if (credentialListenerState is CredentialFailure) {
-          toast( "Something went" );
-
+        } else if (state is CredentialFailure) {
+          _showToast("Something went wrong");
         }
       },
       builder: (context, state) {
-        return Container();
+        if (state is CredentialLoading) {
+          return const Center(child: CircularProgressIndicator(color: tabColor));
+        } else if (state is CredentialPhoneAuthSmsCodeReceived) {
+          return const OtpPage();
+        } else if (state is CredentialPhoneAuthProfileInfo) {
+          return InitialProfileSubmitPage(phoneNumber: _phoneNumber);
+        } else if (state is CredentialSuccess) {
+          return BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, authState) {
+              if (authState is Authenticated) {
+                return HomePage(uid: authState.uid);
+              }
+              return _buildLoginForm();
+            },
+          );
+        }
+        return _buildLoginForm();
       },
-    )
-    
-    }
+    );
+  }
 
-  // ignore: unused_element
-  _bodyWidget () {
+  /// Construye el widget de formulario de inicio de sesión.
+  /// Builds the login form widget.
+  Widget _buildLoginForm() {
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
@@ -78,176 +81,185 @@ class _LoginPageState extends State<LoginPage> {
             Expanded(
               child: Column(
                 children: [
-                  //Texto de bienvenida e imagen de fondo
-                  //Welcome text and background image
-                  const SizedBox(height: 40,),
+                  const SizedBox(height: 40),
                   Center(
                     child: Text(
-                      //Paquete l10n -> S.of(context).Verify_your_phone_number, contiene el texto de verificar el numero de telefono
-                      //Package l10n -> S.of(context).Verify_your_phone_number contains the verify phone number text
                       S.of(context).Verify_your_phone_number,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: tabColor,
                       ),
-                      //style
                     ),
                   ),
                   Text(
-                    //Paquete l10n -> S.of(context).WhatsApp_will_send_an_SMS_message, contiene el texto de WhatsApp enviando un mensaje SMS
-                    //Package l10n -> S.of(context).WhatsApp_will_send_an_SMS_message contains the WhatsApp sending an SMS message text
                     S.of(context).WhatsApp_will_send_an_SMS_message,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 15,
-                    ),
-                    //style
+                    style: const TextStyle(fontSize: 15),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 2),
                     onTap: _openFilteredCountryPickerDialog,
                     title: _buildDialogItem(_selectedFilteredDialoCountry),
                   ),
                   Row(
-                    children: <Widget>[
-                      Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: tabColor,
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
-                        width: 80,
-                        height: 42,
-                        alignment: Alignment.center,
-                        child: Text(_selectedFilteredDialoCountry.phoneCode),
-                      ),
-                      //Caja separadora
-                      //Separator box
-                      const SizedBox(width: 8.0,),
-                      // Suggested code may be subject to a license. Learn more: ~LicenseLog:3818608879.
-                      Expanded(
-                        child: Container(
-                          height: 40,
-                          margin: const EdgeInsets.only(top: 1.5),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: tabColor, width: 1.5),
-                            ),
-                          ),
-                          child: TextField(
-                            controller: _phoneController,
-                            decoration: InputDecoration(
-                              hintText:
-                                  //Paquete l10n -> S.of(context).Phone_Number, contiene el texto de numero de telefono
-                                  //Package l10n -> S.of(context).Phone_Number contains the phone number text
-                                  S.of(context).Phone_Number,
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ),
+                    children: [
+                      _buildCountryCodeBox(),
+                      const SizedBox(width: 8.0),
+                      _buildPhoneNumberField(),
                     ],
                   ),
                 ],
               ),
             ),
-
-            //Boton de siguiente
-            //Next button
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) => const OtpPage()));
-              },
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                width: 120,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: tabColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    //Paquete l10n -> S.of(context).Next, contiene el texto de siguiente
-                    //Package l10n -> S.of(context).Next contains the next text
-                    S.of(context).Next,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            _buildNextButton(),
           ],
         ),
       ),
     );
- 
   }
 
-  // Abre el dialogo de seleccion de paises
-  // Opens the country selection dialog
+  /// Construye el cuadro que muestra el código de país seleccionado.
+  /// Builds the box displaying the selected country code.
+  Widget _buildCountryCodeBox() {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: tabColor, width: 1.5),
+        ),
+      ),
+      width: 80,
+      height: 42,
+      alignment: Alignment.center,
+      child: Text(_selectedFilteredDialoCountry.phoneCode),
+    );
+  }
+
+  /// Construye el campo de entrada para el número de teléfono.
+  /// Builds the input field for the phone number.
+  Widget _buildPhoneNumberField() {
+    return Expanded(
+      child: Container(
+        height: 40,
+        margin: const EdgeInsets.only(top: 1.5),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: tabColor, width: 1.5),
+          ),
+        ),
+        child: TextField(
+          controller: _phoneController,
+          decoration: InputDecoration(
+            hintText: S.of(context).Phone_Number,
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Construye el botón de "Siguiente".
+  /// Builds the "Next" button.
+  Widget _buildNextButton() {
+    return GestureDetector(
+      onTap: _submitVerifyPhoneNumber,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        width: 120,
+        height: 40,
+        decoration: BoxDecoration(
+          color: tabColor,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: Text(
+            S.of(context).Next,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Abre el diálogo para seleccionar un país y su código de marcación.
+  /// Opens the dialog to select a country and its dialing code.
   void _openFilteredCountryPickerDialog() {
     showDialog(
       context: context,
       builder: (_) => Theme(
-          data: Theme.of(context).copyWith(
-            primaryColor: tabColor,
+        data: Theme.of(context).copyWith(primaryColor: tabColor),
+        child: CountryPickerDialog(
+          titlePadding: const EdgeInsets.all(8.0),
+          searchCursorColor: tabColor,
+          searchInputDecoration: InputDecoration(
+            hintText: S.of(context).Search,
           ),
-          child: CountryPickerDialog(
-            titlePadding: const EdgeInsets.all(8.0),
-            searchCursorColor: tabColor,
-            searchInputDecoration: InputDecoration(
-              hintText: S.of(context).Search,
-            ),
-            isSearchable: true,
-            title: Text(S.of(context).Select_your_phone_code),
-            onValuePicked: (Country country) {
-              setState(() {
-                _selectedFilteredDialoCountry = country;
-                _countryCode = country.phoneCode;
-              });
-            },
-            itemBuilder: _buildDialogItem,
-          )),
+          isSearchable: true,
+          title: Text(S.of(context).Select_your_phone_code),
+          onValuePicked: (Country country) {
+            setState(() {
+              _selectedFilteredDialoCountry = country;
+              _countryCode = country.phoneCode;
+            });
+          },
+          itemBuilder: _buildDialogItem,
+        ),
+      ),
     );
   }
-}
 
-//Caja de busqueda de paises
-//Country search box
-Widget _buildDialogItem(Country country) {
-  return Container(
-    height: 40,
-    alignment: Alignment.center,
-    decoration: const BoxDecoration(
-      border: Border(
-        bottom: BorderSide(color: tabColor, width: 1.5),
+  /// Construye un elemento de la lista de selección de países.
+  /// Builds an item in the country selection list.
+  Widget _buildDialogItem(Country country) {
+    return Container(
+      height: 40,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: tabColor, width: 1.5),
+        ),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        CountryPickerUtils.getDefaultFlagImage(country),
-        Text(" +${country.phoneCode}"),
-        Expanded(
+      child: Row(
+        children: [
+          CountryPickerUtils.getDefaultFlagImage(country),
+          const SizedBox(width: 8.0),
+          Text("+${country.phoneCode}"),
+          Expanded(
             child: Text(
-          " ${country.name}",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        )),
-        const Spacer(),
-        const Icon(Icons.arrow_drop_down),
-      ],
-    ),
-  );
+              country.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const Spacer(),
+          const Icon(Icons.arrow_drop_down),
+        ],
+      ),
+    );
+  }
+
+  /// Envía el número de teléfono para la verificación.
+  /// Submits the phone number for verification.
+  void _submitVerifyPhoneNumber() {
+    if (_phoneController.text.isNotEmpty) {
+      _phoneNumber = "+$_countryCode${_phoneController.text}";
+      print("phoneNumber $_phoneNumber");
+      BlocProvider.of<CredentialCubit>(context).submitVerifyPhoneNumber(phoneNumber: _phoneNumber);
+    } else {
+      _showToast("Enter your phone number");
+    }
+  }
+
+  /// Muestra un mensaje de toast.
+  /// Shows a toast message.
+  void _showToast(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 }
