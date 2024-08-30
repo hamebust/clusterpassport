@@ -1,7 +1,6 @@
 // LoginPage: Página de inicio de sesión en la carpeta lib/features/user/presentation/pages
 // LoginPage: Login page in the lib/features/user/presentation/pages folder
 
-//import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
@@ -154,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: S.of(context).Phone_Number,
             border: InputBorder.none,
           ),
+          keyboardType: TextInputType.phone, // <|ISF|> Asegurar que el teclado sea numérico
         ),
       ),
     );

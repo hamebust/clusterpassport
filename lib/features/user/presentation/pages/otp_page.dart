@@ -27,59 +27,57 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
-        child: Column(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(), // Dismiss keyboard on tap outside
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+          child: Column(
           children: [
             Expanded(
               child: Column(
                 children: [
                   const SizedBox(height: 40),
-                  Center(
-                    child: Text(
-                      S.of(context).Verify_your_OTP,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    S.of(context).Enter_your_OTP,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                  const SizedBox(height: 30),
+                    _buildHeaderText(context),
+                    const SizedBox(height: 20),
+                    _buildSubHeaderText(context),
+                    const SizedBox(height: 30),
                   _buildPinCodeWidget(),
                   const SizedBox(height: 30),
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: _submitSmsCode,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                width: 120,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: tabColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    S.of(context).Next,
-                    style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-          ],
+              _buildSubmitButton(context),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  Widget _buildHeaderText(BuildContext context) {
+    return Center(
+      child: Text(
+        S.of(context).Verify_your_OTP,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: tabColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSubHeaderText(BuildContext context) {
+    return Text(
+      S.of(context).Enter_your_OTP,
+      textAlign: TextAlign.center,
+      style: const TextStyle(fontSize: 15),
+    );
+  }
+
   Widget _buildPinCodeWidget() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: <Widget>[
           PinCodeFields(
@@ -94,12 +92,43 @@ class _OtpPageState extends State<OtpPage> {
     );
   }
 
+  Widget _buildSubmitButton(BuildContext context) {
+    return GestureDetector(
+      onTap: _submitSmsCode,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        width: 120,
+        height: 40,
+        decoration: BoxDecoration(
+          color: tabColor,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: Text(
+            S.of(context).Next,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _submitSmsCode() {
     if (_otpController.text.isNotEmpty) {
-      BlocProvider.of<CredentialCubit>(context).submitSmsCode(smsCode: _otpController.text);
+      try {
+        BlocProvider.of<CredentialCubit>(context).submitSmsCode(smsCode: _otpController.text);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).Enter_your_OTP)),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(S.of(context).Enter_your_OTP)),
+        const SnackBar(content: Text('Error occurred')),
       );
     }
   }

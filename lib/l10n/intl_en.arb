@@ -80,5 +80,7 @@
     "Username"
         :"Username",
     "Settings"
-        :"Settings"
+        :"Settings",
+    "Error_occurred"
+        :"Error occurred"    
 }

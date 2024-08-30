@@ -80,5 +80,7 @@
     "Username"
         :"Nombre de Usuario",
     "Settings"
-        :"Configuraciones"
+        :"Configuraciones",
+    "Error_occurred"
+        :"A ocurrido un error"
 }
