@@ -1,14 +1,11 @@
 //OtpPage: Página de verificación OTP en la carpeta lib/features/user/presentation/pages
 //OtpPage: OTP verification page in the lib/features/user/presentation/pages folder
 
-  //Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
-  //Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
   import 'package:cluster_passport/features/app/theme/style.dart';
-  //Paquete que permite conectar a InitialProfileSubmitPage: formulario de Foto y nombre de usuario
-  //
-  import 'package:cluster_passport/features/user/presentation/pages/initial_profile_submit_page.dart';
+  import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
   import 'package:cluster_passport/generated/l10n.dart';
   import 'package:flutter/material.dart';
+  import 'package:flutter_bloc/flutter_bloc.dart';
   import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 
 class OtpPage extends StatefulWidget {
@@ -69,9 +66,7 @@ class _OtpPageState extends State<OtpPage> {
             ),
 
             GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const InitialProfileSubmitPage()),);
-              },
+              onTap: _submitSmsCode,
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
                 width: 120,
@@ -113,5 +108,13 @@ class _OtpPageState extends State<OtpPage> {
         ],
       ),
     );
+  }
+  
+  void _submitSmsCode(){
+    print("otpCode ${_otpController.text}");
+    if (_otpController.text.isNotEmpty){
+      BlocProvider.of<CredentialCubit>(context)
+          .submitSmsCode(smsCode: _otpController.text);
+    }
   }
 }

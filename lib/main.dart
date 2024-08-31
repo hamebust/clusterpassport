@@ -5,12 +5,18 @@
 // All notes are in spanish and english
 
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/get_device_number/get_device_number_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/get_single_user/get_single_user_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/user/user_cubit.dart';
 import 'package:cluster_passport/firebase_options.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:cluster_passport/routes/on_generate_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'main_injection_container.dart' as di;
 import 'dart:async';
@@ -62,22 +68,41 @@ class ClusterPassport extends StatelessWidget {
   Widget build(BuildContext context) {
     // Método separado para construir el MaterialApp
     // Separate method to build the MaterialApp
-    return MaterialApp(
-      title: 'Cluster Passport',
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => di.sl<AuthCubit>()..appStarted(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<CredentialCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<GetSingleUserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<UserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<GetDeviceNumberCubit>(),
+        ),
       ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('es'),
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      initialRoute: "/",
-      onGenerateRoute: OnGenerateRoute().route,
+      child: MaterialApp(
+        title: 'Cluster Passport',
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        locale: const Locale('es'),
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        initialRoute: "/",
+        onGenerateRoute: OnGenerateRoute().route,
+      ),
     );
   }
 }

@@ -5,52 +5,38 @@
   // All notes are in spanish and english
   
   import 'dart:io';
-  //Paquete que permite conectar a las constantes de la aplicación en la carpeta lib/features/app/const/
-  //Package that allows connecting to the application constants in the folder lib/features/app/const/
   import 'package:cluster_passport/features/app/const/app_const.dart';
-  //Paquete que permite conectar a los widgets de la aplicación en la carpeta lib/features/app/global/widgets/
-  //Package that allows connecting to the widgets of the application in the folder lib/features/app/global/widgets/
   import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
-  //Paquete que permite conectar a la página principal de la aplicación en la carpeta lib/features/app/home/home_page.dart
-  //Package that allows connecting to the main page of the application in the folder lib/features/app/home/home_page.dart
-  import 'package:cluster_passport/features/app/home/home_page.dart';
+  import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
+  import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+  import 'package:cluster_passport/storage/storage_provider.dart';
   import 'package:flutter/foundation.dart';
-  //Paquete que permite conectar a los widgets de la aplicación en la carpeta lib/features/app/global/widgets/
-  //Package that allows connecting to the widgets of the application in the folder lib/features/app/global/widgets/
   import 'package:flutter/material.dart';
-  //Paquete que permite conectar a los estilos de la aplicación en la carpeta lib/features/app/theme/style.dart
-  //Package that allows connecting to the styles of the application in the folder lib/features/app/theme/style.dart
   import 'package:cluster_passport/features/app/theme/style.dart';
-  //Paquete que permite manejar las imagenes de la aplicación
-  //Package that handles the images of the application
+  import 'package:flutter_bloc/flutter_bloc.dart';
   import 'package:image_picker/image_picker.dart';
 
-  //Paquetes inabilitados
-  //Packages disabled
-    // import 'package:flutter_bloc/flutter_bloc.dart';
-    // import 'package:cluster_passport/features/app/global/widgets/profile_widget.dart';
-    // import 'package:cluster_passport/features/app/home/home_page.dart';
-    // import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-    // import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
-    // import 'package:cluster_passport/storage/storage_provider.dart';
 
 class InitialProfileSubmitPage extends StatefulWidget {
-  const InitialProfileSubmitPage({super.key});
+  final String phoneNumber;
+  const InitialProfileSubmitPage({super.key, required this.phoneNumber});
 
   @override
-  State<InitialProfileSubmitPage> createState() =>
-      _InitialProfileSubmitPageState();
+  State<InitialProfileSubmitPage> createState() => _InitialProfileSubmitPageState();
 }
 
 class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
   final TextEditingController _usernameController = TextEditingController();
 
   File? _image;
+  
+  // ignore: unused_field
+  bool _isProfileUpdating = false;
+  
   Future selectImage() async {
     try {
       // ignore: invalid_use_of_visible_for_testing_member
-      final pickedFile = await ImagePicker.platform
-          .getImageFromSource(source: ImageSource.gallery);
+      final pickedFile = await ImagePicker.platform.getImageFromSource(source: ImageSource.gallery);
 
       setState(() {
         if (pickedFile != null) {
@@ -128,11 +114,7 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                  (route) => false,
-                );
+                // Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const HomePage(uid: '',)),(route) => false,);
               },
               child: Container(
                 width: 150,
@@ -158,20 +140,37 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
     );
   }
 
-  void submitProfileInfo() {}
+  void submitProfileInfo() {
+    if(_image != null) {
+      StorageProviderRemoteDataSource.uploadProfileImage(
+          file: _image!,
+          onComplete: (onProfileUpdateComplete) {
+            setState(() {
+              _isProfileUpdating = onProfileUpdateComplete;
+            });
+          }
+      ).then((profileImageUrl) {
+        _profileInfo(
+            profileUrl: profileImageUrl
+        );
+      });
+    } else {
+      _profileInfo(profileUrl: "");
+    }
+  }
 
-  // void _profileInfo({String? profileUrl}) {
-  //   if (_usernameController.text.isNotEmpty) {
-  //     BlocProvider.of<CredentialCubit>(context).submitProfileInfo(
-  //         user: UserEntity(
-  //           email: "",
-  //           username: _usernameController.text,
-  //           phoneNumber: widget.phoneNumber,
-  //           status: "Hey There! I'm using WhatsApp Clone",
-  //           isOnline: false,
-  //           profileUrl: profileUrl,
-  //         )
-  //     );
-  //   }
-  // }
+  void _profileInfo({String? profileUrl}) {
+    if (_usernameController.text.isNotEmpty) {
+      BlocProvider.of<CredentialCubit>(context).submitProfileInfo(
+          user: UserEntity(
+            email: "",
+            username: _usernameController.text,
+            phoneNumber: widget.phoneNumber,
+            status: "Hey There! I'm using WhatsApp Clone",
+            isOnline: false,
+            profileUrl: profileUrl,
+          )
+      );
+    }
+  }
 }

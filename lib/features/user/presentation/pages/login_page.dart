@@ -1,27 +1,19 @@
 //LoginPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
 //LoginPage: login page in the lib/features/user/presentation/pages folder
 
-//Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
-//Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
+import 'package:cluster_passport/features/app/const/app_const.dart';
+import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
-//Paquete que permite conectar a OtpPage: página de inicio de sesión en la carpeta lib/features/user/presentation/pages
-//Package that allows connecting to OtpPage: login page in the lib/features/user/presentation/pages folder
+import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/pages/initial_profile_submit_page.dart';
 import 'package:cluster_passport/features/user/presentation/pages/otp_page.dart';
-//Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
-//Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
 import 'package:cluster_passport/generated/l10n.dart';
-//Paquete que permite conectar a Country: paises en la carpeta lib/country_pickers
-//Package that allows connecting to Country: countries in the lib/country_pickers folder
 import 'package:country_pickers/country.dart';
-//Paquete que permite conectar a CountryPickerDialog: dialogo de seleccion de paises en la carpeta lib/country_pickers
-//Package that allows connecting to CountryPickerDialog: country selection dialog in the lib/country_pickers folder
 import 'package:country_pickers/country_picker_dialog.dart';
-//Paquete que permite conectar a Utils: utilidades en la carpeta lib/country_pickers
-//Package that allows connecting to Utils: utilities in the lib/country_pickers folder
 import 'package:country_pickers/utils/utils.dart';
-//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
-//Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,11 +25,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneController = TextEditingController();
 
-  static Country _selectedFilteredDialoCountry =
-      CountryPickerUtils.getCountryByPhoneCode("58");
+  static Country _selectedFilteredDialoCountry = CountryPickerUtils.getCountryByPhoneCode("58");
 
   // ignore: unused_field
   String _countryCode = _selectedFilteredDialoCountry.phoneCode;
+
+  String _phoneNumber = "";
 
   @override
   void dispose() {
@@ -47,6 +40,41 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<CredentialCubit, CredentialState>(
+      listener: (context, credentialListenerState) {
+        if(credentialListenerState is CredentialSuccess) {
+          BlocProvider.of<AuthCubit>(context).loggedIn();
+        }
+        if(credentialListenerState is CredentialFailure) {
+          toast("Something went wrong");
+        }
+      },
+      builder: (context, credentialBuilderState) {
+        if(credentialBuilderState is CredentialLoading) {
+          return const Center(child: CircularProgressIndicator(color: tabColor,),);
+        }
+        if(credentialBuilderState is CredentialPhoneAuthSmsCodeReceived) {
+          return const OtpPage();
+        }
+        if(credentialBuilderState is CredentialPhoneAuthProfileInfo) {
+          return InitialProfileSubmitPage(phoneNumber: _phoneNumber);
+        }
+        if(credentialBuilderState is CredentialSuccess) {
+          return BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, authState){
+              if(authState is Authenticated) {
+                return HomePage(uid: authState.uid,);
+              }
+              return _bodyWidget();
+            },
+          );
+        }
+        return _bodyWidget();
+      },
+    );
+  }
+
+  _bodyWidget () {
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
@@ -139,9 +167,7 @@ class _LoginPageState extends State<LoginPage> {
             //Boton de siguiente
             //Next button
             GestureDetector(
-              onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) => const OtpPage()));
-              },
+              onTap: _submitVerifyPhoneNumber,
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
                 width: 120,
@@ -158,8 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
+                      fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
@@ -197,33 +222,45 @@ class _LoginPageState extends State<LoginPage> {
           )),
     );
   }
-}
 
-//Caja de busqueda de paises
-//Country search box
-Widget _buildDialogItem(Country country) {
-  return Container(
-    height: 40,
-    alignment: Alignment.center,
-    decoration: const BoxDecoration(
-      border: Border(
-        bottom: BorderSide(color: tabColor, width: 1.5),
+
+  //Caja de busqueda de paises
+  //Country search box
+  Widget _buildDialogItem(Country country) {
+    return Container(
+      height: 40,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: tabColor, width: 1.5),
+        ),
       ),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        CountryPickerUtils.getDefaultFlagImage(country),
-        Text(" +${country.phoneCode}"),
-        Expanded(
-            child: Text(
-          " ${country.name}",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        )),
-        const Spacer(),
-        const Icon(Icons.arrow_drop_down),
-      ],
-    ),
-  );
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          CountryPickerUtils.getDefaultFlagImage(country),
+          Text(" +${country.phoneCode}"),
+          Expanded(
+              child: Text(
+            " ${country.name}", maxLines: 1, overflow: TextOverflow.ellipsis,)),
+          const Spacer(),
+          const Icon(Icons.arrow_drop_down),
+        ],
+      ),
+    );
+  }
+  
+  void _submitVerifyPhoneNumber() {
+    if (_phoneController.text.isNotEmpty) {
+      _phoneNumber="+$_countryCode${_phoneController.text}";
+      print("phoneNumber $_phoneNumber");
+      BlocProvider.of<CredentialCubit>(context).submitVerifyPhoneNumber(
+        phoneNumber: _phoneNumber,
+      );
+    } else {
+      toast("Enter your phone number");
+    }
+  }
+
+
 }
