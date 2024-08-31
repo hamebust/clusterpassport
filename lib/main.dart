@@ -19,6 +19,10 @@ void main() async {
   // Asegura que los bindings de Flutter estén inicializados
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Inicializa Firebase y dependencias antes de entrar en runZonedGuarded
+  await initializeFirebase();
+  await initializeDependencies();
+
   // Manejo de errores global
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
@@ -29,13 +33,8 @@ void main() async {
     return true;
   };
 
-  runZonedGuarded(() async {
-    await initializeFirebase();
-
-    await initializeDependencies();
-    
-    // Ejecución de la aplicación Cluster Passport
-    // Execution of Cluster Passport application
+  // Ejecución de la aplicación Cluster Passport en una zona segura
+  runZonedGuarded(() {
     runApp(const ClusterPassport());
   }, (error, stackTrace) {
     // Aquí puedes manejar los errores no capturados
@@ -61,8 +60,8 @@ class ClusterPassport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  // Método separado para construir el MaterialApp
-  // Separate method to build the MaterialApp
+    // Método separado para construir el MaterialApp
+    // Separate method to build the MaterialApp
     return MaterialApp(
       title: 'Cluster Passport',
       localizationsDelegates: const [
