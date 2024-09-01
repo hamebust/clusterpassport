@@ -4,63 +4,62 @@
 //Sección de Paquetes
 //Packages section
 
-  //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
-  //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
-  import 'package:cluster_passport/features/app/const/page_const.dart';
-  
-  //Paquete que permite conectar a SettingsPage: página de configuración en la carpeta lib/features/app/settings
-  //Package that allows connecting to SettingsPage: settings page in the lib/features/app/settings folder
-  import 'package:cluster_passport/features/app/settings/settings_page.dart';
-
-  //Paquete que permite conectar a WelcomePage: página de bienvenida en la carpeta lib/features/app/welcome
-  //Package that allows connecting to WelcomePage: welcome page in the lib/features/app/welcome folder
-  import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
+import 'package:cluster_passport/features/app/const/page_const.dart';
+import 'package:cluster_passport/features/app/settings/settings_page.dart';
+import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
 import 'package:cluster_passport/features/authorized/ui/chat/chat_authorized_page.dart';
+import 'package:cluster_passport/features/contacts/contacts_page.dart';
+import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
+import 'package:cluster_passport/features/user/presentation/pages/edit_profile_page.dart';
+import 'package:flutter/material.dart';
 
-  //Paquete que permite conectar a ContactsPage: página de contactos en la carpeta lib/features/contacts
-  //Package that allows connecting to ContactsPage: contacts page in the lib/features/contacts folder
-  import 'package:cluster_passport/features/contacts/contacts_page.dart';
-
-  //Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
-  //Package that allows connecting to Flutter: main widget of the application in main.dart
-  import 'package:flutter/material.dart';
-
-class OnGenerateRoute{
-
-  Route<dynamic>? route(RouteSettings settings){
+class OnGenerateRoute {
+  Route<dynamic>? route(RouteSettings settings) {
     // ignore: unused_local_variable
     final args = settings.arguments;
     final name = settings.name;
 
-    switch(name){
-
+    switch (name) {
       // Página de selección de contactos
       // Contact selection page
       case PageConst.contactUsersPage:
         {
-            return materialPageBuilder(const ContactsPage());
+          return materialPageBuilder(const ContactsPage());
         }
       // Página de bienvenida
       // Welcome page
       case PageConst.welcomePage:
         {
-            return materialPageBuilder(const WelcomePage());
+          return materialPageBuilder(const WelcomePage());
         }
       // Página de configuración
       // Settings page
       case PageConst.settingsPage:
         {
-            return materialPageBuilder( const SettingsPage());
+          if (args is String) {
+            return materialPageBuilder(SettingsPage(uid: args));
+          } else {
+            return materialPageBuilder(const ErrorPage());
+          }
+        }
+      // Página de configuración
+      // Settings page
+      case PageConst.editProfilePage:
+        {
+          if (args is UserEntity) {
+            return materialPageBuilder(EditProfilePage(currentUser: args,));
+          } else {
+            return materialPageBuilder(const ErrorPage());
+          }
         }
 
       // Página de Clusters
       // Clusters page
       case PageConst.chatAuthorizedPage:
         {
-            return materialPageBuilder( const ChatAuthorizedPage());
+          return materialPageBuilder(const ChatAuthorizedPage());
         }
 
-      
       // Página de usuarios autorizados
       // Authorized users page
       //case PageConst.authorizedUsersPage:
@@ -74,18 +73,27 @@ class OnGenerateRoute{
       //  {
       //      return materialPageBuilder( ClustersPage());
       //  }
-      
-      
-
     }
     return null;
-
   }
-  
-  dynamic materialPageBuilder(Widget child){
+
+  dynamic materialPageBuilder(Widget child) {
     return MaterialPageRoute(builder: (context) => child);
   }
 }
 
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({super.key});
 
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Error"),
+      ),
+      body: const Center(
+        child: Text("Error"),
+      ),
+    );
+  }
+}

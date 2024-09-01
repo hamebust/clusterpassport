@@ -4,6 +4,8 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
 
+import 'package:cluster_passport/features/app/home/home_page.dart';
+import 'package:cluster_passport/features/app/splash/splash_screen.dart';
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
 import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
@@ -102,6 +104,18 @@ class ClusterPassport extends StatelessWidget {
         themeMode: ThemeMode.system,
         initialRoute: "/",
         onGenerateRoute: OnGenerateRoute().route,
+        routes: {
+          "/": (context) {
+            return BlocBuilder<AuthCubit, AuthState>(
+              builder: (contex, authState) {
+                if (authState is Authenticated){
+                  return HomePage(uid: authState.uid);
+                }
+                return const SplashScreen();
+              }
+            );
+          },
+        },
       ),
     );
   }

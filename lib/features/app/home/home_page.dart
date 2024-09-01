@@ -9,30 +9,14 @@
 //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
 //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
 import 'package:cluster_passport/features/app/const/page_const.dart';
-//Paquete que permite conectar a IconAppBarHomePage: icono de la barra de navegación en la carpeta lib/features/app/home/widgets_home
-//Package that allows connecting to IconAppBarHomePage: icon of the navigation bar in the lib/features/app/home/widgets_home folder
 import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
-//Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
-//Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
 import 'package:cluster_passport/features/app/theme/style.dart';
-//Paquete que permite conectar a AuthorizedPage: página de autorizados en la carpeta lib/features/authorized
-//Package that allows connecting to AuthorizedPage: authorized page in the lib/features/authorized folder
 import 'package:cluster_passport/features/authorized/ui/authorized/authorized_page.dart';
-//Paquete que permite conectar a SearchAndCreateClustersPage: página de clusters en la carpeta lib/features/clusters
-//Package that allows connecting to SearchAndCreateClustersPage: clusters page in the lib/features/clusters folder
 import 'package:cluster_passport/features/clusters/ui/search_and_create_cluster/search_and_create_clusters_page.dart';
-//Paquete que permite conectar a MyClustersPage: página de clusters propios en la carpeta lib/features/my_clusters
-//Package that allows connecting to MyClustersPage: my clusters page in the lib/features/my_clusters folder
 import 'package:cluster_passport/features/clusters/ui/my_clusters/my_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
-//Paquete que permite conectar a NotifyPage: página de notificaciones en la carpeta lib/features/notify
-//Package that allows connecting to NotifyPage: notifications page in the lib/features/notify folder
 import 'package:cluster_passport/features/notify/notify_page.dart';
-//Paquete que permite conectar a S: internacionalización de la aplicación en la carpeta lib/generated/l10n
-//Package that allows connecting to S: internationalization of the application in the lib/generated/l10n folder
 import 'package:cluster_passport/generated/l10n.dart';
-//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
-//Package that allows connecting to Flutter: main widget of the application in main.dart
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,87 +53,46 @@ class _HomePageState extends State<HomePage> {
 
         // Botones de la barra de navegación superior
         // Navigation superior bar buttons
-        actions: [
-          Row(
-            children: [
-              // Botón de filtro
-              // Filter button
-              _iconAppBarHomePage(
-                icon: Icons.filter_list,
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const SizedBox(
-                        height: 200,
-                        child: Center(
-                          child: Text('Contenido de la BottomSheet'),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-
-              const SizedBox(width: 20),
-
-              // Botón de búsqueda
-              // Search button
-              _iconAppBarHomePage(
-                icon: Icons.search,
-                onPressed: () {},
-              ),
-
-              const SizedBox(width: 20),
-
-              // Botón de menú
-              // Menu button
-              _iconAppBarHomePage(
-                icon: Icons.more_vert,
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        // Usa SizedBox en lugar de ListView
-                        height: 130,
-                        child: Column(
-                          // Usa Column para organizar los elementos verticalmente
-                          children: <Widget>[
-                            ListTile(
-                              // Usa ListTile para cada ítem
-                              leading: const Icon(Icons.settings),
-                              title: const Text('Configuración'),
+              actions: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.camera_alt_outlined,
+                      color: greyColor,
+                      size: 28,
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    const Icon(Icons.search, color: greyColor, size: 28),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    PopupMenuButton<String>(
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: greyColor,
+                        size: 28,
+                      ),
+                      color: appBarColor,
+                      iconSize: 28,
+                      onSelected: (value) {},
+                      itemBuilder: (context) =>
+                      <PopupMenuEntry<String>>[
+                        PopupMenuItem<String>(
+                          value: "Settings",
+                          child: GestureDetector(
                               onTap: () {
-                                // Navegación a la página de configuración
-                                // Navigation to the settings page,
                                 Navigator.pushNamed(
-                                    context, PageConst.settingsPage);
-                                // Acción al presionar "Configuración"
-                                // Cierra el BottomSheet
+                                    context, PageConst.settingsPage, arguments: widget.uid);
                               },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.info),
-                              title: const Text('Acerca de'),
-                              onTap: () {
-                                // Acción al presionar "Acerca de"
-                                Navigator.pop(context);
-                              },
-                            ),
-                            // Agrega más ListTile según sea necesario
-                          ],
+                              child: const Text('Settings')),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
-
-              const SizedBox(width: 20),
-            ],
-          ),
-        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
       ),
 
       backgroundColor: Theme.of(context).colorScheme.onPrimary,

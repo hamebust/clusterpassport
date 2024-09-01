@@ -113,9 +113,7 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
               height: 20,
             ),
             GestureDetector(
-              onTap: () {
-                // Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const HomePage(uid: '',)),(route) => false,);
-              },
+              onTap: _submitProfileInfo,
               child: Container(
                 width: 150,
                 height: 40,
@@ -140,7 +138,7 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
     );
   }
 
-  void submitProfileInfo() {
+  void _submitProfileInfo() {
     if(_image != null) {
       StorageProviderRemoteDataSource.uploadProfileImage(
           file: _image!,
@@ -166,7 +164,7 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
             email: "",
             username: _usernameController.text,
             phoneNumber: widget.phoneNumber,
-            status: "Hey There! I'm using WhatsApp Clone",
+            status: "Hey There! I'm using Cluster Passport",
             isOnline: false,
             profileUrl: profileUrl,
           )

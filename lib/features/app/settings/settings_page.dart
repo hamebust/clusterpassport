@@ -7,24 +7,37 @@
 //Sección de Paquetes
 //Packages section
 
-//Paquete que permite conectar a Flutter: widget principal de la aplicación en la carpeta main.dart
-//Package that allows connecting to Flutter: main widget of the application in main.dart
+import 'package:cluster_passport/features/app/const/page_const.dart';
+import 'package:cluster_passport/features/app/global/date/widgets/dialog_widget.dart';
+import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/get_single_user/get_single_user_cubit.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
-//Paquete que permite conectar a Style: estilo de la aplicación en la carpeta lib/features/app/theme/style
-//Package that allows connecting to Style: style of the application in the lib/features/app/theme/style folder
 import 'package:cluster_passport/features/app/theme/style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2850830417.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:1522323193.
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final String? uid;
+
+  //Constructor de la página de configuración
+  //Configuration page constructor
+  const SettingsPage({super.key, this.uid});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  @override
+  void initState() {
+    BlocProvider.of<GetSingleUserCubit>(context)
+        .getSingleUser(uid: '${widget.uid}');
+    super.initState();
+  }
+
+  // Widget principal de la página de configuración
+  // Main configuration page widget
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,43 +56,105 @@ class _SettingsPageState extends State<SettingsPage> {
             // Child widget that contains the user profile picture and username
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Row(
-                // Widget hijo que contiene la foto de perfil del usuario
-                // Child widget that contains the user profile picture
-                children: [
-                  SizedBox(
-                    width: 65,
-                    height: 65,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(32.5),
-                        child:
-                            Image.asset("assets/profile_default.png")),
-                  ),
+              child: BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
+                builder: (context, state) {
+                  if (state is GetSingleUserLoaded) {
+                    final singleUser = state.singleUser;
 
-                  //Caja separadora
-                  //Separator box
-                  const SizedBox(
-                    width: 10,
-                  ),
-
-                  // Widget hijo que contiene el nombre de usuario y el código de seguridad
-                  // Child widget that contains the username and security code
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    return Row(
+                      // Widget hijo que contiene la foto de perfil del usuario
+                      // Child widget that contains the user profile picture
                       children: [
-                        Text(
-                          S.of(context).Username,
-                          style: const TextStyle(fontSize: 18),
+                        const SizedBox(
+                          width: 10,
                         ),
-                        const Text(
-                          "while true code {'+58 424 0853586'} ",
-                          style: TextStyle(fontSize: 14),
+
+                        //Caja separadora
+                        //Separator box
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, PageConst.editProfilePage,
+                                arguments: singleUser);
+                          },
+                          child: SizedBox(
+                            width: 65,
+                            height: 65,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(32.5),
+                              child: profileWidget(
+                                  imageUrl: singleUser.profileUrl),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 10),
+
+                        // Widget hijo que contiene el nombre de usuario y el código de seguridad
+                        // Child widget that contains the username and security code
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${singleUser.username}",
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                "${singleUser.status}",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
+                    );
+                  }
+                  return Row(
+                    // Widget hijo que contiene la foto de perfil del usuario
+                    // Child widget that contains the user profile picture
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+
+                      //Caja separadora
+                      //Separator box
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, PageConst.editProfilePage);
+                        },
+                        child: SizedBox(
+                          width: 65,
+                          height: 65,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(32.5),
+                            child: profileWidget(),
+                          ),
+                        ),
+                      ),
+
+                      // Widget hijo que contiene el nombre de usuario y el código de seguridad
+                      // Child widget that contains the username and security code
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "...",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              "...",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
 
@@ -135,7 +210,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: S.of(context).Logout,
                 description: S.of(context).settingsItemWidget_text04,
                 icon: Icons.exit_to_app,
-                onTap: () {}),
+                onTap: () {
+                  displayAlertDialog(
+                    context,
+                    onTap: () {
+                      BlocProvider.of<AuthCubit>(context).loggedOut();
+                      Navigator.pushNamedAndRemoveUntil(context, PageConst.welcomePage, (route) => false);
+                    },
+                    confirmTitle: S.of(context).Logout,
+                    content: "Are you sure you want to logout?",
+                  );
+                }),
           ],
         ));
   }
