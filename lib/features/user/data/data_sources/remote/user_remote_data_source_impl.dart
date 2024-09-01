@@ -145,7 +145,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       phoneNumber: phoneNumber,
       verificationCompleted: phoneVerificationCompleted,
       verificationFailed: phoneVerificationFailed,
-      timeout: const Duration(seconds: 60),
+      timeout: const Duration(seconds: 120),
       codeSent: phoneCodeSent,
       codeAutoRetrievalTimeout: phoneCodeAutoRetrievalTimeout,
     );

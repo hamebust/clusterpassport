@@ -8,57 +8,47 @@ import 'package:equatable/equatable.dart';
 
 part 'credential_state.dart';
 
-/// [CredentialCubit] maneja los estados relacionados con el proceso
-/// de autenticación del usuario usando su número de teléfono.
 class CredentialCubit extends Cubit<CredentialState> {
   final SignInWithPhoneNumberUseCase signInWithPhoneNumberUseCase;
   final VerifyPhoneNumberUseCase verifyPhoneNumberUseCase;
   final CreateUserUseCase createUserUseCase;
-
   CredentialCubit({
     required this.signInWithPhoneNumberUseCase,
     required this.verifyPhoneNumberUseCase,
-    required this.createUserUseCase,
-  }) : super(CredentialInitial());
+    required this.createUserUseCase
+}) : super(CredentialInitial());
 
-  /// Verifica el número de teléfono del usuario y emite el estado correspondiente.
   Future<void> submitVerifyPhoneNumber({required String phoneNumber}) async {
-    _handleOperation(
-      operation: () async {
-        await verifyPhoneNumberUseCase.call(phoneNumber);
-        emit(CredentialPhoneAuthSmsCodeSent());
-      },
-    );
-  }
-
-  /// Verifica el código SMS y emite el estado correspondiente.
-  Future<void> submitSmsCode({required String smsCode}) async {
-    _handleOperation(
-      operation: () async {
-        await signInWithPhoneNumberUseCase.call(smsCode);
-        emit(CredentialPhoneAuthProfileInfo());
-      },
-    );
-  }
-
-  /// Envía la información de perfil del usuario y emite el estado correspondiente.
-  Future<void> submitProfileInfo({required UserEntity user}) async {
-    _handleOperation(
-      operation: () async {
-        await createUserUseCase.call(user);
-        emit(CredentialSuccess());
-      },
-    );
-  }
-
-  /// Método privado que maneja operaciones y captura errores comunes.
-  Future<void> _handleOperation({required Future<void> Function() operation}) async {
     try {
-      await operation();
-    } on SocketException {
-      emit(const CredentialFailure(message: 'Error de red. Verifica tu conexión.'));
-    } catch (e) {
-      emit(CredentialFailure(message: 'Ocurrió un error inesperado: $e'));
+      await verifyPhoneNumberUseCase.call(phoneNumber);
+      emit(CredentialPhoneAuthSmsCodeReceived());
+    } on SocketException catch (_) {
+      emit(CredentialFailure());
+    } catch (_) {
+      emit(CredentialFailure());
     }
   }
-}
+
+  Future<void> submitSmsCode({required String smsCode}) async {
+    try {
+      await signInWithPhoneNumberUseCase.call(smsCode);
+      emit(CredentialPhoneAuthProfileInfo());
+    } on SocketException catch (_) {
+      emit(CredentialFailure());
+    } catch (_) {
+      emit(CredentialFailure());
+    }
+  }
+
+  Future<void> submitProfileInfo({required UserEntity user}) async {
+    try {
+      await createUserUseCase.call(user);
+      emit(CredentialSuccess());
+    } on SocketException catch (_) {
+      emit(CredentialFailure());
+    } catch (_) {
+      emit(CredentialFailure());
+    }
+  }
+
+  }
