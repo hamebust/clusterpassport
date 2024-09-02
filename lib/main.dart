@@ -4,6 +4,9 @@
 // Todos los notas son en español e inglés
 // All notes are in spanish and english
 
+// Sección de paquetes
+// Package section
+import 'dart:async';
 import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
@@ -21,7 +24,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'main_injection_container.dart' as di;
-import 'dart:async';
 
 void main() async {
   // Asegura que los bindings de Flutter estén inicializados

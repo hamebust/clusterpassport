@@ -1,21 +1,20 @@
-//InitialProfileSubmitPage: Formulario inicial de foto y nombre de usuario
-//InitialProfileSubmitPage: Initial form for photo and username
+// InitialProfileSubmitPage: Formulario inicial de foto y nombre de usuario
+// InitialProfileSubmitPage: Initial form for photo and username
 
-  // Todas las notas son en español e inglés
-  // All notes are in spanish and english
-  
-  import 'dart:io';
-  import 'package:cluster_passport/features/app/const/app_const.dart';
-  import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
-  import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-  import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
-  import 'package:cluster_passport/storage/storage_provider.dart';
-  import 'package:flutter/foundation.dart';
-  import 'package:flutter/material.dart';
-  import 'package:cluster_passport/features/app/theme/style.dart';
-  import 'package:flutter_bloc/flutter_bloc.dart';
-  import 'package:image_picker/image_picker.dart';
+// Todas las notas son en español e inglés
+// All notes are in Spanish and English
 
+import 'dart:io';
+import 'package:cluster_passport/features/app/const/app_const.dart';
+import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
+import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/storage/storage_provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:cluster_passport/features/app/theme/style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InitialProfileSubmitPage extends StatefulWidget {
   final String phoneNumber;
@@ -27,28 +26,26 @@ class InitialProfileSubmitPage extends StatefulWidget {
 
 class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
   final TextEditingController _usernameController = TextEditingController();
-
   File? _image;
-  
   // ignore: unused_field
   bool _isProfileUpdating = false;
-  
+
+  // Seleccionar imagen desde la cámara
+  // Select image from camera
   Future selectImage() async {
     try {
-      // ignore: invalid_use_of_visible_for_testing_member
-      final pickedFile = await ImagePicker.platform.getImageFromSource(source: ImageSource.gallery);
-
+      final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
         } else {
           if (kDebugMode) {
-            print("no image has been selected");
+            print("No image has been selected");
           }
         }
       });
     } catch (e) {
-      toast("some error occured $e");
+      toast("Some error occurred: $e");
     }
   }
 
@@ -56,62 +53,50 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 5,
-        ),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             const Center(
               child: Text(
                 "Profile Info",
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tabColor),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Text(
               "Please provide your name and an optional profile photo",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 15),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             GestureDetector(
               onTap: selectImage,
               child: SizedBox(
-                width: 50,
-                height: 50,
+                width: 150,
+                height: 150,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(75),
                   child: profileWidget(image: _image),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Container(
               height: 40,
               margin: const EdgeInsets.only(top: 1.5),
               decoration: const BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: tabColor, width: 1.5))),
+                border: Border(bottom: BorderSide(color: tabColor, width: 1.5)),
+              ),
               child: TextField(
                 controller: _usernameController,
                 decoration: const InputDecoration(
-                    hintText: "Username", border: InputBorder.none),
+                  hintText: "Username",
+                  border: InputBorder.none,
+                ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: _submitProfileInfo,
               child: Container(
@@ -124,50 +109,49 @@ class _InitialProfileSubmitPageState extends State<InitialProfileSubmitPage> {
                 child: const Center(
                   child: Text(
                     "Next",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
+  // Enviar información del perfil
+  // Submit profile information
   void _submitProfileInfo() {
-    if(_image != null) {
+    if (_image != null) {
       StorageProviderRemoteDataSource.uploadProfileImage(
-          file: _image!,
-          onComplete: (onProfileUpdateComplete) {
-            setState(() {
-              _isProfileUpdating = onProfileUpdateComplete;
-            });
-          }
+        file: _image!,
+        onComplete: (onProfileUpdateComplete) {
+          setState(() {
+            _isProfileUpdating = onProfileUpdateComplete;
+          });
+        },
       ).then((profileImageUrl) {
-        _profileInfo(
-            profileUrl: profileImageUrl
-        );
+        _profileInfo(profileUrl: profileImageUrl);
       });
     } else {
       _profileInfo(profileUrl: "");
     }
   }
 
+  // Guardar información del perfil
+  // Save profile information
   void _profileInfo({String? profileUrl}) {
     if (_usernameController.text.isNotEmpty) {
       BlocProvider.of<CredentialCubit>(context).submitProfileInfo(
-          user: UserEntity(
-            email: "",
-            username: _usernameController.text,
-            phoneNumber: widget.phoneNumber,
-            status: "Hey There! I'm using Cluster Passport",
-            isOnline: false,
-            profileUrl: profileUrl,
-          )
+        user: UserEntity(
+          email: "",
+          username: _usernameController.text,
+          phoneNumber: widget.phoneNumber,
+          status: "Hey There! I'm using Cluster Passport",
+          isOnline: false,
+          profileUrl: profileUrl,
+        ),
       );
     }
   }

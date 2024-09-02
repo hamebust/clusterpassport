@@ -273,43 +273,58 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   // Envía la información del perfil actualizada
   // Submits the updated profile information
-  void _submitProfileInfo() {
-    setState(() {
-      _isProfileUpdating = true;
+void _submitProfileInfo() {
+  // Verifica si hay una imagen seleccionada
+  if (_image != null) {
+    // Carga la imagen de perfil seleccionada y actualiza el estado de la carga
+    StorageProviderRemoteDataSource.uploadProfileImage(
+      file: _image!,
+      onComplete: (onProfileUpdateComplete) {
+        // Actualiza el estado de la interfaz de usuario para reflejar el estado de la carga
+        setState(() {
+          _isProfileUpdating = onProfileUpdateComplete;
+        });
+      }
+    ).then((profileImageUrl) {
+      // Llama a _profileInfo con la URL de la imagen cargada
+      _profileInfo(profileUrl: profileImageUrl ?? "");
+    }).catchError((error) {
+      // Manejo de errores durante la carga de la imagen
+      print("Error uploading profile image: $error");
+      toast("Error uploading profile image");
     });
-
-    final profileImageUrlFuture = _image != null
-        ? StorageProviderRemoteDataSource.uploadProfileImage(
-            file: _image!,
-            onComplete: (isComplete) => setState(() => _isProfileUpdating = isComplete),
-          )
-        : Future.value(widget.currentUser.profileUrl);
-
-    profileImageUrlFuture.then((profileImageUrl) {
-      _updateUserProfile(profileImageUrl: profileImageUrl);
-    });
+  } else {
+    // Si no hay imagen seleccionada, usa la URL de perfil existente
+    _profileInfo(profileUrl: widget.currentUser.profileUrl ?? "");
   }
+}
+
 
   // Actualiza el perfil del usuario usando el cubit
   // Updates the user's profile using the cubit
-  void _updateUserProfile({required String profileImageUrl}) {
-    if (_usernameController.text.isNotEmpty) {
-      final updatedUser = UserEntity(
+  void _profileInfo({required String profileUrl}) {
+  // Verifica que el nombre de usuario no esté vacío antes de actualizar el perfil
+  if (_usernameController.text.isNotEmpty) {
+    BlocProvider.of<UserCubit>(context).updateUser(
+      user: UserEntity(
         uid: widget.currentUser.uid,
-        email: widget.currentUser.email,
+        email: "",  // El campo email está vacío, posiblemente agregar manejo si es necesario
         username: _usernameController.text,
         phoneNumber: widget.currentUser.phoneNumber,
         status: _aboutController.text,
-        isOnline: widget.currentUser.isOnline,
-        profileUrl: profileImageUrl,
-      );
-
-      BlocProvider.of<UserCubit>(context).updateUser(user: updatedUser).then((_) {
-        toast("Profile updated");
-        setState(() {
-          _isProfileUpdating = false;
-        });
-      });
-    }
+        isOnline: false,
+        profileUrl: profileUrl,
+      )
+    ).then((_) {
+      // Muestra una notificación de éxito
+      toast("Profile updated successfully");
+    }).catchError((error) {
+      // Manejo de errores durante la actualización del perfil
+      print("Error updating profile: $error");
+      toast("Error updating profile");
+    });
+  } else {
+    toast("Username cannot be empty");
   }
+}
 }

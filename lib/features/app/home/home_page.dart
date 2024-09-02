@@ -68,27 +68,16 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       width: 10,
                     ),
-                    PopupMenuButton<String>(
+                    IconButton(
                       icon: const Icon(
                         Icons.more_vert,
                         color: greyColor,
                         size: 28,
                       ),
-                      color: appBarColor,
-                      iconSize: 28,
-                      onSelected: (value) {},
-                      itemBuilder: (context) =>
-                      <PopupMenuEntry<String>>[
-                        PopupMenuItem<String>(
-                          value: "Settings",
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, PageConst.settingsPage, arguments: widget.uid);
-                              },
-                              child: const Text('Settings')),
-                        ),
-                      ],
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, PageConst.settingsPage, arguments: widget.uid);
+                      },
                     ),
                   ],
                 ),
