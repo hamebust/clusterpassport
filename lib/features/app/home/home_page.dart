@@ -16,8 +16,10 @@ import 'package:cluster_passport/features/clusters/ui/search_and_create_cluster/
 import 'package:cluster_passport/features/clusters/ui/my_clusters/my_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
 import 'package:cluster_passport/features/notify/notify_page.dart';
+import 'package:cluster_passport/features/user/presentation/cubit/get_single_user/get_single_user_cubit.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   final String uid;
@@ -33,6 +35,12 @@ class HomePage extends StatefulWidget {
 // These class define the initial state of the current page index to 0.
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,35 +61,51 @@ class _HomePageState extends State<HomePage> {
 
         // Botones de la barra de navegación superior
         // Navigation superior bar buttons
-              actions: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.camera_alt_outlined,
-                      color: greyColor,
-                      size: 28,
+        actions: [
+          const Icon(Icons.camera_alt_outlined, color: greyColor, size: 28),
+          const SizedBox(width: 25),
+          const Icon(Icons.search, color: greyColor, size: 28),
+          const SizedBox(width: 10),
+
+          // Reemplaza el ícono more_vert con la imagen de perfil del usuario
+          BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
+            builder: (context, state) {
+              if (state is GetSingleUserLoaded) {
+                final singleUser = state.singleUser;
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      PageConst.settingsPage,
+                      arguments: widget.uid,
+                    );
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(4.0), // Ajusta el padding según sea necesario
+                      child: CircleAvatar(
+                      radius: 22, // Ajusta el tamaño del avatar si es necesario
+                      backgroundImage: singleUser.profileUrl != null &&
+                              singleUser.profileUrl!.isNotEmpty
+                          ? NetworkImage(singleUser
+                              .profileUrl!) // Uso de ! para asegurar que no es nulo
+                          : const AssetImage("assets/default_profile.png")
+                              as ImageProvider, // Imagen predeterminada
                     ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    const Icon(Icons.search, color: greyColor, size: 28),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: greyColor,
-                        size: 28,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, PageConst.settingsPage, arguments: widget.uid);
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                );
+              } else {
+                // Muestra un ícono de carga o una imagen predeterminada mientras se cargan los datos
+                return const CircleAvatar(
+                  radius: 18,
+                  backgroundColor: greyColor,
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+
+          const SizedBox(width: 10),
+        ],
       ),
 
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -184,7 +208,8 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SearchAndCreateClustersPage()),
+              MaterialPageRoute(
+                  builder: (context) => const SearchAndCreateClustersPage()),
             );
           },
           child: const Icon(Icons.add_card),

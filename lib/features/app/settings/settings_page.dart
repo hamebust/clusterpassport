@@ -35,8 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     // Cargar la información del usuario al iniciar la página
     // Load user information when the page starts
-    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: '${widget.uid}');
     super.initState();
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: '${widget.uid}');
   }
 
   // Widget principal de la página de configuración
@@ -134,16 +134,16 @@ class _SettingsPageState extends State<SettingsPage> {
           if (state is GetSingleUserLoaded) {
             final singleUser = state.singleUser;
 
-            return Row(
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, PageConst.editProfilePage,
+                    arguments: singleUser);
+              },
+              child: Row(              
               children: [
                 // Foto de perfil
                 // Profile picture
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, PageConst.editProfilePage,
-                        arguments: singleUser);
-                  },
-                  child: SizedBox(
+                SizedBox(
                     width: 65,
                     height: 65,
                     child: ClipRRect(
@@ -151,7 +151,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: profileWidget(imageUrl: singleUser.profileUrl),
                     ),
                   ),
-                ),
 
                 const SizedBox(width: 10),
 
@@ -173,6 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ],
+              ),
             );
           }
 
