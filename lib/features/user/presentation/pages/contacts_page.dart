@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:cluster_passport/features/user/presentation/cubit/get_device_number/get_device_number_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/get_device_number/get_device_number_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -11,12 +11,12 @@
 import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
-import 'package:cluster_passport/features/authorized/ui/authorized/authorized_page.dart';
-import 'package:cluster_passport/features/clusters/ui/search_and_create_cluster/search_and_create_clusters_page.dart';
-import 'package:cluster_passport/features/clusters/ui/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/authorized/presentation/pages/authorized/authorized_page.dart';
+import 'package:cluster_passport/features/clusters/cluster/presentation/pages/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/cluster/presentation/pages/search_and_create_cluster/search_and_create_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
 import 'package:cluster_passport/features/notify/notify_page.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/get_single_user/get_single_user_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/get_single_user/get_single_user_cubit.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

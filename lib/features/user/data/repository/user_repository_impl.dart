@@ -2,7 +2,7 @@
 import 'package:cluster_passport/features/user/data/data_sources/remote/user_remote_data_source.dart';
 import 'package:cluster_passport/features/user/domain/entities/contact_entity.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-import 'package:cluster_passport/features/user/domain/repository/user_repository.dart';
+import 'package:cluster_passport/features/user/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;

@@ -1,5 +1,5 @@
 import 'package:cluster_passport/features/user/domain/entities/contact_entity.dart';
-import 'package:cluster_passport/features/user/domain/repository/user_repository.dart';
+import 'package:cluster_passport/features/user/domain/repositories/user_repository.dart';
 
 /// Use case for retrieving device numbers from the user repository.
 class GetDeviceNumberUseCase {

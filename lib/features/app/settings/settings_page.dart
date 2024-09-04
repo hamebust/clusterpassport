@@ -12,8 +12,8 @@
 import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/global/date/widgets/dialog_widget.dart';
 import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/get_single_user/get_single_user_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/get_single_user/get_single_user_cubit.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';

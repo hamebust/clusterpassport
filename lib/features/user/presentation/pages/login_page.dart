@@ -9,8 +9,8 @@
 import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/auth/auth_cubit.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/auth/auth_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/credential/credential_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/pages/initial_profile_submit_page.dart';
 import 'package:cluster_passport/features/user/presentation/pages/otp_page.dart';
 import 'package:cluster_passport/generated/l10n.dart';

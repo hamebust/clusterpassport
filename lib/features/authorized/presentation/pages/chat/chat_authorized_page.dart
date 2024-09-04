@@ -1,4 +1,4 @@
-import 'package:cluster_passport/features/authorized/ui/chat/widgets/visit_information.dart';
+import 'package:cluster_passport/features/authorized/presentation/pages/chat/widgets/visit_information.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 

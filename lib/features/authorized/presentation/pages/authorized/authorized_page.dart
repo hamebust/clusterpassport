@@ -1,4 +1,4 @@
-import 'package:cluster_passport/features/authorized/ui/chat/chat_authorized_page.dart';
+import 'package:cluster_passport/features/authorized/presentation/pages/chat/chat_authorized_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthorizedPage extends StatelessWidget {

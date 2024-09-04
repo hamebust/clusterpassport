@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/credential/credential_cubit.dart';
 import 'package:cluster_passport/storage/storage_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

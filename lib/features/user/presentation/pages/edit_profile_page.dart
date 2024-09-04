@@ -4,6 +4,7 @@
 // Sección de Paquetes
 // Packages section
 import 'dart:io';
+import 'package:cluster_passport/features/user/presentation/cubits/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:cluster_passport/features/app/const/app_const.dart';
 import 'package:cluster_passport/features/app/global/date/widgets/profile_widget.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/user/user_cubit.dart';
 import 'package:cluster_passport/storage/storage_provider.dart';
 
 class EditProfilePage extends StatefulWidget {

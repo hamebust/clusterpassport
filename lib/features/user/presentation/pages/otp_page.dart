@@ -7,7 +7,7 @@
 // Sección de paquetes
 // Package section
 import 'package:cluster_passport/features/app/theme/style.dart';
-import 'package:cluster_passport/features/user/presentation/cubit/credential/credential_cubit.dart';
+import 'package:cluster_passport/features/user/presentation/cubits/credential/credential_cubit.dart';
 import 'package:cluster_passport/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

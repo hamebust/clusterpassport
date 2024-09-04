@@ -1,5 +1,4 @@
-
-import 'package:cluster_passport/features/clusters/ui/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/cluster/presentation/pages/my_clusters/my_clusters_page.dart';
 import 'package:flutter/material.dart';
 
 class Unit {
