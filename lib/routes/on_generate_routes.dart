@@ -8,7 +8,7 @@ import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/settings/settings_page.dart';
 import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
 import 'package:cluster_passport/features/authorized/ui/chat/chat_authorized_page.dart';
-import 'package:cluster_passport/features/contacts/contacts_page.dart';
+import 'package:cluster_passport/features/user/presentation/pages/contacts_page.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
 import 'package:cluster_passport/features/user/presentation/pages/edit_profile_page.dart';
 import 'package:flutter/material.dart';

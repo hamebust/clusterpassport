@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:fluttertoast/fluttertoast.dart';  // Para mostrar mensajes toast
 import 'package:logger/logger.dart';  // Para logging
-
+ 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final FirebaseFirestore fireStore;
   final FirebaseAuth auth;
