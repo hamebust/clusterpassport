@@ -12,8 +12,8 @@ import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/authorized/presentation/pages/authorized/authorized_page.dart';
-import 'package:cluster_passport/features/clusters/cluster/presentation/pages/my_clusters/my_clusters_page.dart';
-import 'package:cluster_passport/features/clusters/cluster/presentation/pages/search_and_create_cluster/search_and_create_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/presentation/pages/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/presentation/pages/search_and_create_cluster/search_and_create_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
 import 'package:cluster_passport/features/notify/notify_page.dart';
 import 'package:cluster_passport/features/user/presentation/cubits/get_single_user/get_single_user_cubit.dart';
@@ -67,7 +67,9 @@ class _HomePageState extends State<HomePage> {
           const Icon(Icons.search, color: greyColor, size: 28),
           const SizedBox(width: 10),
 
-          // Reemplaza el ícono more_vert con la imagen de perfil del usuario
+          // Botón de perfil
+          // Profile button
+          
           BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
             builder: (context, state) {
               if (state is GetSingleUserLoaded) {

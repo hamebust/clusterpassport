@@ -1,4 +1,4 @@
-import 'package:cluster_passport/features/clusters/cluster/presentation/pages/my_clusters/my_clusters_page.dart';
+import 'package:cluster_passport/features/clusters/presentation/pages/my_clusters/my_clusters_page.dart';
 import 'package:flutter/material.dart';
 
 class Unit {
@@ -162,7 +162,6 @@ class _ClusterPageState extends State<ClusterPage> {
                   'Áreas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-
                 Row(
                   children: [
                     IconButton(
@@ -184,7 +183,7 @@ class _ClusterPageState extends State<ClusterPage> {
             const SizedBox(height: 10),
             // ListView para las Áreas con altura limitada
             SizedBox(
-              height: listViewHeight/5 + 10,
+              height: listViewHeight / 5 + 10,
               child: ListView.builder(
                 itemCount: areas.length,
                 itemBuilder: (context, index) {
@@ -200,7 +199,8 @@ class _ClusterPageState extends State<ClusterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(area.name),
-                          Text(area.user, style: const TextStyle(color: Colors.grey)),
+                          Text(area.user,
+                              style: const TextStyle(color: Colors.grey)),
                         ],
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios),
@@ -244,7 +244,7 @@ class _ClusterPageState extends State<ClusterPage> {
             const SizedBox(height: 10),
             // ListView para las Unidades con altura limitada
             SizedBox(
-              height: listViewHeight/3 + 40,
+              height: listViewHeight / 3 + 40,
               child: ListView.builder(
                 itemCount: selectedUnits.length,
                 itemBuilder: (context, index) {
@@ -260,7 +260,8 @@ class _ClusterPageState extends State<ClusterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(unit.name),
-                          Text(unit.user, style: const TextStyle(color: Colors.grey)),
+                          Text(unit.user,
+                              style: const TextStyle(color: Colors.grey)),
                         ],
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios),
@@ -275,7 +276,6 @@ class _ClusterPageState extends State<ClusterPage> {
           ],
         ),
       ),
-
     );
   }
 }

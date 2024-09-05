@@ -7,6 +7,7 @@
 import 'package:cluster_passport/features/app/const/page_const.dart';
 import 'package:cluster_passport/features/app/settings/settings_page.dart';
 import 'package:cluster_passport/features/app/welcome/welcome_page.dart';
+import 'package:cluster_passport/features/authorized/presentation/pages/authorized/authorized_page.dart';
 import 'package:cluster_passport/features/authorized/presentation/pages/chat/chat_authorized_page.dart';
 import 'package:cluster_passport/features/user/presentation/pages/contacts_page.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
@@ -62,10 +63,10 @@ class OnGenerateRoute {
 
       // Página de usuarios autorizados
       // Authorized users page
-      //case PageConst.authorizedUsersPage:
-      //  {
-      //      return materialPageBuilder( AuthorizedPage());
-      //  }
+      case PageConst.authorizedUsersPage:
+        {
+          return materialPageBuilder( AuthorizedPage());
+        }
 
       // Página de Clusters
       // Clusters page

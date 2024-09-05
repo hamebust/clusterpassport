@@ -8,6 +8,8 @@ class PageConst {
   // Constante estática de la página de Bienvenida "/"
   // Static constant of the welcome page "/"
   static const String welcomePage = "/";
+  ///PageConst.welcomePage es usado en la clase OnGenerateRoute para generar la ruta de la página de bienvenida.
+  ///PageConst.welcomePage is used in the OnGenerateRoute class to generate the route of the welcome page.
 
   // Constante estatica de la página OTP "otpPage"
   // Static constant of the OTP page "otpPage"

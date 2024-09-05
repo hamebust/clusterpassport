@@ -1,4 +1,4 @@
-import 'package:cluster_passport/features/clusters/cluster/presentation/pages/cluster/cluster_page.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/presentation/pages/cluster_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
