@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class ClusterEntity extends Equatable {
   /// Identificador único del Cluster.
   /// Unique identifier of the Cluster.
-  final String id;
+  final String uid;
 
   /// Nombre del Cluster.
   /// Name of the Cluster.
@@ -31,7 +31,7 @@ class ClusterEntity extends Equatable {
   /// Constructor principal para ClusterEntity.
   /// Main constructor for ClusterEntity.
   const ClusterEntity({
-    required this.id,
+    required this.uid,
     required this.name,
     required this.type,
     required this.sectors,
@@ -42,14 +42,14 @@ class ClusterEntity extends Equatable {
   /// Método de fábrica para crear un Cluster Físico.
   /// Factory method to create a Physical Cluster.
   factory ClusterEntity.createPhysicalCluster({
-    required String id,
+    required String uid,
     required String name,
     required List<SectorEntity> sectors,
     required Address address,
     required LatLng coordinates,
   }) {
     return ClusterEntity(
-      id: id,
+      uid: uid,
       name: name,
       type: 'Physical',
       sectors: sectors,
@@ -61,14 +61,14 @@ class ClusterEntity extends Equatable {
   /// Método de fábrica para crear un Cluster Jurídico.
   /// Factory method to create a Legal Cluster.
   factory ClusterEntity.createLegalCluster({
-    required String id,
+    required String uid,
     required String name,
     required List<SectorEntity> sectors,
     required Address address,
     required LatLng coordinates,
   }) {
     return ClusterEntity(
-      id: id,
+      uid: uid,
       name: name,
       type: 'Legal',
       sectors: sectors,
@@ -86,35 +86,47 @@ class ClusterEntity extends Equatable {
   /// Modifica un sector existente en el Cluster.
   /// Modifies an existing sector in the Cluster.
   void updateSector(String sectorId, String newName) {
-    final index = sectors.indexWhere((sector) => sector.id == sectorId);
+    final index = sectors.indexWhere((sector) => sector.uid == sectorId);
     if (index != -1) {
-      sectors[index] = SectorEntity(id: sectorId, name: newName);
+      sectors[index] = sectors[index].copyWith(name: newName);
     }
   }
 
   /// Elimina un sector del Cluster.
   /// Removes a sector from the Cluster.
   void removeSector(String sectorId) {
-    sectors.removeWhere((sector) => sector.id == sectorId);
+    sectors.removeWhere((sector) => sector.uid == sectorId);
   }
 
   @override
-  List<Object> get props => [id, name, type, sectors, address, coordinates];
+  List<Object> get props => [uid, name, type, sectors, address, coordinates];
 }
 
 /// SectorEntity: Representa un Sector o Área dentro de un Cluster.
 /// SectorEntity: Represents a Sector or Area within a Cluster.
 class SectorEntity extends Equatable {
-  final String id;
+  final String uid;
   final String name;
 
   const SectorEntity({
-    required this.id,
+    required this.uid,
     required this.name,
   });
 
+  /// Método para copiar una entidad de Sector con nuevos valores.
+  /// Method to copy a Sector entity with new values.
+  SectorEntity copyWith({
+    String? uid,
+    String? name,
+  }) {
+    return SectorEntity(
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+    );
+  }
+
   @override
-  List<Object> get props => [id, name];
+  List<Object> get props => [uid, name];
 }
 
 /// Address: Representa la dirección detallada de un Cluster.

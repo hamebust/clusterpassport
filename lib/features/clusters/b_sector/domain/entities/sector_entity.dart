@@ -75,3 +75,4 @@ class UnitEntity extends Equatable {
   @override
   List<Object?> get props => [id, name];
 }
+
