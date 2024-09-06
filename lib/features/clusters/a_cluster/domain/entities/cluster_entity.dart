@@ -1,24 +1,28 @@
 import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-/// ClusterEntity: Representa un Cluster en la aplicación, que puede ser un F-Cluster o J-Cluster.
-/// ClusterEntity: Represents a Cluster in the application, which can be a Physical or Legal Cluster.
+/// ClusterEntity: Representa un Cluster (Físico o Jurídico).
+/// ClusterEntity: Represents a Cluster (Physical or Legal).
 class ClusterEntity extends Equatable {
   /// Identificador único del Cluster.
   /// Unique identifier of the Cluster.
   final String uid;
 
+  /// Identificador legal del Cluster.
+  /// Legal identifier of the Cluster.
+  final String legalId;
+
   /// Nombre del Cluster.
   /// Name of the Cluster.
   final String name;
 
+  /// Descripción del Cluster.
+  /// Description of the Cluster.
+  final String description;
+
   /// Tipo de Cluster: Físico o Jurídico.
   /// Type of Cluster: Physical or Legal.
   final String type;
-
-  /// Lista de Sectores o Áreas dentro del Cluster.
-  /// List of Sectors or Areas within the Cluster.
-  final List<SectorEntity> sectors;
 
   /// Dirección del Cluster.
   /// Address of the Cluster.
@@ -32,9 +36,10 @@ class ClusterEntity extends Equatable {
   /// Main constructor for ClusterEntity.
   const ClusterEntity({
     required this.uid,
+    this.legalId = '',
     required this.name,
+    this.description = '',
     required this.type,
-    required this.sectors,
     required this.address,
     required this.coordinates,
   });
@@ -43,16 +48,18 @@ class ClusterEntity extends Equatable {
   /// Factory method to create a Physical Cluster.
   factory ClusterEntity.createPhysicalCluster({
     required String uid,
+    required String legalId,
     required String name,
-    required List<SectorEntity> sectors,
+    required String description,
     required Address address,
     required LatLng coordinates,
   }) {
     return ClusterEntity(
       uid: uid,
+      legalId: legalId,
       name: name,
+      description: description,
       type: 'Physical',
-      sectors: sectors,
       address: address,
       coordinates: coordinates,
     );
@@ -62,75 +69,67 @@ class ClusterEntity extends Equatable {
   /// Factory method to create a Legal Cluster.
   factory ClusterEntity.createLegalCluster({
     required String uid,
+    required String legalId,
     required String name,
-    required List<SectorEntity> sectors,
+    required String description,
     required Address address,
     required LatLng coordinates,
   }) {
     return ClusterEntity(
       uid: uid,
+      legalId: legalId,
       name: name,
+      description: description,
       type: 'Legal',
-      sectors: sectors,
       address: address,
       coordinates: coordinates,
     );
   }
 
-  /// Agrega un nuevo sector al Cluster.
-  /// Adds a new sector to the Cluster.
-  void addSector(SectorEntity sector) {
-    sectors.add(sector);
-  }
-
-  /// Modifica un sector existente en el Cluster.
-  /// Modifies an existing sector in the Cluster.
-  void updateSector(String sectorId, String newName) {
-    final index = sectors.indexWhere((sector) => sector.uid == sectorId);
-    if (index != -1) {
-      sectors[index] = sectors[index].copyWith(name: newName);
-    }
-  }
-
-  /// Elimina un sector del Cluster.
-  /// Removes a sector from the Cluster.
-  void removeSector(String sectorId) {
-    sectors.removeWhere((sector) => sector.uid == sectorId);
-  }
-
-  @override
-  List<Object> get props => [uid, name, type, sectors, address, coordinates];
-}
-
-/// SectorEntity: Representa un Sector o Área dentro de un Cluster.
-/// SectorEntity: Represents a Sector or Area within a Cluster.
-class SectorEntity extends Equatable {
-  final String uid;
-  final String name;
-
-  const SectorEntity({
-    required this.uid,
-    required this.name,
-  });
-
-  /// Método para copiar una entidad de Sector con nuevos valores.
-  /// Method to copy a Sector entity with new values.
-  SectorEntity copyWith({
-    String? uid,
+  /// Método para actualizar la información del Cluster.
+  /// Method to update Cluster information.
+  ///
+  /// Retorna una nueva instancia de `ClusterEntity` con los valores actualizados.
+  /// Returns a new `ClusterEntity` instance with updated values.
+  ClusterEntity update({
+    String? legalId,
     String? name,
+    String? description,
+    Address? address,
+    LatLng? coordinates,
   }) {
-    return SectorEntity(
-      uid: uid ?? this.uid,
+    return ClusterEntity(
+      uid: this.uid, // El UID permanece igual.
+      legalId: legalId ?? this.legalId,
       name: name ?? this.name,
+      description: description ?? this.description,
+      type: this.type, // El tipo permanece igual (Físico o Jurídico).
+      address: address ?? this.address,
+      coordinates: coordinates ?? this.coordinates,
     );
   }
 
+  /// Método para borrar un Cluster.
+  /// Method to delete a Cluster.
+  ///
+  /// En este contexto, eliminar significa devolver un valor `null` o
+  /// realizar una lógica de eliminación según el repositorio.
+  /// In this context, deleting means returning a `null` value or
+  /// performing a deletion logic in the repository.
+  static ClusterEntity? delete(ClusterEntity cluster) {
+    // Aquí puedes realizar cualquier lógica adicional si es necesario,
+    // como registrar la eliminación o notificar a otros servicios.
+    // Here you can perform any additional logic if needed,
+    // like logging the deletion or notifying other services.
+    return null; // Devuelve null para simular la eliminación.
+  }
+
   @override
-  List<Object> get props => [uid, name];
+  List<Object?> get props => [uid, legalId, name, description, type, address, coordinates];
 }
 
-/// Address: Representa la dirección detallada de un Cluster.
-/// Address: Represents the detailed address of a Cluster.
+/// Address: Representa la dirección de un Cluster.
+/// Address: Represents the address of a Cluster.
 class Address extends Equatable {
   final String streetTypeAndName;
   final String buildingNumber;

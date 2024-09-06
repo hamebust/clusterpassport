@@ -1,8 +1,7 @@
-// ClusterRepository: Repositorio abstracto que define las operaciones CRUD para los Clusters.
-// ClusterRepository: Abstract repository that defines CRUD operations for Clusters.
-
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 
+/// ClusterRepository: Repositorio abstracto que define las operaciones CRUD para los Clusters.
+/// ClusterRepository: Abstract repository that defines CRUD operations for Clusters.
 abstract class ClusterRepository {
   
   /// Obtiene un Cluster por su identificador único.
@@ -51,6 +50,19 @@ abstract class ClusterRepository {
   /// Este método no devuelve ningún valor.
   /// This method returns no value.
   Future<void> deleteCluster(String clusterId);
+
+  /// Actualiza parcialmente un Cluster.
+  /// Partially updates a Cluster.
+  ///
+  /// [clusterId] es el identificador del Cluster a actualizar.
+  /// [clusterId] is the identifier of the Cluster to update.
+  ///
+  /// [updatedFields] contiene los campos que se van a actualizar.
+  /// [updatedFields] contains the fields to be updated.
+  ///
+  /// Este método no devuelve ningún valor.
+  /// This method returns no value.
+  Future<void> partialUpdateCluster(String clusterId, Map<String, dynamic> updatedFields);
 
   /// Obtiene un Stream de un Cluster por su identificador único.
   /// Fetches a Stream of a Cluster by its unique identifier.
