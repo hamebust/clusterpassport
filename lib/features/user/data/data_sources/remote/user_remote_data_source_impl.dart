@@ -6,9 +6,9 @@ import 'package:cluster_passport/features/user/domain/entities/contact_entity.da
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:fluttertoast/fluttertoast.dart';  // Para mostrar mensajes toast
-import 'package:logger/logger.dart';  // Para logging
- 
+import 'package:fluttertoast/fluttertoast.dart'; // Para mostrar mensajes toast
+import 'package:logger/logger.dart'; // Para logging
+
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final FirebaseFirestore fireStore;
   final FirebaseAuth auth;
@@ -60,8 +60,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     List<ContactEntity> contactsList = [];
 
     if (await FlutterContacts.requestPermission()) {
-      List<Contact> contacts =
-          await FlutterContacts.getContacts(withProperties: true, withPhoto: true);
+      List<Contact> contacts = await FlutterContacts.getContacts(
+          withProperties: true, withPhoto: true);
 
       for (var contact in contacts) {
         contactsList.add(ContactEntity(
@@ -114,9 +114,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
     Map<String, dynamic> userInfo = {};
 
-    if (user.username?.isNotEmpty ?? false) userInfo['username'] = user.username;
+    if (user.username?.isNotEmpty ?? false)
+      userInfo['username'] = user.username;
     if (user.status?.isNotEmpty ?? false) userInfo['status'] = user.status;
-    if (user.profileUrl?.isNotEmpty ?? false) userInfo['profileUrl'] = user.profileUrl;
+    if (user.profileUrl?.isNotEmpty ?? false)
+      userInfo['profileUrl'] = user.profileUrl;
     if (user.isOnline != null) userInfo['isOnline'] = user.isOnline;
 
     await userCollection.doc(user.uid).update(userInfo);
@@ -125,11 +127,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<void> verifyPhoneNumber(String phoneNumber) async {
     phoneVerificationCompleted(AuthCredential authCredential) {
-      logger.i("Phone verified: Token ${authCredential.token} ${authCredential.signInMethod}");
+      logger.i(
+          "Phone verified: Token ${authCredential.token} ${authCredential.signInMethod}");
     }
 
     phoneVerificationFailed(FirebaseAuthException firebaseAuthException) {
-      logger.e("Phone verification failed: ${firebaseAuthException.message}, ${firebaseAuthException.code}");
+      logger.e(
+          "Phone verification failed: ${firebaseAuthException.message}, ${firebaseAuthException.code}");
     }
 
     phoneCodeAutoRetrievalTimeout(String verificationId) {

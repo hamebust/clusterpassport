@@ -2,7 +2,6 @@ import 'package:cluster_passport/features/user/domain/entities/contact_entity.da
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';
 
 abstract class UserRemoteDataSource {
-
   Future<void> verifyPhoneNumber(String phoneNumber);
   Future<void> signInWithPhoneNumber(String smsPinCode);
 

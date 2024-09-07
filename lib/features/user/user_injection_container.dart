@@ -1,6 +1,6 @@
 import 'package:cluster_passport/features/user/data/data_sources/remote/user_remote_data_source.dart';
 import 'package:cluster_passport/features/user/data/data_sources/remote/user_remote_data_source_impl.dart';
-import 'package:cluster_passport/features/user/data/repository/user_repository_impl.dart';
+import 'package:cluster_passport/features/user/data/repositories/user_repository_impl.dart';
 import 'package:cluster_passport/features/user/domain/repositories/user_repository.dart';
 import 'package:cluster_passport/features/user/domain/usescases/credential/get_current_uid_usecase.dart';
 import 'package:cluster_passport/features/user/domain/usescases/credential/is_sign_in_usecase.dart';

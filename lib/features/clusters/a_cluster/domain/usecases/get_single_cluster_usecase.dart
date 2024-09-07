@@ -6,7 +6,7 @@ import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories
 class GetSingleClusterUseCase {
   final ClusterRepository clusterRepository;
 
-  GetSingleClusterUseCase(this.clusterRepository);
+  GetSingleClusterUseCase({required this.clusterRepository});
 
   /// [getSingleCluster] Obtiene un solo cluster por su ID.
   /// [getSingleCluster] Gets a single cluster by its ID.

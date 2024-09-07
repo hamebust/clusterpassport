@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:cluster_passport/features/app/home/home_page.dart';
 import 'package:cluster_passport/features/app/splash/splash_screen.dart';
 import 'package:cluster_passport/features/app/theme/app_theme.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/presentation/cubits/cluster/cluster_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/cubits/auth/auth_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/cubits/credential/credential_cubit.dart';
 import 'package:cluster_passport/features/user/presentation/cubits/get_device_number/get_device_number_cubit.dart';
@@ -88,6 +89,9 @@ class ClusterPassport extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.sl<GetDeviceNumberCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<ClusterCubit>(),
         ),
       ],
       child: MaterialApp(

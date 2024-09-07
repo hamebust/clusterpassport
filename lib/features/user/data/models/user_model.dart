@@ -1,4 +1,3 @@
-// ignore_for_file: annotate_overrides
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cluster_passport/features/user/domain/entities/user_entity.dart';

@@ -20,4 +20,10 @@ class FirebaseCollectionConst {
   // Llamada
   static const String call = "call";
   static const String callHistory = "callHistory";
+
+  // clusters
+  // clusters
+  static const String clusters = "clusters";
+
+  
 }

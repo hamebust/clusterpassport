@@ -14,7 +14,7 @@ class ClusterEntity extends Equatable {
 
   /// Nombre del Cluster.
   /// Name of the Cluster.
-  final String name;
+  final String clustername;
 
   /// Descripción del Cluster.
   /// Description of the Cluster.
@@ -37,11 +37,19 @@ class ClusterEntity extends Equatable {
   const ClusterEntity({
     required this.uid,
     this.legalId = '',
-    required this.name,
+    required this.clustername,
     this.description = '',
     required this.type,
-    required this.address,
-    required this.coordinates,
+    this.address = const Address(
+      streetTypeAndName: '',
+      buildingNumber: '',
+      neighborhood: '',
+      postalCode: '',
+      city: '',
+      state: '',
+      country: '',
+    ),
+    this.coordinates = const LatLng(10.190175951856812, -64.68849907415074),
   });
 
   /// Método de fábrica para crear un Cluster Físico.
@@ -49,7 +57,7 @@ class ClusterEntity extends Equatable {
   factory ClusterEntity.createPhysicalCluster({
     required String uid,
     required String legalId,
-    required String name,
+    required String clustername,
     required String description,
     required Address address,
     required LatLng coordinates,
@@ -57,20 +65,20 @@ class ClusterEntity extends Equatable {
     return ClusterEntity(
       uid: uid,
       legalId: legalId,
-      name: name,
+      clustername: clustername,
       description: description,
       type: 'Physical',
       address: address,
       coordinates: coordinates,
     );
   }
-
+ 
   /// Método de fábrica para crear un Cluster Jurídico.
   /// Factory method to create a Legal Cluster.
   factory ClusterEntity.createLegalCluster({
     required String uid,
     required String legalId,
-    required String name,
+    required String clustername,
     required String description,
     required Address address,
     required LatLng coordinates,
@@ -78,7 +86,7 @@ class ClusterEntity extends Equatable {
     return ClusterEntity(
       uid: uid,
       legalId: legalId,
-      name: name,
+      clustername: clustername,
       description: description,
       type: 'Legal',
       address: address,
@@ -93,7 +101,7 @@ class ClusterEntity extends Equatable {
   /// Returns a new `ClusterEntity` instance with updated values.
   ClusterEntity update({
     String? legalId,
-    String? name,
+    String? clustername,
     String? description,
     Address? address,
     LatLng? coordinates,
@@ -101,7 +109,7 @@ class ClusterEntity extends Equatable {
     return ClusterEntity(
       uid: this.uid, // El UID permanece igual.
       legalId: legalId ?? this.legalId,
-      name: name ?? this.name,
+      clustername: clustername ?? this.clustername,
       description: description ?? this.description,
       type: this.type, // El tipo permanece igual (Físico o Jurídico).
       address: address ?? this.address,
@@ -125,7 +133,7 @@ class ClusterEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [uid, legalId, name, description, type, address, coordinates];
+  List<Object?> get props => [uid, legalId, clustername, description, type, address, coordinates];
 }
 
 /// Address: Representa la dirección de un Cluster.

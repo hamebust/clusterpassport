@@ -6,7 +6,7 @@ import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories
 class GetAllClustersUseCase {
   final ClusterRepository clusterRepository;
 
-  GetAllClustersUseCase(this.clusterRepository);
+  GetAllClustersUseCase({required this.clusterRepository});
 
   /// [getAllClusters] Obtiene todos los clusters del repositorio.
   /// [getAllClusters] Gets all clusters from the repository.

@@ -287,7 +287,7 @@ void _submitProfileInfo() {
       }
     ).then((profileImageUrl) {
       // Llama a _profileInfo con la URL de la imagen cargada
-      _profileInfo(profileUrl: profileImageUrl ?? "");
+      _profileInfo(profileUrl: profileImageUrl);
     }).catchError((error) {
       // Manejo de errores durante la carga de la imagen
       print("Error uploading profile image: $error");
