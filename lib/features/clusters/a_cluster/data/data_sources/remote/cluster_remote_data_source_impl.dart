@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cluster_passport/features/app/const/firebase_collection_const.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/data/models/cluster_model.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
-
+import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source.dart';
 
 class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   final FirebaseFirestore fireStore;
@@ -16,10 +15,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
     final newCluster = ClusterModel.fromEntity(cluster).toDocument();
 
     try {
-      await clusterCollection.doc(cluster.uid).set(newCluster);
+      await clusterCollection.doc(cluster.clusterUid).set(newCluster);
     } catch (e) {
-      // Implement error handling (logging, throwing exception)
-      // ignore: avoid_print
+      // Implement error handling
       print("Error creating cluster: $e");
       throw Exception("Error creating cluster");
     }
@@ -31,9 +29,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
     final updatedCluster = ClusterModel.fromEntity(cluster).toDocument();
 
     try {
-      await clusterCollection.doc(cluster.uid).update(updatedCluster);
+      await clusterCollection.doc(cluster.clusterUid).update(updatedCluster);
     } catch (e) {
-      // Implement error handling (logging, throwing exception)
+      // Implement error handling
       print("Error updating cluster: $e");
       throw Exception("Error updating cluster");
     }
@@ -46,7 +44,7 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
     try {
       await clusterCollection.doc(clusterId).delete();
     } catch (e) {
-      // Implement error handling (logging, throwing exception)
+      // Implement error handling
       print("Error deleting cluster: $e");
       throw Exception("Error deleting cluster");
     }
@@ -65,10 +63,26 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   }
 
   @override
-  Stream<List<ClusterEntity>> getAllClusters() {
+  Future<List<ClusterEntity>> getAllClusters() async {
     final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+    final querySnapshot = await clusterCollection.get();
 
-    return clusterCollection.snapshots().map((querySnapshot) =>
-        querySnapshot.docs.map((e) => ClusterModel.fromSnapshot(e).toEntity()).toList());
+    return querySnapshot.docs.map((doc) {
+      return ClusterModel.fromSnapshot(doc).toEntity();
+    }).toList();
+  }
+
+  /// Nuevo método para obtener un stream de un cluster por su ID
+  @override
+  Stream<ClusterEntity?> getClusterByIdStream(String clusterId) {
+    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+    
+    return clusterCollection.doc(clusterId).snapshots().map((docSnapshot) {
+      if (docSnapshot.exists) {
+        return ClusterModel.fromSnapshot(docSnapshot).toEntity();
+      } else {
+        return null;
+      }
+    });
   }
 }

@@ -1,61 +1,62 @@
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories/cluster_repository.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/data/models/cluster_model.dart';
 
-/// CreateClusterUseCase: Clase que encapsula la lógica de crear un cluster.
-/// CreateClusterUseCase: Class that encapsulates the logic of creating a cluster.
 class CreateClusterUseCase {
   final ClusterRepository clusterRepository;
 
   CreateClusterUseCase({required this.clusterRepository});
 
-  /// Crea un nuevo cluster en el repositorio seleccionando el tipo (físico o jurídico).
-  /// Creates a new cluster in the repository by selecting the type (physical or legal).
-  ///
-  /// [type] es el tipo de cluster: "Physical" o "Legal".
-  /// [type] is the cluster type: "Physical" or "Legal".
-  ///
-  /// [clusterId] es el identificador único del cluster.
-  /// [clusterId] is the unique identifier for the cluster.
-  ///
-  /// Devuelve un `Future<void>`.
   Future<void> createCluster({
-    required String uid,
+    required String clusterUid,
     required String legalId,
-    required String clustername,
+    required String clusterName,
     required String description,
     required String type, // "Physical" or "Legal"
     required Address address,
     required LatLng coordinates,
+    List<String> administrators = const [],
+    List<String> clients = const [],
+    List<String> securityGuard = const [],
   }) async {
     try {
+      // Crear entidad de Cluster en función del tipo
       ClusterEntity cluster;
-
-      // Selecciona el tipo de cluster y crea la instancia adecuada
       if (type == 'Physical') {
         cluster = ClusterEntity.createPhysicalCluster(
-          uid: uid,
+          clusterUid: clusterUid,
           legalId: legalId,
-          clustername: clustername,
+          clusterName: clusterName,
           description: description,
           address: address,
           coordinates: coordinates,
+          administrators: administrators,
+          clients: clients,
+          securityGuard: securityGuard,
         );
       } else if (type == 'Legal') {
         cluster = ClusterEntity.createLegalCluster(
-          uid: uid,
+          clusterUid: clusterUid,
           legalId: legalId,
-          clustername: clustername,
+          clusterName: clusterName,
           description: description,
           address: address,
           coordinates: coordinates,
+          administrators: administrators,
+          clients: clients,
+          securityGuard: securityGuard,
         );
       } else {
         throw Exception('Invalid cluster type: $type');
       }
 
-      // Guarda el cluster en el repositorio
-      await clusterRepository.createCluster(cluster);
+      // Crear el ClusterModel desde la entidad para manejar Firebase (repositorio remoto)
+      final clusterModel = ClusterModel.fromEntity(cluster);
+      await clusterRepository.createClusterRemote(clusterModel);
+
+      // Guardar también en la base de datos local
+      await clusterRepository.createClusterLocal(clusterModel.toEntity());
     } catch (e) {
       print("Error creating cluster: $e");
       throw Exception("Error creating cluster");

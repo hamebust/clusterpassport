@@ -24,6 +24,10 @@ class UserEntity extends Equatable {
   /// Indicates whether the user is online.
   final bool? isOnline;
 
+  /// The list of clusters the user belongs to.
+  /// UIDs of the clusters the user is associated with.
+  final List<String>? myClusters; // Nueva variable para los UIDs de los clusters.
+
   /// Creates a new instance of [UserEntity].
   const UserEntity({
     this.username,
@@ -32,7 +36,8 @@ class UserEntity extends Equatable {
     this.uid, 
     this.status, 
     this.profileUrl, 
-    this.isOnline
+    this.isOnline,
+    this.myClusters = const [], // Inicializa la lista vacía por defecto.
   });
 
   @override
@@ -43,6 +48,7 @@ class UserEntity extends Equatable {
     uid, 
     status, 
     profileUrl, 
-    isOnline
+    isOnline,
+    myClusters, // Incluye la nueva variable en los props.
   ];
 }

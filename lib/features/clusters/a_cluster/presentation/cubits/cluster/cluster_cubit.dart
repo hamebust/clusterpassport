@@ -28,9 +28,9 @@ class ClusterCubit extends Cubit<ClusterState> {
   Future<void> submitCluster({required ClusterEntity cluster}) async {
     try {
       await createClusterUseCase.createCluster(
-        uid: cluster.uid,
+        clusterUid: cluster.clusterUid,
         legalId: cluster.legalId,
-        clustername: cluster.clustername,
+        clusterName: cluster.clusterName,
         description: cluster.description,
         type: cluster.type,
         address: cluster.address,

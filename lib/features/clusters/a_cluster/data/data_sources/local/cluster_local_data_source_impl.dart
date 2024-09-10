@@ -1,12 +1,11 @@
-// ignore: file_names
-
+import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/local/cluster_local_data_source.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 
-class ClusterLocalDataSource {
-  static const String _dbName = 'clusters.db';
+class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
+  static const String _dbName = 'clusterApp.db';
   static const String _tableName = 'clusters';
   static const int _dbVersion = 1;
   static Database? _database;
@@ -21,7 +20,7 @@ class ClusterLocalDataSource {
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE $_tableName (
-            uid TEXT PRIMARY KEY,
+            clusterUid TEXT PRIMARY KEY,
             legalId TEXT,
             name TEXT,
             description TEXT,
@@ -46,9 +45,9 @@ class ClusterLocalDataSource {
   /// Converts a ClusterEntity into a map for SQLite storage.
   Map<String, dynamic> _toMap(ClusterEntity cluster) {
     return {
-      'uid': cluster.uid,
+      'clusterUid': cluster.clusterUid,
       'legalId': cluster.legalId,
-      'name': cluster.clustername,
+      'name': cluster.clusterName,
       'description': cluster.description,
       'type': cluster.type,
       'streetTypeAndName': cluster.address.streetTypeAndName,
@@ -68,9 +67,9 @@ class ClusterLocalDataSource {
   /// Converts a SQLite map into a ClusterEntity.
   ClusterEntity _fromMap(Map<String, dynamic> map) {
     return ClusterEntity(
-      uid: map['uid'],
+      clusterUid: map['clusterUid'],
       legalId: map['legalId'] ?? '',
-      clustername: map['clustername'],
+      clusterName: map['name'],
       description: map['description'] ?? '',
       type: map['type'],
       address: Address(
@@ -87,8 +86,7 @@ class ClusterLocalDataSource {
     );
   }
 
-  /// Crea un nuevo Cluster en la base de datos.
-  /// Creates a new Cluster in the database.
+  @override
   Future<void> createCluster(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.insert(
@@ -98,14 +96,13 @@ class ClusterLocalDataSource {
     );
   }
 
-  /// Obtiene un Cluster por su identificador único.
-  /// Retrieves a Cluster by its unique identifier.
-  Future<ClusterEntity?> getClusterById(String clusterId) async {
+  @override
+  Future<ClusterEntity?> getClusterById(String clusterUid) async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(
       _tableName,
-      where: 'uid = ?',
-      whereArgs: [clusterId],
+      where: 'clusterUid = ?',
+      whereArgs: [clusterUid],
     );
 
     if (maps.isNotEmpty) {
@@ -114,8 +111,7 @@ class ClusterLocalDataSource {
     return null;
   }
 
-  /// Obtiene todos los Clusters almacenados en la base de datos.
-  /// Retrieves all Clusters stored in the database.
+  @override
   Future<List<ClusterEntity>> getAllClusters() async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(_tableName);
@@ -125,46 +121,42 @@ class ClusterLocalDataSource {
     });
   }
 
-  /// Actualiza un Cluster existente en la base de datos.
-  /// Updates an existing Cluster in the database.
+  @override
   Future<void> updateCluster(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
       _toMap(cluster),
-      where: 'uid = ?',
-      whereArgs: [cluster.uid],
+      where: 'clusterUid = ?',
+      whereArgs: [cluster.clusterUid],
     );
   }
 
-  /// Elimina un Cluster de la base de datos por su identificador único.
-  /// Deletes a Cluster from the database by its unique identifier.
-  Future<void> deleteCluster(String clusterId) async {
+  @override
+  Future<void> deleteCluster(String clusterUid) async {
     await _initializeDatabase();
     await _database!.delete(
       _tableName,
-      where: 'uid = ?',
-      whereArgs: [clusterId],
+      where: 'clusterUid = ?',
+      whereArgs: [clusterUid],
     );
   }
 
-  /// Actualiza parcialmente un Cluster en la base de datos.
-  /// Partially updates a Cluster in the database.
-  Future<void> partialUpdateCluster(String clusterId, Map<String, dynamic> updatedFields) async {
+  @override
+  Future<void> partialUpdateCluster(String clusterUid, Map<String, dynamic> updatedFields) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
       updatedFields,
-      where: 'uid = ?',
-      whereArgs: [clusterId],
+      where: 'clusterUid = ?',
+      whereArgs: [clusterUid],
     );
   }
 
-  /// Obtiene un Stream de un Cluster por su identificador único.
-  /// Retrieves a Stream of a Cluster by its unique identifier.
-  Stream<ClusterEntity?> getClusterByIdStream(String clusterId) async* {
+  @override
+  Stream<ClusterEntity?> getClusterByIdStream(String clusterUid) async* {
     while (true) {
-      final cluster = await getClusterById(clusterId);
+      final cluster = await getClusterById(clusterUid);
       yield cluster;
       await Future.delayed(const Duration(seconds: 2)); // Retraso para simular polling
     }

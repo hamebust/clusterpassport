@@ -30,6 +30,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       username: user.username,
       profileUrl: user.profileUrl,
       status: user.status,
+      myClusters: user.myClusters,
     ).toDocument();
 
     try {
@@ -114,11 +115,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
     Map<String, dynamic> userInfo = {};
 
-    if (user.username?.isNotEmpty ?? false)
+    if (user.username?.isNotEmpty ?? false) {
       userInfo['username'] = user.username;
+    }
     if (user.status?.isNotEmpty ?? false) userInfo['status'] = user.status;
-    if (user.profileUrl?.isNotEmpty ?? false)
+    if (user.profileUrl?.isNotEmpty ?? false) {
       userInfo['profileUrl'] = user.profileUrl;
+    }
     if (user.isOnline != null) userInfo['isOnline'] = user.isOnline;
 
     await userCollection.doc(user.uid).update(userInfo);

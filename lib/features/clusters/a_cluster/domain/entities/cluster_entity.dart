@@ -2,42 +2,42 @@ import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// ClusterEntity: Representa un Cluster (Físico o Jurídico).
-/// ClusterEntity: Represents a Cluster (Physical or Legal).
 class ClusterEntity extends Equatable {
   /// Identificador único del Cluster.
-  /// Unique identifier of the Cluster.
-  final String uid;
+  final String clusterUid;
 
   /// Identificador legal del Cluster.
-  /// Legal identifier of the Cluster.
   final String legalId;
 
   /// Nombre del Cluster.
-  /// Name of the Cluster.
-  final String clustername;
+  final String clusterName; // Renombrado de clustername a clusterName.
 
   /// Descripción del Cluster.
-  /// Description of the Cluster.
   final String description;
 
   /// Tipo de Cluster: Físico o Jurídico.
-  /// Type of Cluster: Physical or Legal.
   final String type;
 
   /// Dirección del Cluster.
-  /// Address of the Cluster.
   final Address address;
 
   /// Coordenadas geográficas del Cluster.
-  /// Geographical coordinates of the Cluster.
   final LatLng coordinates;
 
+  /// Lista de administradores del Cluster.
+  final List<String> administrators; // Nueva variable.
+
+  /// Lista de usuarios del Cluster.
+  final List<String> clients; // Nueva variable.
+
+  /// Lista de vigilantes del Cluster.
+  final List<String> securityGuard; // Nueva variable.
+
   /// Constructor principal para ClusterEntity.
-  /// Main constructor for ClusterEntity.
   const ClusterEntity({
-    required this.uid,
+    required this.clusterUid,
     this.legalId = '',
-    required this.clustername,
+    required this.clusterName, // Renombrado.
     this.description = '',
     required this.type,
     this.address = const Address(
@@ -50,94 +50,109 @@ class ClusterEntity extends Equatable {
       country: '',
     ),
     this.coordinates = const LatLng(10.190175951856812, -64.68849907415074),
+    this.administrators = const [], // Inicializa lista vacía.
+    this.clients = const [], // Inicializa lista vacía.
+    this.securityGuard = const [], // Inicializa lista vacía.
   });
 
   /// Método de fábrica para crear un Cluster Físico.
-  /// Factory method to create a Physical Cluster.
   factory ClusterEntity.createPhysicalCluster({
-    required String uid,
+    required String clusterUid,
     required String legalId,
-    required String clustername,
+    required String clusterName, // Renombrado.
     required String description,
     required Address address,
     required LatLng coordinates,
+    List<String> administrators = const [],
+    List<String> clients = const [],
+    List<String> securityGuard = const [],
   }) {
     return ClusterEntity(
-      uid: uid,
+      clusterUid: clusterUid,
       legalId: legalId,
-      clustername: clustername,
+      clusterName: clusterName,
       description: description,
       type: 'Physical',
       address: address,
       coordinates: coordinates,
+      administrators: administrators,
+      clients: clients,
+      securityGuard: securityGuard,
     );
   }
- 
+
   /// Método de fábrica para crear un Cluster Jurídico.
-  /// Factory method to create a Legal Cluster.
   factory ClusterEntity.createLegalCluster({
-    required String uid,
+    required String clusterUid,
     required String legalId,
-    required String clustername,
+    required String clusterName, // Renombrado.
     required String description,
     required Address address,
     required LatLng coordinates,
+    List<String> administrators = const [],
+    List<String> clients = const [],
+    List<String> securityGuard = const [],
   }) {
     return ClusterEntity(
-      uid: uid,
+      clusterUid: clusterUid,
       legalId: legalId,
-      clustername: clustername,
+      clusterName: clusterName,
       description: description,
       type: 'Legal',
       address: address,
       coordinates: coordinates,
+      administrators: administrators,
+      clients: clients,
+      securityGuard: securityGuard,
     );
   }
 
   /// Método para actualizar la información del Cluster.
-  /// Method to update Cluster information.
-  ///
-  /// Retorna una nueva instancia de `ClusterEntity` con los valores actualizados.
-  /// Returns a new `ClusterEntity` instance with updated values.
   ClusterEntity update({
     String? legalId,
-    String? clustername,
+    String? clusterName, // Renombrado.
     String? description,
     Address? address,
     LatLng? coordinates,
+    List<String>? administrators,
+    List<String>? clients,
+    List<String>? securityGuard,
   }) {
     return ClusterEntity(
-      uid: this.uid, // El UID permanece igual.
+      clusterUid: clusterUid,
       legalId: legalId ?? this.legalId,
-      clustername: clustername ?? this.clustername,
+      clusterName: clusterName ?? this.clusterName, // Renombrado.
       description: description ?? this.description,
-      type: this.type, // El tipo permanece igual (Físico o Jurídico).
+      type: type,
       address: address ?? this.address,
       coordinates: coordinates ?? this.coordinates,
+      administrators: administrators ?? this.administrators,
+      clients: clients ?? this.clients,
+      securityGuard: securityGuard ?? this.securityGuard,
     );
   }
 
   /// Método para borrar un Cluster.
-  /// Method to delete a Cluster.
-  ///
-  /// En este contexto, eliminar significa devolver un valor `null` o
-  /// realizar una lógica de eliminación según el repositorio.
-  /// In this context, deleting means returning a `null` value or
-  /// performing a deletion logic in the repository.
   static ClusterEntity? delete(ClusterEntity cluster) {
-    // Aquí puedes realizar cualquier lógica adicional si es necesario,
-    // como registrar la eliminación o notificar a otros servicios.
-    // Here you can perform any additional logic if needed,
-    // like logging the deletion or notifying other services.
-    return null; // Devuelve null para simular la eliminación.
+    return null;
   }
 
   @override
-  List<Object?> get props => [uid, legalId, clustername, description, type, address, coordinates];
+  List<Object?> get props => [
+        clusterUid,
+        legalId,
+        clusterName, // Renombrado.
+        description,
+        type,
+        address,
+        coordinates,
+        administrators, // Nueva variable.
+        clients, // Nueva variable.
+        securityGuard, // Nueva variable.
+      ];
 }
 
 /// Address: Representa la dirección de un Cluster.
-/// Address: Represents the address of a Cluster.
 class Address extends Equatable {
   final String streetTypeAndName;
   final String buildingNumber;

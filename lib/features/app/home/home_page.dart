@@ -121,8 +121,8 @@ class _HomePageState extends State<HomePage> {
         // Authorized page
         AuthorizedPage(),
 
-        // Página de autorizaciones
-        // Authorized page
+        // Página de mis clusters
+        // My clusters page
         MyClustersPage(),
 
         // Página de Novedades
