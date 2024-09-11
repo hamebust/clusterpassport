@@ -3,20 +3,28 @@ import 'package:cluster_passport/features/user/domain/entities/user_entity.dart'
 
 class UserModel extends UserEntity {
   // ignore: overridden_fields
+  @override
   final String? username;
   // ignore: overridden_fields
+  @override
   final String? email;
   // ignore: overridden_fields
+  @override
   final String? phoneNumber;
   // ignore: overridden_fields
+  @override
   final bool? isOnline;
   // ignore: overridden_fields
+  @override
   final String? uid;
   // ignore: overridden_fields
+  @override
   final String? status;
   // ignore: overridden_fields
+  @override
   final String? profileUrl;
   // ignore: overridden_fields
+  @override
   final List<String>? myClusters;
 
   const UserModel({

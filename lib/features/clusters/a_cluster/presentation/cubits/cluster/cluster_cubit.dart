@@ -79,7 +79,7 @@ class ClusterCubit extends Cubit<ClusterState> {
       if (cluster != null) {
         emit(ClusterLoadedSingle(cluster: cluster));
       } else {
-        emit(ClusterFailure(error: 'Cluster not found'));
+        emit(const ClusterFailure(error: 'Cluster not found'));
       }
     } catch (e, stackTrace) {
       print('Error in getSingleCluster: $e');

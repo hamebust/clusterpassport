@@ -94,8 +94,8 @@ class UnitEntity extends Equatable {
       uid: uid,
       name: '',
       sectorId: sectorId,
-      jClusterIds: [],
-      userIds: [],
+      jClusterIds: const [],
+      userIds: const [],
       location: '',
     );
   }
