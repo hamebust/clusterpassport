@@ -8,11 +8,11 @@ part 'get_single_user_state.dart';
 /// [GetSingleUserCubit] maneja la lógica de negocio para obtener la información de un solo usuario
 /// y emite los estados correspondientes para reflejar el progreso y resultado de la operación.
 class GetSingleUserCubit extends Cubit<GetSingleUserState> {
-  final GetSingleUserUseCase getSingleUserUseCase;
+  final GetSingleUserUsecase getSingleUserUsecase;
 
   /// Constructor de [GetSingleUserCubit].
   /// Inicializa el estado en [GetSingleUserInitial].
-  GetSingleUserCubit({required this.getSingleUserUseCase})
+  GetSingleUserCubit({required this.getSingleUserUsecase})
       : super(GetSingleUserInitial());
 
   /// Método que obtiene un solo usuario basado en el UID proporcionado.
@@ -21,7 +21,7 @@ class GetSingleUserCubit extends Cubit<GetSingleUserState> {
     emit(GetSingleUserLoading());
 
     try {
-      final streamResponse = getSingleUserUseCase.call(uid);
+      final streamResponse = getSingleUserUsecase.call(uid);
       await for (final users in streamResponse) {
         if (users.isNotEmpty) {
           emit(GetSingleUserLoaded(singleUser: users.first));

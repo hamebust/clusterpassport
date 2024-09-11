@@ -7,48 +7,45 @@ import 'package:equatable/equatable.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final GetCurrentUidUseCase getCurrentUidUseCase;
-  final IsSignInUseCase isSignInUseCase;
-  final SignOutUseCase signOutUseCase;
+  final GetCurrentUidUsecase getCurrentUidUsecase;
+  final IsSignInUsecase isSignInUsecase;
+  final SignOutUsecase signOutUsecase;
 
-  AuthCubit({
-    required this.getCurrentUidUseCase,
-    required this.isSignInUseCase,
-    required this.signOutUseCase
-}) : super(AuthInitial());
+  AuthCubit(
+      {required this.getCurrentUidUsecase,
+      required this.isSignInUsecase,
+      required this.signOutUsecase})
+      : super(AuthInitial());
 
-  Future<void> appStarted() async{
+  Future<void> appStarted() async {
+    try {
+      bool isSignIn = await isSignInUsecase.call();
 
-    try{
-      bool isSignIn=await isSignInUseCase.call();
-
-      if (isSignIn){
-        final uid=await getCurrentUidUseCase.call();
+      if (isSignIn) {
+        final uid = await getCurrentUidUsecase.call();
         emit(Authenticated(uid: uid));
-      }else {
+      } else {
         emit(UnAuthenticated());
       }
-
-    }catch(_){
+    } catch (_) {
       emit(UnAuthenticated());
     }
-
   }
 
-  Future<void> loggedIn() async{
-    try{
-      final uid= await getCurrentUidUseCase.call();
+  Future<void> loggedIn() async {
+    try {
+      final uid = await getCurrentUidUsecase.call();
       emit(Authenticated(uid: uid));
-    }catch(_){
+    } catch (_) {
       emit(UnAuthenticated());
     }
   }
 
-  Future<void> loggedOut() async{
-    try{
-      await signOutUseCase.call();
+  Future<void> loggedOut() async {
+    try {
+      await signOutUsecase.call();
       emit(UnAuthenticated());
-    }catch(_){
+    } catch (_) {
       emit(UnAuthenticated());
     }
   }

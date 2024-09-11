@@ -27,76 +27,76 @@ Future<void> userInjectionContainer() async {
 
   // Registra AuthCubit para manejar la autenticación del usuario
   sl.registerFactory<AuthCubit>(() => AuthCubit(
-        getCurrentUidUseCase: sl(),
-        isSignInUseCase: sl(),
-        signOutUseCase: sl(),
+        getCurrentUidUsecase: sl(),
+        isSignInUsecase: sl(),
+        signOutUsecase: sl(),
       ));
 
   // Registra UserCubit para gestionar la obtención y actualización de usuarios
   sl.registerFactory<UserCubit>(() => UserCubit(
-        updateUserUseCase: sl(),
-        getAllUsersUseCase: sl(),
+        updateUserUsecase: sl(),
+        getAllUsersUsecase: sl(),
       ));
 
   // Registra GetSingleUserCubit para obtener un único usuario basado en su UID
   sl.registerFactory<GetSingleUserCubit>(() => GetSingleUserCubit(
-        getSingleUserUseCase: sl(),
+        getSingleUserUsecase: sl(),
       ));
 
   // Registra CredentialCubit para manejar el proceso de verificación de credenciales del usuario
   sl.registerFactory<CredentialCubit>(() => CredentialCubit(
-        createUserUseCase: sl(),
-        signInWithPhoneNumberUseCase: sl(),
-        verifyPhoneNumberUseCase: sl(),
+        createUserUsecase: sl(),
+        signInWithPhoneNumberUsecase: sl(),
+        verifyPhoneNumberUsecase: sl(),
       ));
 
   // Registra GetDeviceNumberCubit para obtener los números de teléfono del dispositivo
   sl.registerFactory<GetDeviceNumberCubit>(() => GetDeviceNumberCubit(
-        getDeviceNumberUseCase: sl(),
+        getDeviceNumberUsecase: sl(),
       ));
 
   // * USE CASES INJECTION
   // Registro de Use Cases en el Service Locator (sl)
 
   // Registra el caso de uso para obtener el UID actual del usuario
-  sl.registerLazySingleton<GetCurrentUidUseCase>(
-      () => GetCurrentUidUseCase(repository: sl()));
+  sl.registerLazySingleton<GetCurrentUidUsecase>(
+      () => GetCurrentUidUsecase(repository: sl()));
 
   // Registra el caso de uso para verificar si el usuario está autenticado
-  sl.registerLazySingleton<IsSignInUseCase>(
-      () => IsSignInUseCase(repository: sl()));
+  sl.registerLazySingleton<IsSignInUsecase>(
+      () => IsSignInUsecase(repository: sl()));
 
   // Registra el caso de uso para cerrar sesión
-  sl.registerLazySingleton<SignOutUseCase>(
-      () => SignOutUseCase(repository: sl()));
+  sl.registerLazySingleton<SignOutUsecase>(
+      () => SignOutUsecase(repository: sl()));
 
   // Registra el caso de uso para crear un nuevo usuario
-  sl.registerLazySingleton<CreateUserUseCase>(
-      () => CreateUserUseCase(repository: sl()));
+  sl.registerLazySingleton<CreateUserUsecase>(
+      () => CreateUserUsecase(repository: sl()));
 
   // Registra el caso de uso para obtener todos los usuarios
-  sl.registerLazySingleton<GetAllUsersUseCase>(
-      () => GetAllUsersUseCase(repository: sl()));
+  sl.registerLazySingleton<GetAllUsersUsecase>(
+      () => GetAllUsersUsecase(repository: sl()));
 
   // Registra el caso de uso para actualizar la información de un usuario
-  sl.registerLazySingleton<UpdateUserUseCase>(
-      () => UpdateUserUseCase(repository: sl()));
+  sl.registerLazySingleton<UpdateUserUsecase>(
+      () => UpdateUserUsecase(repository: sl()));
 
   // Registra el caso de uso para obtener un único usuario por UID
-  sl.registerLazySingleton<GetSingleUserUseCase>(
-      () => GetSingleUserUseCase(repository: sl()));
+  sl.registerLazySingleton<GetSingleUserUsecase>(
+      () => GetSingleUserUsecase(repository: sl()));
 
   // Registra el caso de uso para iniciar sesión con número de teléfono
-  sl.registerLazySingleton<SignInWithPhoneNumberUseCase>(
-      () => SignInWithPhoneNumberUseCase(repository: sl()));
+  sl.registerLazySingleton<SignInWithPhoneNumberUsecase>(
+      () => SignInWithPhoneNumberUsecase(repository: sl()));
 
   // Registra el caso de uso para verificar el número de teléfono
-  sl.registerLazySingleton<VerifyPhoneNumberUseCase>(
-      () => VerifyPhoneNumberUseCase(repository: sl()));
+  sl.registerLazySingleton<VerifyPhoneNumberUsecase>(
+      () => VerifyPhoneNumberUsecase(repository: sl()));
 
   // Registra el caso de uso para obtener los números de teléfono del dispositivo
-  sl.registerLazySingleton<GetDeviceNumberUseCase>(
-      () => GetDeviceNumberUseCase(repository: sl()));
+  sl.registerLazySingleton<GetDeviceNumberUsecase>(
+      () => GetDeviceNumberUsecase(repository: sl()));
 
   // * REPOSITORY & DATA SOURCES INJECTION
   // Registro de Repositorios y Data Sources en el Service Locator (sl)

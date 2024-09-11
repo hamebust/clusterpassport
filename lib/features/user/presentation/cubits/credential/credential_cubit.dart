@@ -9,18 +9,18 @@ import 'package:equatable/equatable.dart';
 part 'credential_state.dart';
 
 class CredentialCubit extends Cubit<CredentialState> {
-  final SignInWithPhoneNumberUseCase signInWithPhoneNumberUseCase;
-  final VerifyPhoneNumberUseCase verifyPhoneNumberUseCase;
-  final CreateUserUseCase createUserUseCase;
-  CredentialCubit({
-    required this.signInWithPhoneNumberUseCase,
-    required this.verifyPhoneNumberUseCase,
-    required this.createUserUseCase
-}) : super(CredentialInitial());
+  final SignInWithPhoneNumberUsecase signInWithPhoneNumberUsecase;
+  final VerifyPhoneNumberUsecase verifyPhoneNumberUsecase;
+  final CreateUserUsecase createUserUsecase;
+  CredentialCubit(
+      {required this.signInWithPhoneNumberUsecase,
+      required this.verifyPhoneNumberUsecase,
+      required this.createUserUsecase})
+      : super(CredentialInitial());
 
   Future<void> submitVerifyPhoneNumber({required String phoneNumber}) async {
     try {
-      await verifyPhoneNumberUseCase.call(phoneNumber);
+      await verifyPhoneNumberUsecase.call(phoneNumber);
       emit(CredentialPhoneAuthSmsCodeReceived());
     } on SocketException catch (_) {
       emit(CredentialFailure());
@@ -31,7 +31,7 @@ class CredentialCubit extends Cubit<CredentialState> {
 
   Future<void> submitSmsCode({required String smsCode}) async {
     try {
-      await signInWithPhoneNumberUseCase.call(smsCode);
+      await signInWithPhoneNumberUsecase.call(smsCode);
       emit(CredentialPhoneAuthProfileInfo());
     } on SocketException catch (_) {
       emit(CredentialFailure());
@@ -42,7 +42,7 @@ class CredentialCubit extends Cubit<CredentialState> {
 
   Future<void> submitProfileInfo({required UserEntity user}) async {
     try {
-      await createUserUseCase.call(user);
+      await createUserUsecase.call(user);
       emit(CredentialSuccess());
     } on SocketException catch (_) {
       emit(CredentialFailure());
@@ -50,5 +50,4 @@ class CredentialCubit extends Cubit<CredentialState> {
       emit(CredentialFailure());
     }
   }
-
-  }
+}

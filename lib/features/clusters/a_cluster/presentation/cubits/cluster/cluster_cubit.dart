@@ -10,24 +10,24 @@ import 'package:equatable/equatable.dart';
 part 'cluster_state.dart';
 
 class ClusterCubit extends Cubit<ClusterState> {
-  final CreateClusterUseCase createClusterUseCase;
-  final DeleteSingleClusterUseCase deleteSingleClusterUseCase;
-  final GetAllClustersUseCase getAllClusterUseCase;
-  final GetSingleClusterUseCase getSingleClusterUseCase;
-  final UpdateClusterUseCase updateClusterUseCase;
+  final CreateClusterUsecase createClusterUsecase;
+  final DeleteSingleClusterUsecase deleteSingleClusterUsecase;
+  final GetAllClustersUsecase getAllClusterUsecase;
+  final GetSingleClusterUsecase getSingleClusterUsecase;
+  final UpdateClusterUsecase updateClusterUsecase;
 
   ClusterCubit({
-    required this.createClusterUseCase,
-    required this.deleteSingleClusterUseCase,
-    required this.getAllClusterUseCase,
-    required this.getSingleClusterUseCase,
-    required this.updateClusterUseCase,
+    required this.createClusterUsecase,
+    required this.deleteSingleClusterUsecase,
+    required this.getAllClusterUsecase,
+    required this.getSingleClusterUsecase,
+    required this.updateClusterUsecase,
   }) : super(ClusterInitial());
 
   // Método para crear un nuevo cluster
   Future<void> submitCluster({required ClusterEntity cluster}) async {
     try {
-      await createClusterUseCase.createCluster(
+      await createClusterUsecase.createCluster(
         clusterUid: cluster.clusterUid,
         legalId: cluster.legalId,
         clusterName: cluster.clusterName,
@@ -47,7 +47,7 @@ class ClusterCubit extends Cubit<ClusterState> {
   // Método para actualizar un cluster existente
   Future<void> updateCluster({required ClusterEntity cluster}) async {
     try {
-      await updateClusterUseCase.updateCluster(cluster);
+      await updateClusterUsecase.updateCluster(cluster);
       emit(ClusterSuccess());
     } catch (e, stackTrace) {
       print('Error in updateCluster: $e');
@@ -61,7 +61,7 @@ class ClusterCubit extends Cubit<ClusterState> {
     emit(ClusterLoading());
 
     try {
-      final clusters = await getAllClusterUseCase.getAllClusters();
+      final clusters = await getAllClusterUsecase.getAllClusters();
       emit(ClusterLoaded(clusters: clusters));
     } catch (e, stackTrace) {
       print('Error in getAllClusters: $e');
@@ -75,7 +75,7 @@ class ClusterCubit extends Cubit<ClusterState> {
     emit(ClusterLoading());
 
     try {
-      final cluster = await getSingleClusterUseCase.getSingleCluster(clusterId);
+      final cluster = await getSingleClusterUsecase.getSingleCluster(clusterId);
       if (cluster != null) {
         emit(ClusterLoadedSingle(cluster: cluster));
       } else {
@@ -93,8 +93,9 @@ class ClusterCubit extends Cubit<ClusterState> {
     emit(ClusterLoading());
 
     try {
-      await deleteSingleClusterUseCase.deleteSingleCluster(clusterId);
-      emit(ClusterDeleteSuccess()); // Emitir un estado de éxito en la eliminación
+      await deleteSingleClusterUsecase.deleteSingleCluster(clusterId);
+      emit(
+          ClusterDeleteSuccess()); // Emitir un estado de éxito en la eliminación
     } catch (e, stackTrace) {
       print('Error in deleteSingleCluster: $e');
       print(stackTrace);

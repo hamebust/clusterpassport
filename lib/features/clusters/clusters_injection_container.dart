@@ -10,36 +10,37 @@ import 'package:cluster_passport/main_injection_container.dart';
 
 Future<void> clustersInjectionContainer() async {
   sl.registerFactory<ClusterCubit>(() => ClusterCubit(
-        createClusterUseCase: sl(),
-        deleteSingleClusterUseCase: sl(),
-        getAllClusterUseCase: sl(),
-        getSingleClusterUseCase: sl(),
-        updateClusterUseCase: sl(),
+        createClusterUsecase: sl(),
+        deleteSingleClusterUsecase: sl(),
+        getAllClusterUsecase: sl(),
+        getSingleClusterUsecase: sl(),
+        updateClusterUsecase: sl(),
       ));
 
   // Registra el caso de uso para crear el Cluster
-  sl.registerLazySingleton<CreateClusterUseCase>(
-      () => CreateClusterUseCase(clusterRepository: sl()));
+  sl.registerLazySingleton<CreateClusterUsecase>(
+      () => CreateClusterUsecase(clusterRepository: sl()));
 
   // Registra el caso de uso para eliminar un usuario por su ID
-  sl.registerLazySingleton<DeleteSingleClusterUseCase>(
-      () => DeleteSingleClusterUseCase(clusterRepository: sl()));
+  sl.registerLazySingleton<DeleteSingleClusterUsecase>(
+      () => DeleteSingleClusterUsecase(clusterRepository: sl()));
 
   // registra el caso de uso para obtener todos los usuarios
-  sl.registerLazySingleton<GetAllClustersUseCase>(
-      () => GetAllClustersUseCase(clusterRepository: sl()));
+  sl.registerLazySingleton<GetAllClustersUsecase>(
+      () => GetAllClustersUsecase(clusterRepository: sl()));
 
   // Registra el caso de uso para obtener un solo usuario por su ID
-  sl.registerLazySingleton<GetSingleClusterUseCase>(
-      () => GetSingleClusterUseCase(clusterRepository: sl()));
+  sl.registerLazySingleton<GetSingleClusterUsecase>(
+      () => GetSingleClusterUsecase(clusterRepository: sl()));
 
   // Registra el caso de uso para actualizar la información de un usuario
-  sl.registerLazySingleton<UpdateClusterUseCase>(
-      () => UpdateClusterUseCase(clusterRepository: sl()));
+  sl.registerLazySingleton<UpdateClusterUsecase>(
+      () => UpdateClusterUsecase(clusterRepository: sl()));
 
   // * REPOSITORY & DATA SOURCES INJECTION
 
-  sl.registerLazySingleton<ClusterRemoteDataSource>(() => ClusterRemoteDataSourceImpl(
-    fireStore: sl.call(),
-  ));
+  sl.registerLazySingleton<ClusterRemoteDataSource>(
+      () => ClusterRemoteDataSourceImpl(
+            fireStore: sl.call(),
+          ));
 }

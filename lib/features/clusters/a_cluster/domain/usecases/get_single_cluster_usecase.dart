@@ -1,10 +1,10 @@
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories/cluster_repository.dart';
 
-class GetSingleClusterUseCase {
+class GetSingleClusterUsecase {
   final ClusterRepository clusterRepository;
 
-  GetSingleClusterUseCase({required this.clusterRepository});
+  GetSingleClusterUsecase({required this.clusterRepository});
 
   Future<ClusterEntity?> getSingleCluster(String clusterUid) async {
     // Obtiene el cluster desde el repositorio remoto

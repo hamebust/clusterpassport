@@ -10,14 +10,14 @@ part 'user_state.dart';
 /// de la información de usuarios, y emite los estados correspondientes para reflejar el progreso
 /// y resultado de las operaciones.
 class UserCubit extends Cubit<UserState> {
-  final UpdateUserUseCase updateUserUseCase;
-  final GetAllUsersUseCase getAllUsersUseCase;
+  final UpdateUserUsecase updateUserUsecase;
+  final GetAllUsersUsecase getAllUsersUsecase;
 
   /// Constructor de [UserCubit].
   /// Inicializa el estado en [UserInitial].
   UserCubit({
-    required this.updateUserUseCase,
-    required this.getAllUsersUseCase,
+    required this.updateUserUsecase,
+    required this.getAllUsersUsecase,
   }) : super(UserInitial());
 
   /// Obtiene todos los usuarios del repositorio.
@@ -26,7 +26,7 @@ class UserCubit extends Cubit<UserState> {
     emit(UserLoading());
 
     try {
-      final streamResponse = getAllUsersUseCase.call();
+      final streamResponse = getAllUsersUsecase.call();
       await for (final users in streamResponse) {
         emit(UserLoaded(users: users));
       }
@@ -41,7 +41,7 @@ class UserCubit extends Cubit<UserState> {
   /// En caso de error, emitirá [UserFailure].
   Future<void> updateUser({required UserEntity user}) async {
     try {
-      await updateUserUseCase.call(user);
+      await updateUserUsecase.call(user);
       // Se puede emitir un estado de éxito aquí si es necesario.
     } catch (e, stackTrace) {
       print('Error in updateUser: $e');

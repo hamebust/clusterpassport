@@ -8,19 +8,20 @@ part 'get_device_number_state.dart';
 /// [GetDeviceNumberCubit] maneja el estado relacionado con la obtención
 /// de números de contacto desde el dispositivo.
 class GetDeviceNumberCubit extends Cubit<GetDeviceNumberState> {
-  final GetDeviceNumberUseCase getDeviceNumberUseCase;
+  final GetDeviceNumberUsecase getDeviceNumberUsecase;
 
   /// Constructor para [GetDeviceNumberCubit].
   /// Inicializa el estado en [GetDeviceNumberInitial].
-  GetDeviceNumberCubit({required this.getDeviceNumberUseCase}) 
+  GetDeviceNumberCubit({required this.getDeviceNumberUsecase})
       : super(GetDeviceNumberInitial());
 
   /// Método que obtiene los números de contacto del dispositivo.
   Future<void> getDeviceNumber() async {
-    emit(GetDeviceNumberLoading());  // Emitimos estado de carga al iniciar la operación
+    emit(
+        GetDeviceNumberLoading()); // Emitimos estado de carga al iniciar la operación
     try {
       // Llama al caso de uso para obtener los números de contacto
-      final contactNumbers = await getDeviceNumberUseCase.call();
+      final contactNumbers = await getDeviceNumberUsecase.call();
       emit(GetDeviceNumberLoaded(contacts: contactNumbers));
     } catch (e, stackTrace) {
       // Manejo de errores en caso de fallo durante la operación

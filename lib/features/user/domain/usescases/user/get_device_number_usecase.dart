@@ -2,12 +2,12 @@ import 'package:cluster_passport/features/user/domain/entities/contact_entity.da
 import 'package:cluster_passport/features/user/domain/repositories/user_repository.dart';
 
 /// Use case for retrieving device numbers from the user repository.
-class GetDeviceNumberUseCase {
+class GetDeviceNumberUsecase {
   final UserRepository repository;
 
-  /// Constructor for GetDeviceNumberUseCase.
+  /// Constructor for GetDeviceNumberUsecase.
   /// The repository is injected via the constructor.
-  GetDeviceNumberUseCase({required this.repository});
+  GetDeviceNumberUsecase({required this.repository});
 
   /// Calls the repository to get the device numbers.
   /// Returns a list of [ContactEntity].

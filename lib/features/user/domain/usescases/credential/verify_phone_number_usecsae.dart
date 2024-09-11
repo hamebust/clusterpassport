@@ -1,12 +1,11 @@
 import 'package:cluster_passport/features/user/domain/repositories/user_repository.dart';
 
-class VerifyPhoneNumberUseCase {
+class VerifyPhoneNumberUsecase {
   final UserRepository repository;
 
-  VerifyPhoneNumberUseCase({required this.repository});
+  VerifyPhoneNumberUsecase({required this.repository});
 
   Future<void> call(String phoneNumber) async {
     return repository.verifyPhoneNumber(phoneNumber);
   }
-
 }
