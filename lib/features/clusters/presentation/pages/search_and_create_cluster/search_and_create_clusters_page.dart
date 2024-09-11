@@ -31,7 +31,7 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
       },
     );
   }
-
+ 
   String _searchTerm = ''; // Para almacenar el término de búsqueda
 
   @override
