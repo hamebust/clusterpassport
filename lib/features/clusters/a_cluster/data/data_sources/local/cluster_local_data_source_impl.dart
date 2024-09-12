@@ -87,7 +87,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> createCluster(ClusterEntity cluster) async {
+  Future<void> createClusterLocal(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.insert(
       _tableName,
@@ -97,7 +97,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<ClusterEntity?> getClusterById(String clusterUid) async {
+  Future<ClusterEntity?> getClusterByIdLocal(String clusterUid) async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(
       _tableName,
@@ -112,7 +112,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<List<ClusterEntity>> getAllClusters() async {
+  Future<List<ClusterEntity>> getAllClustersLocal() async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(_tableName);
 
@@ -122,7 +122,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> updateCluster(ClusterEntity cluster) async {
+  Future<void> updateClusterLocal(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
@@ -133,7 +133,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> deleteCluster(String clusterUid) async {
+  Future<void> deleteClusterLocal(String clusterUid) async {
     await _initializeDatabase();
     await _database!.delete(
       _tableName,
@@ -143,7 +143,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> partialUpdateCluster(String clusterUid, Map<String, dynamic> updatedFields) async {
+  Future<void> partialUpdateClusterLocal(String clusterUid, Map<String, dynamic> updatedFields) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
@@ -154,9 +154,9 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Stream<ClusterEntity?> getClusterByIdStream(String clusterUid) async* {
+  Stream<ClusterEntity?> getClusterByIdStreamLocal(String clusterUid) async* {
     while (true) {
-      final cluster = await getClusterById(clusterUid);
+      final cluster = await getClusterByIdLocal(clusterUid);
       yield cluster;
       await Future.delayed(const Duration(seconds: 2)); // Retraso para simular polling
     }

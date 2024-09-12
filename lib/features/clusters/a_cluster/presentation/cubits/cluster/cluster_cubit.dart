@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/create_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/delete_cluster_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_cluster_usecase.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_clusters_remote_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_single_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/update_cluster_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +12,7 @@ part 'cluster_state.dart';
 class ClusterCubit extends Cubit<ClusterState> {
   final CreateClusterUsecase createClusterUsecase;
   final DeleteSingleClusterUsecase deleteSingleClusterUsecase;
-  final GetAllClustersUsecase getAllClusterUsecase;
+  final GetAllClustersRemoteUsecase getAllClusterUsecase;
   final GetSingleClusterUsecase getSingleClusterUsecase;
   final UpdateClusterUsecase updateClusterUsecase;
 

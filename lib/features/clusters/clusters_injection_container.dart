@@ -2,7 +2,7 @@ import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/r
 import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source_impl.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/create_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/delete_cluster_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_cluster_usecase.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_clusters_remote_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_single_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/update_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/presentation/cubits/cluster/cluster_cubit.dart';
@@ -26,8 +26,8 @@ Future<void> clustersInjectionContainer() async {
       () => DeleteSingleClusterUsecase(clusterRepository: sl()));
 
   // registra el caso de uso para obtener todos los usuarios
-  sl.registerLazySingleton<GetAllClustersUsecase>(
-      () => GetAllClustersUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<GetAllClustersRemoteUsecase>(
+      () => GetAllClustersRemoteUsecase(clusterRepository: sl()));
 
   // Registra el caso de uso para obtener un solo usuario por su ID
   sl.registerLazySingleton<GetSingleClusterUsecase>(

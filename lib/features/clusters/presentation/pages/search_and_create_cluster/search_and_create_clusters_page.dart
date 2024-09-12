@@ -1,134 +1,101 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cluster_passport/features/app/const/firebase_collection_const.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/presentation/cubits/cluster/cluster_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cluster_passport/features/clusters/presentation/pages/search_and_create_cluster/widgets/create_cluster_form.dart';
 
 class SearchAndCreateClustersPage extends StatefulWidget {
-  const SearchAndCreateClustersPage({super.key});
+  const SearchAndCreateClustersPage({Key? key}) : super(key: key);
+
   @override
-  State<SearchAndCreateClustersPage> createState() => _SearchAndCreateClustersPageState();
+  _SearchAndCreateClustersPageState createState() => _SearchAndCreateClustersPageState();
 }
 
 class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPage> {
-  void _mostrarDialogoFiltro(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Filtrar por Tipo'),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Agrega aquí los filtros (Residencial, Mall, Empresa)
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cerrar'),
-            ),
-          ],
-        );
-      },
-    );
+  bool _isCreateClusterFormVisible = false;
+
+  // Alternar la visibilidad del formulario de creación de clúster
+  void _toggleCreateFormVisibility() {
+    setState(() {
+      _isCreateClusterFormVisible = !_isCreateClusterFormVisible;
+    });
   }
- 
-  String _searchTerm = ''; // Para almacenar el término de búsqueda
+
+  @override
+  void initState() {
+    super.initState();
+    // Al inicializar el widget, obtenemos todos los clústeres
+    BlocProvider.of<ClusterCubit>(context).getAllClusters();
+
+    // Crear la colección 'clusters' si no existe (con manejo de errores)
+    _createClustersCollection();
+  }
+
+  Future<void> _createClustersCollection() async {
+    try {
+      final clusterCollection = FirebaseFirestore.instance.collection(FirebaseCollectionConst.clusters);
+      await clusterCollection.add({}); // Agrega un documento vacío para crear la colección
+      print('Colección "clusters" creada correctamente');
+    } catch (e) {
+      // Manejar errores al crear la colección
+      print('Error al crear la colección "clusters": $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Barra de navegación  
-      // Navigation bar
       appBar: AppBar(
-
-        // Botón de retroceso
-        // Back button
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-
-        // Título de la página
-        // Page title
         title: const Text('Clusters'),
         actions: [
-          
-          
-          const SizedBox(
-            width: 50,
-          ),
-
-          // Botón de filtro
-          // Filtro button
           IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // Acción al presionar el icono de filtro
-              _mostrarDialogoFiltro(context);
-            },
+            icon: _isCreateClusterFormVisible ? const Icon(Icons.close) : const Icon(Icons.add),
+            onPressed: _toggleCreateFormVisibility,
           ),
-
-          // Botón de búsqueda
-          // Search button
-          Expanded(
-            // Para que el TextField ocupe el espacio disponible
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: TextField(
-                onChanged: (text) {
-                  setState(() {
-                    _searchTerm = text;
-                  });
-                },
-                decoration: const InputDecoration(
-                  hintText: 'Buscar clusters...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-          
         ],
       ),
       body: Column(
         children: [
-          Expanded(
-            // Para que la lista ocupe el espacio disponible
-            child: ListView(
-              children:  [
-                _ClusterItem(
-                  nombre: 'Conjunto Residencial Las Palmeras',
-                  tipo: 'Residencial',
-                  visible: _searchTerm.isEmpty || 'Conjunto Residencial Las Palmeras'.toLowerCase().contains(_searchTerm.toLowerCase()),
-                  // Agrega aquí la imagen o icono del conjunto residencial
-                ),
-                _ClusterItem(
-                  nombre: 'Centro Comercial El Dorado',
-                  tipo: 'Mall',
-                  visible: _searchTerm.isEmpty || 'Centro Comercial El Dorado'.toLowerCase().contains(_searchTerm.toLowerCase()),
-                  // Agrega aquí la imagen o icono del centro comercial
-                ),
-                _ClusterItem(
-                  nombre: 'Empresa Acme S.A.',
-                  tipo: 'Empresa',
-                  visible: _searchTerm.isEmpty || 'Empresa Acme S.A.'.toLowerCase().contains(_searchTerm.toLowerCase()),
-                  // Agrega aquí la imagen o icono de la empresa
-                ),
-                // Agrega más _ClusterItem según sea necesario
-              ],
+          // Si el formulario de creación es visible, lo mostramos
+          if (_isCreateClusterFormVisible)
+            CreateClusterForm(
+              onClusterCreated: () {
+                // Cuando un clúster es creado, refrescamos la lista de clústeres
+                BlocProvider.of<ClusterCubit>(context).getAllClusters();
+                _toggleCreateFormVisibility();
+              }, createClusterUsecase: BlocProvider.of<ClusterCubit>(context).createClusterUsecase,
             ),
-          ),
-          Padding(
-            // Para el botón de crear cluster
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Acción al presionar el botón de crear cluster
-                // Navega a la pantalla de creación de cluster
+
+          // Usamos BlocBuilder para manejar el estado del cubit
+          Expanded(
+            child: BlocBuilder<ClusterCubit, ClusterState>(
+              builder: (context, state) {
+                if (state is ClusterLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ClusterFailure) {
+                  return Center(child: Text('Error: ${state.error}'));
+                } else if (state is ClusterLoaded) {
+                  // Verificamos si hay clusters o no
+                  if (state.clusters.isEmpty) {
+                    return const Center(child: Text('No existen clusters')); 
+                  } else {
+                    final clusters = state.clusters;
+                    return ListView.builder(
+                      itemCount: clusters.length,
+                      itemBuilder: (context, index) {
+                        final cluster = clusters[index];
+                        return ListTile(
+                          title: Text(cluster.clusterName),
+                          subtitle: Text(cluster.description),
+                        );
+                      },
+                    );
+                  }
+                } else {
+                  return const Center(child: Text('Unexpected state'));
+                }
               },
-              child: const Text('Crear Cluster'),
             ),
           ),
         ],
@@ -136,32 +103,3 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
     );
   }
 }
-
-// Widget para cada item de la lista
-class _ClusterItem extends StatelessWidget {
-  final String nombre;
-  final String tipo;
-  final bool visible;
-  // Agrega aquí un parámetro para la imagen o icono
-
-  const _ClusterItem({
-    required this.nombre,
-    required this.tipo,
-    required this.visible,
-    // Agrega aquí el parámetro para la imagen o icono
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!visible) {
-    return const SizedBox.shrink(); // No muestra el cluster si visible es false
-  }
-    return ListTile(
-      //leading: // Muestra aquí la imagen o icono del cluster
-      title: Text(nombre), // Muestra el nombre del cluster
-      subtitle: Text(tipo),
-    );
-  }
-} // Muestra el tipo de cluster
-
-

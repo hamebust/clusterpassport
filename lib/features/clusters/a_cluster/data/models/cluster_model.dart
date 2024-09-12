@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

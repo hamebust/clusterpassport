@@ -16,48 +16,54 @@ class ClusterRepositoryImpl implements ClusterRepository {
   // Operaciones Remotas
   @override
   Future<void> createClusterRemote(ClusterEntity cluster) async {
-    await remoteDataSource.createCluster(cluster);
+    await remoteDataSource.createClusterRemote(cluster);
   }
 
   @override
   Future<void> updateClusterRemote(ClusterEntity cluster) async {
-    await remoteDataSource.updateCluster(cluster);
+    await remoteDataSource.updateClusterRemote(cluster);
   }
 
   @override
   Future<void> deleteClusterRemote(String clusterId) async {
-    await remoteDataSource.deleteCluster(clusterId);
+    await remoteDataSource.deleteClusterRemote(clusterId);
   }
 
   @override
   Future<List<ClusterEntity>> getAllClustersRemote() async {
-    return await remoteDataSource.getAllClusters();
+    return await remoteDataSource.getAllClustersRemote();
   }
 
   // Operaciones Locales
   @override
   Future<void> createClusterLocal(ClusterEntity cluster) async {
-    await localDataSource.createCluster(cluster);
+    await localDataSource.createClusterLocal(cluster);
   }
 
   @override
   Future<void> updateClusterLocal(ClusterEntity cluster) async {
-    await localDataSource.updateCluster(cluster);
+    await localDataSource.updateClusterLocal(cluster);
   }
 
   @override
   Future<void> deleteClusterLocal(String clusterId) async {
-    await localDataSource.deleteCluster(clusterId);
+    await localDataSource.deleteClusterLocal(clusterId);
   }
 
+  @override
+  Future<List<ClusterEntity>> getAllClustersLocal() async {
+    return await localDataSource.getAllClustersLocal();
+  }
+  
   // Métodos comunes
   @override
   Future<ClusterEntity?> getClusterById(String clusterId) async {
-    return await localDataSource.getClusterById(clusterId);
+    return await localDataSource.getClusterByIdLocal(clusterId);
   }
 
   @override
   Stream<ClusterEntity?> getClusterByIdStream(String clusterId) {
-    return localDataSource.getClusterByIdStream(clusterId);
+    return localDataSource.getClusterByIdStreamLocal(clusterId);
   }
+
 }

@@ -9,9 +9,9 @@
 //Paquete que permite conectar a PageConst: constantes en la carpeta lib/features/app/const
 //Package that allows connecting to PageConst: page constants in the lib/features/app/const folder
 import 'package:cluster_passport/features/app/const/page_const.dart';
-import 'package:cluster_passport/features/app/home/widgets_home/icon_appbar_home_page.dart';
 import 'package:cluster_passport/features/app/theme/style.dart';
 import 'package:cluster_passport/features/authorized/presentation/pages/authorized/authorized_page.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/presentation/cubits/cluster/cluster_cubit.dart';
 import 'package:cluster_passport/features/clusters/presentation/pages/my_clusters/my_clusters_page.dart';
 import 'package:cluster_passport/features/clusters/presentation/pages/search_and_create_cluster/search_and_create_clusters_page.dart';
 import 'package:cluster_passport/features/news/news_page.dart';
@@ -211,27 +211,25 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const SearchAndCreateClustersPage()),
+                builder: (context) => BlocProvider(
+                  create: (context) => ClusterCubit(
+                    createClusterUsecase: BlocProvider.of<ClusterCubit>(context).createClusterUsecase,
+                    deleteSingleClusterUsecase: BlocProvider.of<ClusterCubit>(context).deleteSingleClusterUsecase,
+                    getAllClusterUsecase: BlocProvider.of<ClusterCubit>(context).getAllClusterUsecase,
+                    getSingleClusterUsecase: BlocProvider.of<ClusterCubit>(context).getSingleClusterUsecase,
+                    updateClusterUsecase: BlocProvider.of<ClusterCubit>(context).updateClusterUsecase,
+                  ),
+                  child: const SearchAndCreateClustersPage(),
+                ),
+              ),
             );
           },
           child: const Icon(Icons.add_card),
         );
+
       default:
         return null;
     }
   }
 
-  Widget _iconAppBarHomePage({
-    required IconData icon,
-    required VoidCallback onPressed,
-    Color color = greyColor,
-    double size = 28,
-  }) {
-    return IconAppBarHomePage(
-      icon: icon,
-      color: color,
-      size: size,
-      onPressed: onPressed,
-    );
-  }
 }
