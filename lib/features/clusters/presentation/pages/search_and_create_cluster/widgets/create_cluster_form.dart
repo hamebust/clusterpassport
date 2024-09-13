@@ -54,110 +54,113 @@ class _CreateClusterFormState extends State<CreateClusterForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          _buildTextFormField(
-            controller: _nameController,
-            labelText: 'Cluster Name',
-            validationMessage: 'Please enter a name',
+      
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildTextFormField(
+                controller: _nameController,
+                labelText: 'Cluster Name',
+                validationMessage: 'Please enter a name',
+              ),
+              _buildTextFormField(
+                controller: _descriptionController,
+                labelText: 'Description',
+                validationMessage: 'Please enter a description',
+              ),
+              _buildTextFormField(
+                controller: _legalIdController,
+                labelText: 'Legal ID',
+                validationMessage: 'Please enter a Legal ID',
+              ),
+              // Campos para la dirección
+              _buildTextFormField(
+                controller: _streetTypeAndNameController,
+                labelText: 'Street Type and Name',
+                validationMessage: 'Please enter the street type and name',
+              ),
+              _buildTextFormField(
+                controller: _buildingNumberController,
+                labelText: 'Building Number',
+                validationMessage: 'Please enter the building number',
+              ),
+              _buildTextFormField(
+                controller: _neighborhoodController,
+                labelText: 'Neighborhood',
+                validationMessage: 'Please enter the neighborhood',
+              ),
+              _buildTextFormField(
+                controller: _postalCodeController,
+                labelText: 'Postal Code',
+                validationMessage: 'Please enter the postal code',
+              ),
+              _buildTextFormField(
+                controller: _cityController,
+                labelText: 'City',
+                validationMessage: 'Please enter the city',
+              ),
+              _buildTextFormField(
+                controller: _stateController,
+                labelText: 'State',
+                validationMessage: 'Please enter the state',
+              ),
+              _buildTextFormField(
+                controller: _countryController,
+                labelText: 'Country',
+                validationMessage: 'Please enter the country',
+              ),
+              DropdownButtonFormField<String>(
+                value: _clusterType,
+                decoration: const InputDecoration(labelText: 'Cluster Type'),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _clusterType = newValue!;
+                  });
+                },
+                items: <String>['Physical', 'Legal']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() => _isLoading = true);
+          
+                    // Crear el objeto Address con los valores del formulario
+                    final address = Address(
+                      streetTypeAndName: _streetTypeAndNameController.text,
+                      buildingNumber: _buildingNumberController.text,
+                      neighborhood: _neighborhoodController.text,
+                      postalCode: _postalCodeController.text,
+                      city: _cityController.text,
+                      state: _stateController.text,
+                      country: _countryController.text,
+                    );
+          
+                    await widget.createClusterUsecase.createCluster(
+                      clusterUid: 'generatedClusterUid',
+                      legalId: _legalIdController.text,
+                      clusterName: _nameController.text,
+                      description: _descriptionController.text,
+                      type: _clusterType,
+                      address: address, // Pasar el objeto Address
+                      coordinates: _coordinates,
+                    );
+                    setState(() => _isLoading = false);
+                    widget.onClusterCreated();
+                  }
+                },
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text('Create Cluster'),
+              ),
+            ],
           ),
-          _buildTextFormField(
-            controller: _descriptionController,
-            labelText: 'Description',
-            validationMessage: 'Please enter a description',
-          ),
-          _buildTextFormField(
-            controller: _legalIdController,
-            labelText: 'Legal ID',
-            validationMessage: 'Please enter a Legal ID',
-          ),
-          // Campos para la dirección
-          _buildTextFormField(
-            controller: _streetTypeAndNameController,
-            labelText: 'Street Type and Name',
-            validationMessage: 'Please enter the street type and name',
-          ),
-          _buildTextFormField(
-            controller: _buildingNumberController,
-            labelText: 'Building Number',
-            validationMessage: 'Please enter the building number',
-          ),
-          _buildTextFormField(
-            controller: _neighborhoodController,
-            labelText: 'Neighborhood',
-            validationMessage: 'Please enter the neighborhood',
-          ),
-          _buildTextFormField(
-            controller: _postalCodeController,
-            labelText: 'Postal Code',
-            validationMessage: 'Please enter the postal code',
-          ),
-          _buildTextFormField(
-            controller: _cityController,
-            labelText: 'City',
-            validationMessage: 'Please enter the city',
-          ),
-          _buildTextFormField(
-            controller: _stateController,
-            labelText: 'State',
-            validationMessage: 'Please enter the state',
-          ),
-          _buildTextFormField(
-            controller: _countryController,
-            labelText: 'Country',
-            validationMessage: 'Please enter the country',
-          ),
-          DropdownButtonFormField<String>(
-            value: _clusterType,
-            decoration: const InputDecoration(labelText: 'Cluster Type'),
-            onChanged: (String? newValue) {
-              setState(() {
-                _clusterType = newValue!;
-              });
-            },
-            items: <String>['Physical', 'Legal']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                setState(() => _isLoading = true);
-
-                // Crear el objeto Address con los valores del formulario
-                final address = Address(
-                  streetTypeAndName: _streetTypeAndNameController.text,
-                  buildingNumber: _buildingNumberController.text,
-                  neighborhood: _neighborhoodController.text,
-                  postalCode: _postalCodeController.text,
-                  city: _cityController.text,
-                  state: _stateController.text,
-                  country: _countryController.text,
-                );
-
-                await widget.createClusterUsecase.createCluster(
-                  clusterUid: 'generatedClusterUid',
-                  legalId: _legalIdController.text,
-                  clusterName: _nameController.text,
-                  description: _descriptionController.text,
-                  type: _clusterType,
-                  address: address, // Pasar el objeto Address
-                  coordinates: _coordinates,
-                );
-                setState(() => _isLoading = false);
-                widget.onClusterCreated();
-              }
-            },
-            child: _isLoading
-                ? const CircularProgressIndicator()
-                : const Text('Create Cluster'),
-          ),
-        ],
-      ),
+        ),
     );
   }
 

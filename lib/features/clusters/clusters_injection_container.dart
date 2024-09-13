@@ -1,5 +1,9 @@
+import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/local/cluster_local_data_source.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/local/cluster_local_data_source_impl.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source_impl.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/data/repositories/cluster_repository_impl.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories/cluster_repository.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/create_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/delete_cluster_usecase.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_clusters_remote_usecase.dart';
@@ -39,8 +43,21 @@ Future<void> clustersInjectionContainer() async {
 
   // * REPOSITORY & DATA SOURCES INJECTION
 
+  sl.registerLazySingleton<ClusterRepository>(
+      () => ClusterRepositoryImpl(
+            localDataSource: sl(), // Asegúrate de que ClusterLocalDataSource también esté registrado
+            remoteDataSource: sl(),
+          ));
+
+  // * DATA SOURCES INJECTION
+
+  // Registro de la fuente de datos remota (Firebase)
   sl.registerLazySingleton<ClusterRemoteDataSource>(
       () => ClusterRemoteDataSourceImpl(
             fireStore: sl.call(),
           ));
+  
+  // Registro de la fuente de datos local (SQLite)
+  sl.registerLazySingleton<ClusterLocalDataSource>(
+      () => ClusterLocalDataSourceImpl()); 
 }
