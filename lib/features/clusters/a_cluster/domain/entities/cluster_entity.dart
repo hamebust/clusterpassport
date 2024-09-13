@@ -16,7 +16,9 @@ class ClusterEntity extends Equatable {
   final String description;
 
   /// Tipo de Cluster: Físico o Jurídico.
-  final String type;
+  final String clusterType;
+
+  /// Tipo de Cluster: Físico o Jurídico.
 
   /// Dirección del Cluster.
   final Address address;
@@ -39,7 +41,7 @@ class ClusterEntity extends Equatable {
     this.legalId = '',
     required this.clusterName, // Renombrado.
     this.description = '',
-    required this.type,
+    required this.clusterType,
     this.address = const Address(
       streetTypeAndName: '',
       buildingNumber: '',
@@ -72,7 +74,7 @@ class ClusterEntity extends Equatable {
       legalId: legalId,
       clusterName: clusterName,
       description: description,
-      type: 'Physical',
+      clusterType: 'Physical',
       address: address,
       coordinates: coordinates,
       administrators: administrators,
@@ -98,7 +100,7 @@ class ClusterEntity extends Equatable {
       legalId: legalId,
       clusterName: clusterName,
       description: description,
-      type: 'Legal',
+      clusterType: 'Legal',
       address: address,
       coordinates: coordinates,
       administrators: administrators,
@@ -123,7 +125,7 @@ class ClusterEntity extends Equatable {
       legalId: legalId ?? this.legalId,
       clusterName: clusterName ?? this.clusterName, // Renombrado.
       description: description ?? this.description,
-      type: type,
+      clusterType: clusterType,
       address: address ?? this.address,
       coordinates: coordinates ?? this.coordinates,
       administrators: administrators ?? this.administrators,
@@ -143,7 +145,7 @@ class ClusterEntity extends Equatable {
         legalId,
         clusterName, // Renombrado.
         description,
-        type,
+        clusterType,
         address,
         coordinates,
         administrators, // Nueva variable.

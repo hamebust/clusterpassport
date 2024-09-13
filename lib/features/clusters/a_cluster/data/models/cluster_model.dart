@@ -14,7 +14,7 @@ class ClusterModel extends ClusterEntity {
   @override
   final String description;
   @override
-  final String type;
+  final String clusterType;
   @override
   final Address address;
   @override
@@ -33,7 +33,7 @@ class ClusterModel extends ClusterEntity {
     required this.legalId,
     required this.clusterName,
     required this.description,
-    required this.type,
+    required this.clusterType,
     required this.address,
     required this.coordinates,
     this.administrators = const [], // Inicializamos las listas.
@@ -44,7 +44,7 @@ class ClusterModel extends ClusterEntity {
           legalId: legalId,
           clusterName: clusterName,
           description: description,
-          type: type,
+          clusterType: clusterType,
           address: address,
           coordinates: coordinates,
           administrators: administrators,
@@ -58,23 +58,24 @@ class ClusterModel extends ClusterEntity {
 
     return ClusterModel(
       clusterUid: snap['clusterUid'],
-      legalId: snap['legalId'],
-      clusterName: snap['clusterName'],
-      description: snap['description'],
-      type: snap['type'],
+      legalId: snap['legalId'] ?? '',
+      clusterName: snap['clusterName'] ?? '',
+      description: snap['description'] ?? '',
+      clusterType:
+          snap['clusterType'] ?? 'Physical', // Manejo de nulo para clusterType
       address: Address(
-        streetTypeAndName: snap['streetTypeAndName'],
-        buildingNumber: snap['buildingNumber'],
-        apartmentOrFloor: snap['apartmentOrFloor'],
-        neighborhood: snap['neighborhood'],
-        postalCode: snap['postalCode'],
-        city: snap['city'],
-        state: snap['state'],
-        country: snap['country'],
+        streetTypeAndName: snap['streetTypeAndName'] ?? '',
+        buildingNumber: snap['buildingNumber'] ?? '',
+        apartmentOrFloor: snap['apartmentOrFloor'] ?? '',
+        neighborhood: snap['neighborhood'] ?? '',
+        postalCode: snap['postalCode'] ?? '',
+        city: snap['city'] ?? '',
+        state: snap['state'] ?? '',
+        country: snap['country'] ?? '',
       ),
       coordinates: LatLng(
-        snap['latitude'],
-        snap['longitude'],
+        snap['latitude'] ?? 0.0,
+        snap['longitude'] ?? 0.0,
       ),
       administrators: List<String>.from(snap['administrators'] ?? []),
       clients: List<String>.from(snap['clients'] ?? []),
@@ -88,7 +89,7 @@ class ClusterModel extends ClusterEntity {
         "legalId": legalId,
         "clusterName": clusterName,
         "description": description,
-        "type": type,
+        "clusterType": clusterType,
         "streetTypeAndName": address.streetTypeAndName,
         "buildingNumber": address.buildingNumber,
         "apartmentOrFloor": address.apartmentOrFloor,
@@ -111,7 +112,7 @@ class ClusterModel extends ClusterEntity {
       legalId: cluster.legalId,
       clusterName: cluster.clusterName,
       description: cluster.description,
-      type: cluster.type,
+      clusterType: cluster.clusterType,
       address: cluster.address,
       coordinates: cluster.coordinates,
       administrators: cluster.administrators,
@@ -127,7 +128,7 @@ class ClusterModel extends ClusterEntity {
       legalId: legalId,
       clusterName: clusterName,
       description: description,
-      type: type,
+      clusterType: clusterType,
       address: address,
       coordinates: coordinates,
       administrators: administrators,

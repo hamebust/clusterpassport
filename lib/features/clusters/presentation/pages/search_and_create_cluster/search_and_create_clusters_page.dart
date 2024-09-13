@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cluster_passport/features/clusters/presentation/pages/search_and_create_cluster/widgets/create_cluster_form.dart';
 
 class SearchAndCreateClustersPage extends StatefulWidget {
-  const SearchAndCreateClustersPage({Key? key}) : super(key: key);
+  const SearchAndCreateClustersPage({super.key});
 
   @override
   _SearchAndCreateClustersPageState createState() => _SearchAndCreateClustersPageState();
@@ -15,7 +15,6 @@ class SearchAndCreateClustersPage extends StatefulWidget {
 class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPage> {
   bool _isCreateClusterFormVisible = false;
 
-  // Alternar la visibilidad del formulario de creación de clúster
   void _toggleCreateFormVisibility() {
     setState(() {
       _isCreateClusterFormVisible = !_isCreateClusterFormVisible;
@@ -25,20 +24,15 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
   @override
   void initState() {
     super.initState();
-    // Al inicializar el widget, obtenemos todos los clústeres
     BlocProvider.of<ClusterCubit>(context).getAllClusters();
-
-    // Crear la colección 'clusters' si no existe (con manejo de errores)
     _createClustersCollection();
   }
 
   Future<void> _createClustersCollection() async {
     try {
       final clusterCollection = FirebaseFirestore.instance.collection(FirebaseCollectionConst.clusters);
-      await clusterCollection.add({}); // Agrega un documento vacío para crear la colección
-      print('Colección "clusters" creada correctamente');
+      await clusterCollection.add({});
     } catch (e) {
-      // Manejar errores al crear la colección
       print('Error al crear la colección "clusters": $e');
     }
   }
@@ -57,17 +51,16 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
       ),
       body: Column(
         children: [
-          // Si el formulario de creación es visible, lo mostramos
           if (_isCreateClusterFormVisible)
-            CreateClusterForm(
-              onClusterCreated: () {
-                // Cuando un clúster es creado, refrescamos la lista de clústeres
-                BlocProvider.of<ClusterCubit>(context).getAllClusters();
-                _toggleCreateFormVisibility();
-              }, createClusterUsecase: BlocProvider.of<ClusterCubit>(context).createClusterUsecase,
+            Expanded( // Asegura que el formulario ocupe todo el espacio disponible y sea desplazable
+              child: CreateClusterForm(
+                onClusterCreated: () {
+                  BlocProvider.of<ClusterCubit>(context).getAllClusters();
+                  _toggleCreateFormVisibility();
+                },
+                createClusterUsecase: BlocProvider.of<ClusterCubit>(context).createClusterUsecase,
+              ),
             ),
-
-          // Usamos BlocBuilder para manejar el estado del cubit
           Expanded(
             child: BlocBuilder<ClusterCubit, ClusterState>(
               builder: (context, state) {
@@ -76,9 +69,8 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
                 } else if (state is ClusterFailure) {
                   return Center(child: Text('Error: ${state.error}'));
                 } else if (state is ClusterLoaded) {
-                  // Verificamos si hay clusters o no
                   if (state.clusters.isEmpty) {
-                    return const Center(child: Text('No existen clusters')); 
+                    return const Center(child: Text('No existen clusters'));
                   } else {
                     final clusters = state.clusters;
                     return ListView.builder(

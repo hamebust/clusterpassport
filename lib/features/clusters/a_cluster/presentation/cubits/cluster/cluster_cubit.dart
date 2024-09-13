@@ -32,7 +32,7 @@ class ClusterCubit extends Cubit<ClusterState> {
         legalId: cluster.legalId,
         clusterName: cluster.clusterName,
         description: cluster.description,
-        type: cluster.type,
+        clusterType: cluster.clusterType,
         address: cluster.address,
         coordinates: cluster.coordinates,
       );

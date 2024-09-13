@@ -13,7 +13,7 @@ class CreateClusterUsecase {
     required String legalId,
     required String clusterName,
     required String description,
-    required String type, // "Physical" or "Legal"
+    required String clusterType, // "Physical" or "Legal"
     required Address address,
     required LatLng coordinates,
     List<String> administrators = const [],
@@ -21,9 +21,14 @@ class CreateClusterUsecase {
     List<String> securityGuard = const [],
   }) async {
     try {
-      // Crear entidad de Cluster en función del tipo
+      // Validar el tipo de cluster antes de crear la entidad
+      if (clusterType != 'Physical' && clusterType != 'Legal') {
+        throw Exception('Invalid cluster type: $clusterType');
+      }
+
+      // Crear entidad de Cluster en función del tipo (ahora con clusterType validado)
       ClusterEntity cluster;
-      if (type == 'Physical') {
+      if (clusterType == 'Physical') {
         cluster = ClusterEntity.createPhysicalCluster(
           clusterUid: clusterUid,
           legalId: legalId,
@@ -35,7 +40,7 @@ class CreateClusterUsecase {
           clients: clients,
           securityGuard: securityGuard,
         );
-      } else if (type == 'Legal') {
+      } else { // clusterType debe ser 'Legal' en este punto
         cluster = ClusterEntity.createLegalCluster(
           clusterUid: clusterUid,
           legalId: legalId,
@@ -47,8 +52,6 @@ class CreateClusterUsecase {
           clients: clients,
           securityGuard: securityGuard,
         );
-      } else {
-        throw Exception('Invalid cluster type: $type');
       }
 
       // Crear el ClusterModel desde la entidad para manejar Firebase (repositorio remoto)

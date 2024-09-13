@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cluster_passport/features/app/const/firebase_collection_const.dart';
 import 'package:cluster_passport/features/clusters/clusters_injection_container.dart';
 import 'package:cluster_passport/features/user/user_injection_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,4 +29,18 @@ Future<void> init() async {
     // Handle any errors that occur during cluster injection container initialization
     print('Error initializing cluster injection container: $e');
   }
+  try {
+    // Crear la colección 'clusters' si no existe
+    final clusterCollection = FirebaseFirestore.instance.collection(FirebaseCollectionConst.clusters);
+    await clusterCollection.get().then((value) {
+      if (value.docs.isEmpty) {
+        clusterCollection.add({}); // Agrega un documento vacío para crear la colección
+        print('Colección "clusters" creada correctamente');
+      }
+    });
+  } catch (e) {
+    // Manejar errores al crear la colección
+    print('Error al crear la colección "clusters": $e');
+  }
+
 }
