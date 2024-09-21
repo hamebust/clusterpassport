@@ -10,6 +10,6 @@ class GetAllClustersRemoteUsecase {
 
   /// Obtiene todos los clusters desde el repositorio remoto.
   Future<List<ClusterEntity>> getAllClusters() async {
-    return await clusterRepository.getAllClustersRemote();
+    return await clusterRepository.clusteRemoteDataSourceGetAll();
   }
 }

@@ -10,8 +10,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   ClusterRemoteDataSourceImpl({required this.fireStore});
 
   @override
-  Future<void> createClusterRemote(ClusterEntity cluster) async {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+  Future<void> clusterRemoteDataSourceCreate(ClusterEntity cluster) async {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
     final newCluster = ClusterModel.fromEntity(cluster).toDocument();
 
     try {
@@ -24,8 +25,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   }
 
   @override
-  Future<void> updateClusterRemote(ClusterEntity cluster) async {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+  Future<void> clusteRemoteDataSourceUpdate(ClusterEntity cluster) async {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
     final updatedCluster = ClusterModel.fromEntity(cluster).toDocument();
 
     try {
@@ -38,8 +40,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   }
 
   @override
-  Future<void> deleteClusterRemote(String clusterId) async {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+  Future<void> clusteRemoteDataSourceDelete(String clusterId) async {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
 
     try {
       await clusterCollection.doc(clusterId).delete();
@@ -51,8 +54,10 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   }
 
   @override
-  Future<ClusterEntity?> getClusterByIdRemote(String clusterId) async {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+  Future<ClusterEntity?> clusteLocalDataSourceGetByIdRemote(
+      String clusterId) async {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
     final docSnapshot = await clusterCollection.doc(clusterId).get();
 
     if (docSnapshot.exists) {
@@ -63,8 +68,9 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
   }
 
   @override
-  Future<List<ClusterEntity>> getAllClustersRemote() async {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
+  Future<List<ClusterEntity>> clusteRemoteDataSourceGetAll() async {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
     final querySnapshot = await clusterCollection.get();
 
     return querySnapshot.docs.map((doc) {
@@ -74,9 +80,11 @@ class ClusterRemoteDataSourceImpl implements ClusterRemoteDataSource {
 
   /// Nuevo método para obtener un stream de un cluster por su ID
   @override
-  Stream<ClusterEntity?> getClusterByIdStreamRemote(String clusterId) {
-    final clusterCollection = fireStore.collection(FirebaseCollectionConst.clusters);
-    
+  Stream<ClusterEntity?> clusteLocalDataSourceGetByIdStreamRemote(
+      String clusterId) {
+    final clusterCollection =
+        fireStore.collection(FirebaseCollectionConst.clusters);
+
     return clusterCollection.doc(clusterId).snapshots().map((docSnapshot) {
       if (docSnapshot.exists) {
         return ClusterModel.fromSnapshot(docSnapshot).toEntity();

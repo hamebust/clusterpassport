@@ -8,9 +8,9 @@ class UpdateClusterUsecase {
 
   Future<void> updateCluster(ClusterEntity cluster) async {
     // Actualizar en el repositorio remoto
-    await clusterRepository.updateClusterRemote(cluster);
+    await clusterRepository.clusteRemoteDataSourceUpdate(cluster);
 
     // Actualizar en la base de datos local
-    await clusterRepository.updateClusterLocal(cluster);
+    await clusterRepository.clusteLocalDataSourceUpdate(cluster);
   }
 }

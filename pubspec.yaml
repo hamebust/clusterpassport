@@ -83,7 +83,9 @@ dependencies:
   firebase_app_check: ^0.3.1+1
   google_maps_flutter: ^2.9.0
   sqflite: ^2.3.3+1
+  sqlite3_flutter_libs: ^0.5.3
   path: ^1.9.0
+  logging: ^1.2.0
   #flutter_intl:
   #  enabled: true
 dev_dependencies:

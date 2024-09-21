@@ -7,9 +7,9 @@ class DeleteSingleClusterUsecase {
 
   Future<void> deleteSingleCluster(String clusterUid) async {
     // Eliminar del repositorio remoto (Firebase)
-    await clusterRepository.deleteClusterRemote(clusterUid);
+    await clusterRepository.clusteRemoteDataSourceDelete(clusterUid);
 
     // Eliminar de la base de datos local
-    await clusterRepository.deleteClusterLocal(clusterUid);
+    await clusterRepository.clusteLocalDataSourceDelete(clusterUid);
   }
 }

@@ -13,7 +13,8 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   /// Inicializa la base de datos y crea la tabla de clusters si no existe.
   /// Initializes the database and creates the clusters table if it doesn't exist.
   Future<void> _initializeDatabase() async {
-    if (_database != null) return; // Si la base de datos ya está inicializada, no hacer nada.
+    if (_database != null)
+      return; // Si la base de datos ya está inicializada, no hacer nada.
     _database = await openDatabase(
       join(await getDatabasesPath(), _dbName),
       version: _dbVersion,
@@ -21,16 +22,16 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
         await db.execute('''
           CREATE TABLE $_tableName (
             clusterUid TEXT PRIMARY KEY,
-            legalId TEXT,
+            clusterLegalId TEXT,
             name TEXT,
-            description TEXT,
+            clusterDescription TEXT,
             clusterType TEXT,
-            streetTypeAndName TEXT,
-            buildingNumber TEXT,
-            apartmentOrFloor TEXT,
-            neighborhood TEXT,
-            postalCode TEXT,
-            city TEXT,
+            clusterAddressStreetTypeAndName TEXT,
+            clusterAddressBuildingNumber TEXT,
+            clusterAddressApartmentOrFloor TEXT,
+            clusterAddressNeighborhood TEXT,
+            clusterAddressPostalCode TEXT,
+            clusterAddressCity TEXT,
             state TEXT,
             country TEXT,
             latitude REAL,
@@ -46,20 +47,25 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   Map<String, dynamic> _toMap(ClusterEntity cluster) {
     return {
       'clusterUid': cluster.clusterUid,
-      'legalId': cluster.legalId,
+      'clusterLegalId': cluster.clusterLegalId,
       'name': cluster.clusterName,
-      'description': cluster.description,
+      'clusterDescription': cluster.clusterDescription,
       'clusterType': cluster.clusterType,
-      'streetTypeAndName': cluster.address.streetTypeAndName,
-      'buildingNumber': cluster.address.buildingNumber,
-      'apartmentOrFloor': cluster.address.apartmentOrFloor,
-      'neighborhood': cluster.address.neighborhood,
-      'postalCode': cluster.address.postalCode,
-      'city': cluster.address.city,
-      'state': cluster.address.state,
-      'country': cluster.address.country,
-      'latitude': cluster.coordinates.latitude,
-      'longitude': cluster.coordinates.longitude,
+      'clusterAddressStreetTypeAndName':
+          cluster.clusterAddress.clusterAddressStreetTypeAndName,
+      'clusterAddressBuildingNumber':
+          cluster.clusterAddress.clusterAddressBuildingNumber,
+      'clusterAddressApartmentOrFloor':
+          cluster.clusterAddress.clusterAddressApartmentOrFloor,
+      'clusterAddressNeighborhood':
+          cluster.clusterAddress.clusterAddressNeighborhood,
+      'clusterAddressPostalCode':
+          cluster.clusterAddress.clusterAddressPostalCode,
+      'clusterAddressCity': cluster.clusterAddress.clusterAddressCity,
+      'state': cluster.clusterAddress.state,
+      'country': cluster.clusterAddress.country,
+      'latitude': cluster.clusterCoordinates.latitude,
+      'longitude': cluster.clusterCoordinates.longitude,
     };
   }
 
@@ -68,26 +74,27 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   ClusterEntity _fromMap(Map<String, dynamic> map) {
     return ClusterEntity(
       clusterUid: map['clusterUid'],
-      legalId: map['legalId'] ?? '',
+      clusterLegalId: map['clusterLegalId'] ?? '',
       clusterName: map['name'],
-      description: map['description'] ?? '',
+      clusterDescription: map['clusterDescription'] ?? '',
       clusterType: map['clusterType'],
-      address: Address(
-        streetTypeAndName: map['streetTypeAndName'],
-        buildingNumber: map['buildingNumber'],
-        apartmentOrFloor: map['apartmentOrFloor'] ?? '',
-        neighborhood: map['neighborhood'],
-        postalCode: map['postalCode'],
-        city: map['city'],
+      clusterAddress: ClusterAddress(
+        clusterAddressStreetTypeAndName: map['clusterAddressStreetTypeAndName'],
+        clusterAddressBuildingNumber: map['clusterAddressBuildingNumber'],
+        clusterAddressApartmentOrFloor:
+            map['clusterAddressApartmentOrFloor'] ?? '',
+        clusterAddressNeighborhood: map['clusterAddressNeighborhood'],
+        clusterAddressPostalCode: map['clusterAddressPostalCode'],
+        clusterAddressCity: map['clusterAddressCity'],
         state: map['state'],
         country: map['country'],
       ),
-      coordinates: LatLng(map['latitude'], map['longitude']),
+      clusterCoordinates: LatLng(map['latitude'], map['longitude']),
     );
   }
 
   @override
-  Future<void> createClusterLocal(ClusterEntity cluster) async {
+  Future<void> clusteLocalDataSourceCreate(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.insert(
       _tableName,
@@ -97,7 +104,8 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<ClusterEntity?> getClusterByIdLocal(String clusterUid) async {
+  Future<ClusterEntity?> clusteLocalDataSourceGetByIdLocal(
+      String clusterUid) async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(
       _tableName,
@@ -112,7 +120,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<List<ClusterEntity>> getAllClustersLocal() async {
+  Future<List<ClusterEntity>> clusteLocalDataSourceGetAll() async {
     await _initializeDatabase();
     final List<Map<String, dynamic>> maps = await _database!.query(_tableName);
 
@@ -122,7 +130,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> updateClusterLocal(ClusterEntity cluster) async {
+  Future<void> clusteLocalDataSourceUpdate(ClusterEntity cluster) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
@@ -133,7 +141,7 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> deleteClusterLocal(String clusterUid) async {
+  Future<void> clusteLocalDataSourceDelete(String clusterUid) async {
     await _initializeDatabase();
     await _database!.delete(
       _tableName,
@@ -143,7 +151,8 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Future<void> partialUpdateClusterLocal(String clusterUid, Map<String, dynamic> updatedFields) async {
+  Future<void> partialUpdateClusterLocal(
+      String clusterUid, Map<String, dynamic> updatedFields) async {
     await _initializeDatabase();
     await _database!.update(
       _tableName,
@@ -154,11 +163,13 @@ class ClusterLocalDataSourceImpl implements ClusterLocalDataSource {
   }
 
   @override
-  Stream<ClusterEntity?> getClusterByIdStreamLocal(String clusterUid) async* {
+  Stream<ClusterEntity?> clusteLocalDataSourceGetByIdStreamLocal(
+      String clusterUid) async* {
     while (true) {
-      final cluster = await getClusterByIdLocal(clusterUid);
+      final cluster = await clusteLocalDataSourceGetByIdLocal(clusterUid);
       yield cluster;
-      await Future.delayed(const Duration(seconds: 2)); // Retraso para simular polling
+      await Future.delayed(
+          const Duration(seconds: 2)); // Retraso para simular polling
     }
   }
 }

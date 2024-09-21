@@ -9,7 +9,7 @@ class GetAllClustersLocalUsecase {
   GetAllClustersLocalUsecase({required this.clusterRepository});
 
   /// Obtiene todos los clusters desde el repositorio local.
-  Future<List<ClusterEntity>> getAllClustersLocal() async {
-    return await clusterRepository.getAllClustersLocal();
+  Future<List<ClusterEntity>> clusteLocalDataSourceGetAll() async {
+    return await clusterRepository.clusteLocalDataSourceGetAll();
   }
 }

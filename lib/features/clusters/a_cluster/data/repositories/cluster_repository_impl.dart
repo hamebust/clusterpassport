@@ -5,65 +5,66 @@ import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/r
 
 /// ClusterRepositoryImpl: Implementación del repositorio para manejar las fuentes de datos locales y remotas.
 class ClusterRepositoryImpl implements ClusterRepository {
-  final ClusterLocalDataSource localDataSource;
-  final ClusterRemoteDataSource remoteDataSource;
+  final ClusterLocalDataSource clusterLocalDataSource;
+  final ClusterRemoteDataSource clusterRemoteDataSource;
 
   ClusterRepositoryImpl({
-    required this.localDataSource,
-    required this.remoteDataSource,
+    required this.clusterLocalDataSource,
+    required this.clusterRemoteDataSource,
   });
 
   // Operaciones Remotas
   @override
-  Future<void> createClusterRemote(ClusterEntity cluster) async {
-    await remoteDataSource.createClusterRemote(cluster);
+  Future<void> clusterRemoteDataSourceCreate(ClusterEntity cluster) async {
+    await clusterRemoteDataSource.clusterRemoteDataSourceCreate(cluster);
   }
 
   @override
-  Future<void> updateClusterRemote(ClusterEntity cluster) async {
-    await remoteDataSource.updateClusterRemote(cluster);
+  Future<void> clusteRemoteDataSourceUpdate(ClusterEntity cluster) async {
+    await clusterRemoteDataSource.clusteRemoteDataSourceUpdate(cluster);
   }
 
   @override
-  Future<void> deleteClusterRemote(String clusterId) async {
-    await remoteDataSource.deleteClusterRemote(clusterId);
+  Future<void> clusteRemoteDataSourceDelete(String clusterId) async {
+    await clusterRemoteDataSource.clusteRemoteDataSourceDelete(clusterId);
   }
 
   @override
-  Future<List<ClusterEntity>> getAllClustersRemote() async {
-    return await remoteDataSource.getAllClustersRemote();
+  Future<List<ClusterEntity>> clusteRemoteDataSourceGetAll() async {
+    return await clusterRemoteDataSource.clusteRemoteDataSourceGetAll();
   }
 
   // Operaciones Locales
   @override
-  Future<void> createClusterLocal(ClusterEntity cluster) async {
-    await localDataSource.createClusterLocal(cluster);
+  Future<void> clusteLocalDataSourceCreate(ClusterEntity cluster) async {
+    await clusterLocalDataSource.clusteLocalDataSourceCreate(cluster);
   }
 
   @override
-  Future<void> updateClusterLocal(ClusterEntity cluster) async {
-    await localDataSource.updateClusterLocal(cluster);
+  Future<void> clusteLocalDataSourceUpdate(ClusterEntity cluster) async {
+    await clusterLocalDataSource.clusteLocalDataSourceUpdate(cluster);
   }
 
   @override
-  Future<void> deleteClusterLocal(String clusterId) async {
-    await localDataSource.deleteClusterLocal(clusterId);
+  Future<void> clusteLocalDataSourceDelete(String clusterId) async {
+    await clusterLocalDataSource.clusteLocalDataSourceDelete(clusterId);
   }
 
   @override
-  Future<List<ClusterEntity>> getAllClustersLocal() async {
-    return await localDataSource.getAllClustersLocal();
+  Future<List<ClusterEntity>> clusteLocalDataSourceGetAll() async {
+    return await clusterLocalDataSource.clusteLocalDataSourceGetAll();
   }
-  
+
   // Métodos comunes
   @override
-  Future<ClusterEntity?> getClusterById(String clusterId) async {
-    return await localDataSource.getClusterByIdLocal(clusterId);
+  Future<ClusterEntity?> clusteLocalDataSourceGetById(String clusterId) async {
+    return await clusterLocalDataSource
+        .clusteLocalDataSourceGetByIdLocal(clusterId);
   }
 
   @override
-  Stream<ClusterEntity?> getClusterByIdStream(String clusterId) {
-    return localDataSource.getClusterByIdStreamLocal(clusterId);
+  Stream<ClusterEntity?> clusteLocalDataSourceGetByIdStream(String clusterId) {
+    return clusterLocalDataSource
+        .clusteLocalDataSourceGetByIdStreamLocal(clusterId);
   }
-
 }

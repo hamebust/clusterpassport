@@ -8,7 +8,7 @@ class Cluster {
   final String profileImage; // URL o path de la imagen
   final String title;
   final String subtitle;
-  final String address;
+  final String clusterAddress;
   final bool clusterState; // Indica si tiene estados nuevos o no
   final IconData icon;
 
@@ -18,7 +18,7 @@ class Cluster {
     required this.profileImage,
     required this.title,
     required this.subtitle,
-    required this.address,
+    required this.clusterAddress,
     required this.clusterState,
     required this.icon,
   });
@@ -34,7 +34,7 @@ class MyClustersPage extends StatelessWidget {
       profileImage: 'assets/images/oleus.png',
       title: 'Centro Comercial Oleus',
       subtitle: 'Mi trabajo',
-      address: '58H7+5V2, Lechería 6016, Anzoátegui',
+      clusterAddress: '58H7+5V2, Lechería 6016, Anzoátegui',
       clusterState: true,
       icon: Icons.directions,
     ),
@@ -44,7 +44,7 @@ class MyClustersPage extends StatelessWidget {
       profileImage: 'assets/images/loma_linda.png',
       title: 'Conjunto Residencial Loma Linda',
       subtitle: 'Mi hogar',
-      address: '4321 Avenida Siempre Viva, Ciudad, País',
+      clusterAddress: '4321 Avenida Siempre Viva, Ciudad, País',
       clusterState: false,
       icon: Icons.directions,
     ),
@@ -54,7 +54,7 @@ class MyClustersPage extends StatelessWidget {
       profileImage: 'assets/images/el_remanso.png',
       title: 'Conjunto Residencial El Remanso',
       subtitle: 'Mi hogar',
-      address: '5844+95M, Barcelona 6001, Anzoátegui',
+      clusterAddress: '5844+95M, Barcelona 6001, Anzoátegui',
       clusterState: true,
       icon: Icons.directions,
     ),
@@ -149,7 +149,7 @@ class ClusterCard extends StatelessWidget {
             icon: Icon(cluster.icon),
             onPressed: () async {
               final url =
-                  'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(cluster.address)}';
+                  'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(cluster.clusterAddress)}';
               if (await canLaunchUrl(Uri.parse(url))) {
                 await launchUrl(Uri.parse(url));
               } else {

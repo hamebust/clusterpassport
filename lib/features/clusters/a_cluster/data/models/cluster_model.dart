@@ -1,56 +1,20 @@
-// ignore_for_file: overridden_fields
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ClusterModel extends ClusterEntity {
-  @override
-  final String clusterUid;
-  @override
-  final String legalId;
-  @override
-  final String clusterName;
-  @override
-  final String description;
-  @override
-  final String clusterType;
-  @override
-  final Address address;
-  @override
-  final LatLng coordinates;
-
-  // Nuevas variables añadidas.
-  @override
-  final List<String> administrators;
-  @override
-  final List<String> clients;
-  @override
-  final List<String> securityGuard;
-
   const ClusterModel({
-    required this.clusterUid,
-    required this.legalId,
-    required this.clusterName,
-    required this.description,
-    required this.clusterType,
-    required this.address,
-    required this.coordinates,
-    this.administrators = const [], // Inicializamos las listas.
-    this.clients = const [],
-    this.securityGuard = const [],
-  }) : super(
-          clusterUid: clusterUid,
-          legalId: legalId,
-          clusterName: clusterName,
-          description: description,
-          clusterType: clusterType,
-          address: address,
-          coordinates: coordinates,
-          administrators: administrators,
-          clients: clients,
-          securityGuard: securityGuard,
-        );
+    required super.clusterUid,
+    required super.clusterLegalId,
+    required super.clusterName,
+    required super.clusterDescription,
+    required super.clusterType,
+    required super.clusterAddress,
+    required super.clusterCoordinates,
+    super.clusterAdministrators = const [],
+    super.clusterClients = const [],
+    super.clusterSecurityGuard = const [],
+  });
 
   // Factory method para crear un ClusterModel desde un snapshot de Firebase.
   factory ClusterModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -58,66 +22,65 @@ class ClusterModel extends ClusterEntity {
 
     return ClusterModel(
       clusterUid: snap['clusterUid'],
-      legalId: snap['legalId'] ?? '',
+      clusterLegalId: snap['clusterLegalId'] ?? '',
       clusterName: snap['clusterName'] ?? '',
-      description: snap['description'] ?? '',
-      clusterType:
-          snap['clusterType'] ?? 'Physical', // Manejo de nulo para clusterType
-      address: Address(
-        streetTypeAndName: snap['streetTypeAndName'] ?? '',
-        buildingNumber: snap['buildingNumber'] ?? '',
-        apartmentOrFloor: snap['apartmentOrFloor'] ?? '',
-        neighborhood: snap['neighborhood'] ?? '',
-        postalCode: snap['postalCode'] ?? '',
-        city: snap['city'] ?? '',
+      clusterDescription: snap['clusterDescription'] ?? '',
+      clusterType: snap['clusterType'] ?? 'Physical',
+      clusterAddress: ClusterAddress(
+        clusterAddressStreetTypeAndName: snap['clusterAddressStreetTypeAndName'] ?? '',
+        clusterAddressBuildingNumber: snap['clusterAddressBuildingNumber'] ?? '',
+        clusterAddressApartmentOrFloor: snap['clusterAddressApartmentOrFloor'] ?? '',
+        clusterAddressNeighborhood: snap['clusterAddressNeighborhood'] ?? '',
+        clusterAddressPostalCode: snap['clusterAddressPostalCode'] ?? '',
+        clusterAddressCity: snap['clusterAddressCity'] ?? '',
         state: snap['state'] ?? '',
         country: snap['country'] ?? '',
       ),
-      coordinates: LatLng(
+      clusterCoordinates: LatLng(
         snap['latitude'] ?? 0.0,
         snap['longitude'] ?? 0.0,
       ),
-      administrators: List<String>.from(snap['administrators'] ?? []),
-      clients: List<String>.from(snap['clients'] ?? []),
-      securityGuard: List<String>.from(snap['securityGuard'] ?? []),
+      clusterAdministrators: List<String>.from(snap['clusterAdministrators'] ?? []),
+      clusterClients: List<String>.from(snap['clusterClients'] ?? []),
+      clusterSecurityGuard: List<String>.from(snap['clusterSecurityGuard'] ?? []),
     );
   }
 
   // Método para convertir el modelo en un mapa para subir a Firebase.
   Map<String, dynamic> toDocument() => {
         "clusterUid": clusterUid,
-        "legalId": legalId,
+        "clusterLegalId": clusterLegalId,
         "clusterName": clusterName,
-        "description": description,
+        "clusterDescription": clusterDescription,
         "clusterType": clusterType,
-        "streetTypeAndName": address.streetTypeAndName,
-        "buildingNumber": address.buildingNumber,
-        "apartmentOrFloor": address.apartmentOrFloor,
-        "neighborhood": address.neighborhood,
-        "postalCode": address.postalCode,
-        "city": address.city,
-        "state": address.state,
-        "country": address.country,
-        "latitude": coordinates.latitude,
-        "longitude": coordinates.longitude,
-        "administrators": administrators,
-        "clients": clients,
-        "securityGuard": securityGuard,
+        "clusterAddressStreetTypeAndName": clusterAddress.clusterAddressStreetTypeAndName,
+        "clusterAddressBuildingNumber": clusterAddress.clusterAddressBuildingNumber,
+        "clusterAddressApartmentOrFloor": clusterAddress.clusterAddressApartmentOrFloor,
+        "clusterAddressNeighborhood": clusterAddress.clusterAddressNeighborhood,
+        "clusterAddressPostalCode": clusterAddress.clusterAddressPostalCode,
+        "clusterAddressCity": clusterAddress.clusterAddressCity,
+        "state": clusterAddress.state,
+        "country": clusterAddress.country,
+        "latitude": clusterCoordinates.latitude,
+        "longitude": clusterCoordinates.longitude,
+        "clusterAdministrators": clusterAdministrators,
+        "clusterClients": clusterClients,
+        "clusterSecurityGuard": clusterSecurityGuard,
       };
 
   // Método de fábrica para crear un ClusterModel desde una entidad existente.
   factory ClusterModel.fromEntity(ClusterEntity cluster) {
     return ClusterModel(
       clusterUid: cluster.clusterUid,
-      legalId: cluster.legalId,
+      clusterLegalId: cluster.clusterLegalId,
       clusterName: cluster.clusterName,
-      description: cluster.description,
+      clusterDescription: cluster.clusterDescription,
       clusterType: cluster.clusterType,
-      address: cluster.address,
-      coordinates: cluster.coordinates,
-      administrators: cluster.administrators,
-      clients: cluster.clients,
-      securityGuard: cluster.securityGuard,
+      clusterAddress: cluster.clusterAddress,
+      clusterCoordinates: cluster.clusterCoordinates,
+      clusterAdministrators: cluster.clusterAdministrators,
+      clusterClients: cluster.clusterClients,
+      clusterSecurityGuard: cluster.clusterSecurityGuard,
     );
   }
 
@@ -125,15 +88,15 @@ class ClusterModel extends ClusterEntity {
   ClusterEntity toEntity() {
     return ClusterEntity(
       clusterUid: clusterUid,
-      legalId: legalId,
+      clusterLegalId: clusterLegalId,
       clusterName: clusterName,
-      description: description,
+      clusterDescription: clusterDescription,
       clusterType: clusterType,
-      address: address,
-      coordinates: coordinates,
-      administrators: administrators,
-      clients: clients,
-      securityGuard: securityGuard,
+      clusterAddress: clusterAddress,
+      clusterCoordinates: clusterCoordinates,
+      clusterAdministrators: clusterAdministrators,
+      clusterClients: clusterClients,
+      clusterSecurityGuard: clusterSecurityGuard,
     );
   }
 }

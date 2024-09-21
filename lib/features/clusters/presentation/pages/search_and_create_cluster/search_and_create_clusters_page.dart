@@ -79,7 +79,7 @@ class _SearchAndCreateClustersPageState extends State<SearchAndCreateClustersPag
                         final cluster = clusters[index];
                         return ListTile(
                           title: Text(cluster.clusterName),
-                          subtitle: Text(cluster.description),
+                          subtitle: Text(cluster.clusterDescription),
                         );
                       },
                     );

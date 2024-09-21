@@ -10,15 +10,15 @@ class CreateClusterUsecase {
 
   Future<void> createCluster({
     required String clusterUid,
-    required String legalId,
+    required String clusterLegalId,
     required String clusterName,
-    required String description,
+    required String clusterDescription,
     required String clusterType, // "Physical" or "Legal"
-    required Address address,
-    required LatLng coordinates,
-    List<String> administrators = const [],
-    List<String> clients = const [],
-    List<String> securityGuard = const [],
+    required ClusterAddress clusterAddress,
+    required LatLng clusterCoordinates,
+    List<String> clusterAdministrators = const [],
+    List<String> clusterClients = const [],
+    List<String> clusterSecurityGuard = const [],
   }) async {
     try {
       // Validar el tipo de cluster antes de crear la entidad
@@ -29,37 +29,39 @@ class CreateClusterUsecase {
       // Crear entidad de Cluster en función del tipo (ahora con clusterType validado)
       ClusterEntity cluster;
       if (clusterType == 'Physical') {
-        cluster = ClusterEntity.createPhysicalCluster(
+        cluster = ClusterEntity.clusterEntityCreatePhysical(
           clusterUid: clusterUid,
-          legalId: legalId,
+          clusterLegalId: clusterLegalId,
           clusterName: clusterName,
-          description: description,
-          address: address,
-          coordinates: coordinates,
-          administrators: administrators,
-          clients: clients,
-          securityGuard: securityGuard,
+          clusterDescription: clusterDescription,
+          clusterAddress: clusterAddress,
+          clusterCoordinates: clusterCoordinates,
+          clusterAdministrators: clusterAdministrators,
+          clusterClients: clusterClients,
+          clusterSecurityGuard: clusterSecurityGuard,
         );
-      } else { // clusterType debe ser 'Legal' en este punto
-        cluster = ClusterEntity.createLegalCluster(
+      } else {
+        // clusterType debe ser 'Legal' en este punto
+        cluster = ClusterEntity.clusterEntityCreateLegal(
           clusterUid: clusterUid,
-          legalId: legalId,
+          clusterLegalId: clusterLegalId,
           clusterName: clusterName,
-          description: description,
-          address: address,
-          coordinates: coordinates,
-          administrators: administrators,
-          clients: clients,
-          securityGuard: securityGuard,
+          clusterDescription: clusterDescription,
+          clusterAddress: clusterAddress,
+          clusterCoordinates: clusterCoordinates,
+          clusterAdministrators: clusterAdministrators,
+          clusterClients: clusterClients,
+          clusterSecurityGuard: clusterSecurityGuard,
         );
       }
 
       // Crear el ClusterModel desde la entidad para manejar Firebase (repositorio remoto)
       final clusterModel = ClusterModel.fromEntity(cluster);
-      await clusterRepository.createClusterRemote(clusterModel);
+      await clusterRepository.clusterRemoteDataSourceCreate(clusterModel);
 
       // Guardar también en la base de datos local
-      await clusterRepository.createClusterLocal(clusterModel.toEntity());
+      await clusterRepository
+          .clusteLocalDataSourceCreate(clusterModel.toEntity());
     } catch (e) {
       print("Error creating cluster: $e");
       throw Exception("Error creating cluster");

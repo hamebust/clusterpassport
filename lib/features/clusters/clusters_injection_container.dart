@@ -45,8 +45,8 @@ Future<void> clustersInjectionContainer() async {
 
   sl.registerLazySingleton<ClusterRepository>(
       () => ClusterRepositoryImpl(
-            localDataSource: sl(), // Asegúrate de que ClusterLocalDataSource también esté registrado
-            remoteDataSource: sl(),
+            clusterLocalDataSource: sl(), // Asegúrate de que ClusterLocalDataSource también esté registrado
+            clusterRemoteDataSource: sl(),
           ));
 
   // * DATA SOURCES INJECTION

@@ -29,12 +29,12 @@ class ClusterCubit extends Cubit<ClusterState> {
     try {
       await createClusterUsecase.createCluster(
         clusterUid: cluster.clusterUid,
-        legalId: cluster.legalId,
+        clusterLegalId: cluster.clusterLegalId,
         clusterName: cluster.clusterName,
-        description: cluster.description,
+        clusterDescription: cluster.clusterDescription,
         clusterType: cluster.clusterType,
-        address: cluster.address,
-        coordinates: cluster.coordinates,
+        clusterAddress: cluster.clusterAddress,
+        clusterCoordinates: cluster.clusterCoordinates,
       );
       emit(ClusterSuccess());
     } catch (e, stackTrace) {

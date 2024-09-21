@@ -8,11 +8,12 @@ class GetSingleClusterUsecase {
 
   Future<ClusterEntity?> getSingleCluster(String clusterUid) async {
     // Obtiene el cluster desde el repositorio remoto
-    final cluster = await clusterRepository.getClusterById(clusterUid);
+    final cluster =
+        await clusterRepository.clusteLocalDataSourceGetById(clusterUid);
 
     // Si el cluster se encuentra, guardarlo en la base de datos local
     if (cluster != null) {
-      await clusterRepository.getClusterById(clusterUid);
+      await clusterRepository.clusteLocalDataSourceGetById(clusterUid);
     }
 
     return cluster;

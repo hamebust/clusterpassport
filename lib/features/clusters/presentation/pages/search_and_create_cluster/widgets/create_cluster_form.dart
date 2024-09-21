@@ -20,13 +20,13 @@ class CreateClusterForm extends StatefulWidget {
 class _CreateClusterFormState extends State<CreateClusterForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _legalIdController = TextEditingController();
-  final _streetTypeAndNameController = TextEditingController();
-  final _buildingNumberController = TextEditingController();
-  final _neighborhoodController = TextEditingController();
-  final _postalCodeController = TextEditingController();
-  final _cityController = TextEditingController();
+  final _clusterDescriptionController = TextEditingController();
+  final _clusterLegalIdController = TextEditingController();
+  final _clusterAddressStreetTypeAndNameController = TextEditingController();
+  final _clusterAddressBuildingNumberController = TextEditingController();
+  final _clusterAddressNeighborhoodController = TextEditingController();
+  final _clusterAddressPostalCodeController = TextEditingController();
+  final _clusterAddressCityController = TextEditingController();
   final _stateController = TextEditingController();
   final _countryController = TextEditingController();
 
@@ -65,37 +65,37 @@ class _CreateClusterFormState extends State<CreateClusterForm> {
               validationMessage: 'Please enter a name',
             ),
             _buildTextFormField(
-              controller: _descriptionController,
+              controller: _clusterDescriptionController,
               labelText: 'Description',
               validationMessage: 'Please enter a description',
             ),
             _buildTextFormField(
-              controller: _legalIdController,
+              controller: _clusterLegalIdController,
               labelText: 'Legal ID',
               validationMessage: 'Please enter a Legal ID',
             ),
             _buildTextFormField(
-              controller: _streetTypeAndNameController,
+              controller: _clusterAddressStreetTypeAndNameController,
               labelText: 'Street Type and Name',
               validationMessage: 'Please enter the street type and name',
             ),
             _buildTextFormField(
-              controller: _buildingNumberController,
+              controller: _clusterAddressBuildingNumberController,
               labelText: 'Building Number',
               validationMessage: 'Please enter the building number',
             ),
             _buildTextFormField(
-              controller: _neighborhoodController,
+              controller: _clusterAddressNeighborhoodController,
               labelText: 'Neighborhood',
-              validationMessage: 'Please enter the neighborhood',
+              validationMessage: 'Please enter the clusterAddressNeighborhood',
             ),
             _buildTextFormField(
-              controller: _postalCodeController,
+              controller: _clusterAddressPostalCodeController,
               labelText: 'Postal Code',
               validationMessage: 'Please enter the postal code',
             ),
             _buildTextFormField(
-              controller: _cityController,
+              controller: _clusterAddressCityController,
               labelText: 'City',
               validationMessage: 'Please enter the city',
             ),
@@ -131,24 +131,28 @@ class _CreateClusterFormState extends State<CreateClusterForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   setState(() => _isLoading = true);
-                  final address = Address(
-                    streetTypeAndName: _streetTypeAndNameController.text,
-                    buildingNumber: _buildingNumberController.text,
-                    neighborhood: _neighborhoodController.text,
-                    postalCode: _postalCodeController.text,
-                    city: _cityController.text,
+                  final address = ClusterAddress(
+                    clusterAddressStreetTypeAndName:
+                        _clusterAddressStreetTypeAndNameController.text,
+                    clusterAddressBuildingNumber:
+                        _clusterAddressBuildingNumberController.text,
+                    clusterAddressNeighborhood:
+                        _clusterAddressNeighborhoodController.text,
+                    clusterAddressPostalCode:
+                        _clusterAddressPostalCodeController.text,
+                    clusterAddressCity: _clusterAddressCityController.text,
                     state: _stateController.text,
                     country: _countryController.text,
                   );
 
                   await widget.createClusterUsecase.createCluster(
                     clusterUid: 'generatedClusterUid',
-                    legalId: _legalIdController.text,
+                    clusterLegalId: _clusterLegalIdController.text,
                     clusterName: _nameController.text,
-                    description: _descriptionController.text,
+                    clusterDescription: _clusterDescriptionController.text,
                     clusterType: _clusterType,
-                    address: address,
-                    coordinates: _coordinates,
+                    clusterAddress: address,
+                    clusterCoordinates: _coordinates,
                   );
                   setState(() => _isLoading = false);
                   widget.onClusterCreated();
@@ -167,13 +171,13 @@ class _CreateClusterFormState extends State<CreateClusterForm> {
   @override
   void dispose() {
     _nameController.dispose();
-    _descriptionController.dispose();
-    _legalIdController.dispose();
-    _streetTypeAndNameController.dispose();
-    _buildingNumberController.dispose();
-    _neighborhoodController.dispose();
-    _postalCodeController.dispose();
-    _cityController.dispose();
+    _clusterDescriptionController.dispose();
+    _clusterLegalIdController.dispose();
+    _clusterAddressStreetTypeAndNameController.dispose();
+    _clusterAddressBuildingNumberController.dispose();
+    _clusterAddressNeighborhoodController.dispose();
+    _clusterAddressPostalCodeController.dispose();
+    _clusterAddressCityController.dispose();
     _stateController.dispose();
     _countryController.dispose();
     super.dispose();
