@@ -1,0 +1,8 @@
+modules = ["nix", "dart-2.18", "dart-3.5", "bash"]
+run = "flutter run"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "flutter run"]
