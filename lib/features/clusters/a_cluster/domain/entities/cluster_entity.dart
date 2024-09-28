@@ -88,7 +88,7 @@ class ClusterEntity extends Equatable {
       clusterSecurityGuard: clusterSecurityGuard,
     );
   }
-
+ 
   /// Método para actualizar la información del Cluster.
   ClusterEntity update({
     String? clusterLegalId,

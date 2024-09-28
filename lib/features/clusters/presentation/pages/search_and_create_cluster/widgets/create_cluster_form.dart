@@ -1,10 +1,10 @@
 import 'package:cluster_passport/features/clusters/a_cluster/domain/entities/cluster_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/create_cluster_usecase.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_create_single_cluster.dart';
 
 class CreateClusterForm extends StatefulWidget {
-  final CreateClusterUsecase createClusterUsecase;
+  final UsecaseClusterCreateSingleCluster createClusterUsecase;
   final VoidCallback onClusterCreated;
 
   const CreateClusterForm({

@@ -4,11 +4,11 @@ import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/r
 import 'package:cluster_passport/features/clusters/a_cluster/data/data_sources/remote/cluster_remote_data_source_impl.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/data/repositories/cluster_repository_impl.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories/cluster_repository.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/create_cluster_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/delete_cluster_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_all_clusters_remote_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/get_single_cluster_usecase.dart';
-import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/update_cluster_usecase.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_create_single_cluster.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_delete_single_cluster.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_remote_get_all_clusters.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_get_single_cluster.dart';
+import 'package:cluster_passport/features/clusters/a_cluster/domain/usecases/usecase_cluster_update_cluster.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/presentation/cubits/cluster/cluster_cubit.dart';
 import 'package:cluster_passport/main_injection_container.dart';
 
@@ -22,32 +22,32 @@ Future<void> clustersInjectionContainer() async {
       ));
 
   // Registra el caso de uso para crear el Cluster
-  sl.registerLazySingleton<CreateClusterUsecase>(
-      () => CreateClusterUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<UsecaseClusterCreateSingleCluster>(
+      () => UsecaseClusterCreateSingleCluster(clusterRepository: sl()));
 
   // Registra el caso de uso para eliminar un usuario por su ID
-  sl.registerLazySingleton<DeleteSingleClusterUsecase>(
-      () => DeleteSingleClusterUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<UsecaseClusterDeleteSingleCluster>(
+      () => UsecaseClusterDeleteSingleCluster(clusterRepository: sl()));
 
   // registra el caso de uso para obtener todos los usuarios
-  sl.registerLazySingleton<GetAllClustersRemoteUsecase>(
-      () => GetAllClustersRemoteUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<UsecaseClusterRemoteGetAllClusters>(
+      () => UsecaseClusterRemoteGetAllClusters(clusterRepository: sl()));
 
   // Registra el caso de uso para obtener un solo usuario por su ID
-  sl.registerLazySingleton<GetSingleClusterUsecase>(
-      () => GetSingleClusterUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<UsecaseClusterGetSingleCluster>(
+      () => UsecaseClusterGetSingleCluster(clusterRepository: sl()));
 
   // Registra el caso de uso para actualizar la información de un usuario
-  sl.registerLazySingleton<UpdateClusterUsecase>(
-      () => UpdateClusterUsecase(clusterRepository: sl()));
+  sl.registerLazySingleton<UsecaseClusterUpdateCluster>(
+      () => UsecaseClusterUpdateCluster(clusterRepository: sl()));
 
   // * REPOSITORY & DATA SOURCES INJECTION
 
-  sl.registerLazySingleton<ClusterRepository>(
-      () => ClusterRepositoryImpl(
-            clusterLocalDataSource: sl(), // Asegúrate de que ClusterLocalDataSource también esté registrado
-            clusterRemoteDataSource: sl(),
-          ));
+  sl.registerLazySingleton<ClusterRepository>(() => ClusterRepositoryImpl(
+        clusterLocalDataSource:
+            sl(), // Asegúrate de que ClusterLocalDataSource también esté registrado
+        clusterRemoteDataSource: sl(),
+      ));
 
   // * DATA SOURCES INJECTION
 
@@ -56,8 +56,8 @@ Future<void> clustersInjectionContainer() async {
       () => ClusterRemoteDataSourceImpl(
             fireStore: sl.call(),
           ));
-  
+
   // Registro de la fuente de datos local (SQLite)
   sl.registerLazySingleton<ClusterLocalDataSource>(
-      () => ClusterLocalDataSourceImpl()); 
+      () => ClusterLocalDataSourceImpl());
 }

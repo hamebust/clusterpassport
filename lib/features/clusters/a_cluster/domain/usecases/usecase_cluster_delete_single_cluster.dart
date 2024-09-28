@@ -1,9 +1,9 @@
 import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories/cluster_repository.dart';
 
-class DeleteSingleClusterUsecase {
+class UsecaseClusterDeleteSingleCluster {
   final ClusterRepository clusterRepository;
 
-  DeleteSingleClusterUsecase({required this.clusterRepository});
+  UsecaseClusterDeleteSingleCluster({required this.clusterRepository});
 
   Future<void> deleteSingleCluster(String clusterUid) async {
     // Eliminar del repositorio remoto (Firebase)

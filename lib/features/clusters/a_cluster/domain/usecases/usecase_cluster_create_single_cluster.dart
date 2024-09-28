@@ -3,10 +3,10 @@ import 'package:cluster_passport/features/clusters/a_cluster/domain/repositories
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cluster_passport/features/clusters/a_cluster/data/models/cluster_model.dart';
 
-class CreateClusterUsecase {
+class UsecaseClusterCreateSingleCluster {
   final ClusterRepository clusterRepository;
 
-  CreateClusterUsecase({required this.clusterRepository});
+  UsecaseClusterCreateSingleCluster({required this.clusterRepository});
 
   Future<void> createCluster({
     required String clusterUid,
